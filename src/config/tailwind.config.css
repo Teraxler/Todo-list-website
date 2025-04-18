@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --font-inter: "Inter";
+  --font-montserrat: "Montserrat";
+
+  --color-danger: #f21e1e;
+  --color-success: #05a301;
+  --color-primary: #ff6767;
+  --color-cultured: #f8f8f8;
+  --color-ghost-white: #f5f8ff;
+  --color-blue-bonnet: #0225ff;
+  --color-picton-blue: #3abeff;
+  --color-sonic-silver: #747474;
+  --color-quick-silver: #a1a3ab;
+  --color-orioles-orange: #f24e1e;
+
+  --shadow-search-box: -17px 69px 28px 0 #00000001, -9px 39px 24px 0 #00000002,
+    -4px 17px 18px 0 #00000003, -1px 4px 10px 0 #00000004;
+  --shadow-header: 0 4px 12px 0 #00000007;
+}
+
+@layer base {
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("../assets/fonts/inter/Inter-VariableFont_opsz,wght.ttf")
+      format("truetype");
+  }
+  @font-face {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("../assets/fonts/montserrat/Montserrat-VariableFont_wght.ttf")
+      format("truetype");
+  }
+  body {
+    font-family: var(--font-inter);
+  }
+}

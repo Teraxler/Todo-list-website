@@ -8,7 +8,7 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx @tailwindcss/cli -i ./src/configs/tailwindcss.css -o ./src/styles/app.css --watch"
+    "build": "npx @tailwindcss/cli -i ./src/config/tailwind.config.css -o ./src/styles/app.css --watch"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.1.4",
