@@ -2,26 +2,79 @@
   "users": [
     {
       "id": 1,
-      "name": "",
-      "family": "",
-      "username": "",
-      "email": "",
-      "password": "",
-      "phone": "",
-      "position": "",
+      "name": "Ali",
+      "family": "Rezai",
+      "username": "ali.rezai",
+      "email": "ali.rezai@example.com",
+      "password": "securepassword123",
+      "phone": "+98-912-3456789",
+      "position": "Software Engineer",
       "createdAt": "2024-05-10T09:00:00Z",
-      "tasks": [{
-        "id": "",
-        "title": "",
-        "status": "Not Started",
-        "createdAt": "2024-05-10T09:00:00Z",
-        "priority": "",
-        "description": "",
-        "cover": {
-          "path": "",
-          "alt": ""
+      "profile": "",
+      "tasks": [
+        {
+          "id": 101,
+          "title": "Develop API Endpoint",
+          "status": "Not Started",
+          "createdAt": "2024-05-10T09:00:00Z",
+          "priority": "High",
+          "description": "Create and test the new API endpoint for user authentication",
+          "cover": {
+            "path": "api.png",
+            "alt": "API development task cover image"
+          }
+        },
+        {
+          "id": 102,
+          "title": "Fix Database Migration Issue",
+          "status": "Not Started",
+          "createdAt": "2024-05-10T10:00:00Z",
+          "priority": "Medium",
+          "description": "Resolve compatibility problems with database migration scripts",
+          "cover": {
+            "path": "fix-database.jpeg",
+            "alt": "Database migration task cover image"
+          }
         }
-      }]
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Sara",
+      "family": "Mohammadi",
+      "username": "sara.mohammadi",
+      "email": "sara.mohammadi@example.com",
+      "password": "strongpass456",
+      "phone": "+98-935-6789101",
+      "position": "Project Manager",
+      "createdAt": "2024-05-10T09:30:00Z",
+      "profile": "",
+      "tasks": [
+        {
+          "id": 201,
+          "title": "Review Project Timeline",
+          "status": "Not Started",
+          "createdAt": "2024-05-10T11:00:00Z",
+          "priority": "High",
+          "description": "Analyze and adjust project deadlines for better efficiency",
+          "cover": {
+            "path": "review.jpeg",
+            "alt": "Project timeline review task cover image"
+          }
+        },
+        {
+          "id": 202,
+          "title": "Organize Team Meeting",
+          "status": "Not Started",
+          "createdAt": "2024-05-10T12:00:00Z",
+          "priority": "Medium",
+          "description": "Schedule and prepare agenda for the upcoming weekly team meeting",
+          "cover": {
+            "path": "team-meeting.png",
+            "alt": "Team meeting task cover image"
+          }
+        }
+      ]
     }
   ]
 }
