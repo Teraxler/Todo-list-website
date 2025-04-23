@@ -6,7 +6,7 @@
     <title>Todo List</title>
     <link rel="stylesheet" href="./styles/app.css" />
   </head>
-  <body class="font-inter">
+  <body class="font-inter bg-ghost-white">
     <!-- SVG -->
     <svg class="hidden">
       <symbol
@@ -116,15 +116,28 @@
       </symbol>
       <symbol
         id="tasks"
-        viewBox="0 0 21 24"
+        viewBox="0 0 24 24"
         fill="currentColor"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
-          d="M2.33333 24H18.6667C19.9535 24 21 22.9236 21 21.6V3.6C21 2.2764 19.9535 1.2 18.6667 1.2H16.3333C16.3333 0.88174 16.2104 0.576515 15.9916 0.351472C15.7728 0.126428 15.4761 0 15.1667 0H5.83333C5.52391 0 5.22717 0.126428 5.00838 0.351472C4.78958 0.576515 4.66667 0.88174 4.66667 1.2H2.33333C1.0465 1.2 0 2.2764 0 3.6V21.6C0 22.9236 1.0465 24 2.33333 24ZM2.33333 3.6H4.66667V6H16.3333V3.6H18.6667V21.6H2.33333V3.6Z"
-          fill="#A1A3AB"
+          d="M5 22H19C20.103 22 21 21.103 21 20V5C21 3.897 20.103 3 19 3H17C17 2.73478 16.8946 2.48043 16.7071 2.29289C16.5196 2.10536 16.2652 2 16 2H8C7.73478 2 7.48043 2.10536 7.29289 2.29289C7.10536 2.48043 7 2.73478 7 3H5C3.897 3 3 3.897 3 5V20C3 21.103 3.897 22 5 22ZM5 5H7V7H17V5H19V20H5V5Z"
+        />
+        <path
+          d="M11 13.586L9.20697 11.793L7.79297 13.207L11 16.414L16.207 11.207L14.793 9.79297L11 13.586Z"
         />
       </symbol>
+      <symbol
+        id="tasks-category"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M9.65329 19.7143H24V21.4286H9.65329V19.7143ZM2.65414 20.5714L0.0102479 22.7829L1.45517 24L5.55423 20.5714L1.45517 17.1429L0 18.3514L2.65414 20.5714ZM9.65329 11.1429H24V12.8571H9.65329V11.1429ZM2.65414 12L0.0102479 14.2114L1.45517 15.4286L5.55423 12L1.45517 8.57143L0 9.78L2.65414 12ZM9.65329 2.57143H24V4.28571H9.65329V2.57143ZM2.65414 3.42857L0.0102479 5.64L1.45517 6.85714L5.55423 3.42857L1.45517 0L0 1.20857L2.65414 3.42857Z"
+        />
+      </symbol>
+
       <symbol
         id="notification"
         viewBox="0 0 15 16"
@@ -217,28 +230,106 @@
         </div>
       </div>
     </header>
-    <!-- Main -->
-    <main>
+    <div class="flex h-[calc(100vh-100px)]">
       <!-- Sidebar -->
-      <aside>
-        <nav>
-          <ul>
+      <aside class="min-w-17 flex flex-col bg-primary px-2.5 lg:px-5.25 pb-7.75 mt-10 lg:mt-14 text-white rounded-r-lg">
+        <div class="relative pt-12 lg:pt-14">
+          <div
+            class="absolute -top-4/10 left-0 right-0 mx-auto rounded-full overflow-hidden size-12 lg:size-21.5"
+          >
+            <img src="./assets/images/users/user-1.jpg" alt="Profile image" />
+          </div>
+          <div class="hidden lg:flex flex-col items-center">
+            <span>Sunder Gurung</span>
+            <span>sundargurung360@gmail.com</span>
+          </div>
+        </div>
+
+        <nav class="flex flex-col justify-between items-center h-full lg:pt-4.5">
+          <ul class="flex flex-col gap-y-2 *:flex">
             <li>
-              <a href="./index.html">
-                <svg>
+              <a
+                class="inline-block lg:flex gap-x-4 p-3 lg:py-4.5 lg:px-4 rounded-[14px] lg:w-72 bg-white text-primary"
+                href="./index.html"
+              >
+                <svg class="shrink-0 size-5 lg:size-6">
                   <use href="#dashboard"></use>
                 </svg>
-                Dashboard
+                <span class="max-lg:hidden">
+                  Dashboard
+                </span>
               </a>
             </li>
             <li>
-              <a href="./pages/my-task.html"></a>
+              <a
+                class="inline-block lg:flex gap-x-4 p-3 lg:py-4.5 lg:px-4 rounded-[14px] lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
+                href="./index.html"
+              >
+                <svg class="shrink-0 size-5 lg:size-6">
+                  <use href="#tasks"></use>
+                </svg>
+                <span class="max-lg:hidden">
+                  My Task
+                </span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="inline-block lg:flex gap-x-4 p-3 lg:py-4.5 lg:px-4 rounded-[14px] lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
+                href="./index.html"
+              >
+                <svg class="shrink-0 size-5 lg:size-6">
+                  <use href="#tasks-category"></use>
+                </svg>
+                <span class="max-lg:hidden">
+                  Task Category
+                </span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="inline-block lg:flex gap-x-4 p-3 lg:py-4.5 lg:px-4 rounded-[14px] lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
+                href="./index.html"
+              >
+                <svg class="shrink-0 size-5 lg:size-6">
+                  <use href="#settings"></use>
+                </svg>
+                <span class="max-lg:hidden">
+                  Settings
+                </span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="inline-block lg:flex gap-x-4 p-3 lg:py-4.5 lg:px-4 rounded-[14px] lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
+                href="./index.html"
+              >
+                <svg class="shrink-0 size-5 lg:size-6">
+                  <use href="#help"></use>
+                </svg>
+                <span class="max-lg:hidden">
+                  Help
+                </span>
+              </a>
             </li>
           </ul>
+          <!-- Logout -->
+            <a
+              class="inline-block lg:flex gap-x-4 p-3 lg:py-4.5 lg:px-4 mt-auto rounded-[14px] w-min lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
+              href="./index.html"
+            >
+              <svg class=" shrink-0 size-5 lg:size-6">
+                <use href="#log-out"></use>
+              </svg>
+              <span class="max-lg:hidden">
+                Logout
+              </span>
+            </a>
         </nav>
       </aside>
-    </main>
-
+      <!-- Main -->
+      <main></main>
+    </div>
     <div
       id="overlay"
       class="fixed top-0 left-0 w-full h-0 bg-black/74 transition-all duration-700"
