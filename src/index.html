@@ -98,7 +98,7 @@
         />
       </symbol>
       <symbol
-        id="task-complete"
+        id="task-status"
         width="23"
         height="23"
         viewBox="0 0 23 23"
@@ -162,7 +162,7 @@
 
     <!-- Header -->
     <header
-      class="flex items-center justify-between h-25 px-4 sm:pl-10 lg:pl-17.5 sm:pr-12 lg:pr-19 bg-cultured shadow-header"
+      class="sticky top-0 flex items-center justify-between h-25 mb-10 lg:mb-14 px-4 sm:pl-10 lg:pl-17.5 sm:pr-12 lg:pr-19 bg-cultured shadow-header"
     >
       <!-- Logo -->
       <div class="flex font-semibold text-xl sm:text-[32px]">
@@ -230,9 +230,11 @@
         </div>
       </div>
     </header>
-    <div class="flex h-[calc(100vh-100px)]">
+    <div class="flex min-h-[calc(100dvh-140px)] ">
       <!-- Sidebar -->
-      <aside class="min-w-17 flex flex-col bg-primary px-2.5 lg:px-5.25 pb-7.75 mt-10 lg:mt-14 text-white rounded-r-lg">
+      <aside
+        class="sticky top-35 lg:top-39 min-w-17 h-[calc(100dvh-140px)] lg:h-[calc(100dvh-156px)] shrink-0 flex flex-col bg-primary px-2.5 lg:px-5.25 pb-7.75 text-white rounded-r-lg"
+      >
         <div class="relative pt-12 lg:pt-14">
           <div
             class="absolute -top-4/10 left-0 right-0 mx-auto rounded-full overflow-hidden size-12 lg:size-21.5"
@@ -245,7 +247,9 @@
           </div>
         </div>
 
-        <nav class="flex flex-col justify-between items-center h-full lg:pt-4.5">
+        <nav
+          class="flex flex-col justify-between items-center h-full lg:pt-4.5"
+        >
           <ul class="flex flex-col gap-y-2 *:flex">
             <li>
               <a
@@ -255,9 +259,7 @@
                 <svg class="shrink-0 size-5 lg:size-6">
                   <use href="#dashboard"></use>
                 </svg>
-                <span class="max-lg:hidden">
-                  Dashboard
-                </span>
+                <span class="max-lg:hidden"> Dashboard </span>
               </a>
             </li>
             <li>
@@ -268,9 +270,7 @@
                 <svg class="shrink-0 size-5 lg:size-6">
                   <use href="#tasks"></use>
                 </svg>
-                <span class="max-lg:hidden">
-                  My Task
-                </span>
+                <span class="max-lg:hidden"> My Task </span>
               </a>
             </li>
             <li>
@@ -281,9 +281,7 @@
                 <svg class="shrink-0 size-5 lg:size-6">
                   <use href="#tasks-category"></use>
                 </svg>
-                <span class="max-lg:hidden">
-                  Task Category
-                </span>
+                <span class="max-lg:hidden"> Task Category </span>
               </a>
             </li>
             <li>
@@ -294,9 +292,7 @@
                 <svg class="shrink-0 size-5 lg:size-6">
                   <use href="#settings"></use>
                 </svg>
-                <span class="max-lg:hidden">
-                  Settings
-                </span>
+                <span class="max-lg:hidden"> Settings </span>
               </a>
             </li>
             <li>
@@ -307,28 +303,22 @@
                 <svg class="shrink-0 size-5 lg:size-6">
                   <use href="#help"></use>
                 </svg>
-                <span class="max-lg:hidden">
-                  Help
-                </span>
+                <span class="max-lg:hidden"> Help </span>
               </a>
             </li>
           </ul>
           <!-- Logout -->
-            <a
-              class="inline-block lg:flex gap-x-4 p-3 lg:py-4.5 lg:px-4 mt-auto rounded-[14px] w-min lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
-              href="./index.html"
-            >
-              <svg class=" shrink-0 size-5 lg:size-6">
-                <use href="#log-out"></use>
-              </svg>
-              <span class="max-lg:hidden">
-                Logout
-              </span>
-            </a>
+          <a
+            class="inline-block lg:flex gap-x-4 p-3 lg:py-4.5 lg:px-4 mt-auto rounded-[14px] w-min lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
+            href="./index.html"
+          >
+            <svg class="shrink-0 size-5 lg:size-6">
+              <use href="#log-out"></use>
+            </svg>
+            <span class="max-lg:hidden"> Logout </span>
+          </a>
         </nav>
-      </aside>
-      <!-- Main -->
-      <main></main>
+      </aside>      
     </div>
     <div
       id="overlay"

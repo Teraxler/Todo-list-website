@@ -6,6 +6,9 @@ import { getDateTime, searchTodo } from "./modules/utils.js";
 const todos = [];
 let user = {};
 
+let isSidebarVisible = window.innerWidth >= 600;
+console.log("🚀 ~ isSidebarVisible:", isSidebarVisible);
+
 function insertDate() {
   const todayDateContainer = document.getElementById("today-date");
 
@@ -33,6 +36,35 @@ function insertSearchResultHandler(keyupEvent) {
       </li>`;
   }
 }
+
+function showSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  sidebar.classList.remove("-left-47");
+  sidebar.classList.add("left-0");
+
+  showOverlay();
+}
+
+function hideSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  sidebar.classList.add("-left-47");
+  sidebar.classList.remove("left-0");
+
+  hideOverlay();
+}
+
+function toggleMenu() {
+  if (isSidebarVisible) {
+    hideSidebar();
+  } else {
+    showSidebar();
+  }
+
+  isSidebarVisible = !isSidebarVisible;
+}
+
+const toggleSidebarBtn = document.getElementById("toggle-menu");
+toggleSidebarBtn.addEventListener("click", toggleMenu);
 
 function showOverlay() {
   document.getElementById("overlay").classList.add("h-full");
@@ -72,8 +104,16 @@ function hideSerachBar() {
   );
 }
 
+function hiddenVisibleContent() {
+  if (isSidebarVisible) {
+    hideSidebar();
+  } else {
+    hideSerachBar();
+  }
+}
+
 const overlay = document.getElementById("overlay");
-overlay.addEventListener("click", hideSerachBar);
+overlay.addEventListener("click", hiddenVisibleContent);
 
 const serachBarIcon = document.getElementById("search-bar-icon");
 serachBarIcon.addEventListener("click", showSerachBar);
