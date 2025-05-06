@@ -8,7 +8,17 @@
   </head>
   <body class="font-inter bg-ghost-white">
     <!-- SVG -->
-    <svg class="hidden">
+    <svg width="0" height="0" class="hidden">
+      <symbol
+        fill="currentColor"
+        id="back-arrow-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 26.676 26.676"
+      >
+        <path
+          d="M26.105,21.891c-0.229,0-0.439-0.131-0.529-0.346l0,0c-0.066-0.156-1.716-3.857-7.885-4.59 c-1.285-0.156-2.824-0.236-4.693-0.25v4.613c0,0.213-0.115,0.406-0.304,0.508c-0.188,0.098-0.413,0.084-0.588-0.033L0.254,13.815 C0.094,13.708,0,13.528,0,13.339c0-0.191,0.094-0.365,0.254-0.477l11.857-7.979c0.175-0.121,0.398-0.129,0.588-0.029 c0.19,0.102,0.303,0.295,0.303,0.502v4.293c2.578,0.336,13.674,2.33,13.674,11.674c0,0.271-0.191,0.508-0.459,0.562 C26.18,21.891,26.141,21.891,26.105,21.891z"
+        ></path>
+      </symbol>
       <symbol
         id="dashboard"
         viewBox="0 0 26 26"
@@ -41,12 +51,12 @@
       </symbol>
       <symbol
         id="menu"
-        viewBox="0 0 26 26"
-        fill="currentColor"
         xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 30 30"
       >
         <path
-          d="M10.4577 21.3571H26V23.2143H10.4577V21.3571ZM2.87532 22.2857L0.0111019 24.6814L1.57643 26L6.01708 22.2857L1.57643 18.5714L0 19.8807L2.87532 22.2857ZM10.4577 12.0714H26V13.9286H10.4577V12.0714ZM2.87532 13L0.0111019 15.3957L1.57643 16.7143L6.01708 13L1.57643 9.28571L0 10.595L2.87532 13ZM10.4577 2.78571H26V4.64286H10.4577V2.78571ZM2.87532 3.71429L0.0111019 6.11L1.57643 7.42857L6.01708 3.71429L1.57643 0L0 1.30929L2.87532 3.71429Z"
+          d="M 3 7 A 1.0001 1.0001 0 1 0 3 9 L 27 9 A 1.0001 1.0001 0 1 0 27 7 L 3 7 z M 3 14 A 1.0001 1.0001 0 1 0 3 16 L 27 16 A 1.0001 1.0001 0 1 0 27 14 L 3 14 z M 3 21 A 1.0001 1.0001 0 1 0 3 23 L 27 23 A 1.0001 1.0001 0 1 0 27 21 L 3 21 z"
         />
       </symbol>
       <symbol
@@ -137,7 +147,6 @@
           d="M9.65329 19.7143H24V21.4286H9.65329V19.7143ZM2.65414 20.5714L0.0102479 22.7829L1.45517 24L5.55423 20.5714L1.45517 17.1429L0 18.3514L2.65414 20.5714ZM9.65329 11.1429H24V12.8571H9.65329V11.1429ZM2.65414 12L0.0102479 14.2114L1.45517 15.4286L5.55423 12L1.45517 8.57143L0 9.78L2.65414 12ZM9.65329 2.57143H24V4.28571H9.65329V2.57143ZM2.65414 3.42857L0.0102479 5.64L1.45517 6.85714L5.55423 3.42857L1.45517 0L0 1.20857L2.65414 3.42857Z"
         />
       </symbol>
-
       <symbol
         id="notification"
         viewBox="0 0 15 16"
@@ -149,7 +158,7 @@
         />
       </symbol>
       <symbol
-        id="calendar"
+        id="calendar-icon"
         viewBox="0 0 15 15"
         fill="currentColor"
         xmlns="http://www.w3.org/2000/svg"
@@ -158,19 +167,64 @@
           d="M13.3276 2.09458L9.92466 2.09459V1.24737C9.92466 1.0125 9.73447 0.822266 9.49966 0.822266C9.26485 0.822266 9.07466 1.0125 9.07466 1.24737V2.09438H5.67466V1.24737C5.67466 1.0125 5.48447 0.822266 5.24966 0.822266C5.01485 0.822266 4.82466 1.0125 4.82466 1.24737V2.09438H1.42764C0.958224 2.09438 0.577637 2.47505 0.577637 2.94458V13.5721C0.577637 14.0416 0.958224 14.4223 1.42764 14.4223H13.3276C13.797 14.4223 14.1776 14.0416 14.1776 13.5721V2.94458C14.1776 2.47525 13.797 2.09458 13.3276 2.09458ZM13.3276 13.5721H1.42764V2.94458H4.82466V3.37286C4.82466 3.60772 5.01485 3.79796 5.24966 3.79796C5.48447 3.79796 5.67466 3.60772 5.67466 3.37286V2.94479H9.07466V3.37308C9.07466 3.60794 9.26485 3.79818 9.49966 3.79818C9.73447 3.79818 9.92466 3.60794 9.92466 3.37308V2.94479H13.3276V13.5721ZM10.3526 7.62087H11.2026C11.4372 7.62087 11.6276 7.43043 11.6276 7.19577V6.34557C11.6276 6.11092 11.4372 5.92047 11.2026 5.92047H10.3526C10.118 5.92047 9.92764 6.11092 9.92764 6.34557V7.19577C9.92764 7.43043 10.118 7.62087 10.3526 7.62087ZM10.3526 11.0215H11.2026C11.4372 11.0215 11.6276 10.8312 11.6276 10.5964V9.74616C11.6276 9.5115 11.4372 9.32106 11.2026 9.32106H10.3526C10.118 9.32106 9.92764 9.5115 9.92764 9.74616V10.5964C9.92764 10.8314 10.118 11.0215 10.3526 11.0215ZM7.80264 9.32106H6.95264C6.71804 9.32106 6.52764 9.5115 6.52764 9.74616V10.5964C6.52764 10.8312 6.71804 11.0215 6.95264 11.0215H7.80264C8.03724 11.0215 8.22764 10.8312 8.22764 10.5964V9.74616C8.22764 9.51171 8.03724 9.32106 7.80264 9.32106ZM7.80264 5.92047H6.95264C6.71804 5.92047 6.52764 6.11092 6.52764 6.34557V7.19577C6.52764 7.43043 6.71804 7.62087 6.95264 7.62087H7.80264C8.03724 7.62087 8.22764 7.43043 8.22764 7.19577V6.34557C8.22764 6.1107 8.03724 5.92047 7.80264 5.92047ZM4.40264 5.92047H3.55264C3.31804 5.92047 3.12764 6.11092 3.12764 6.34557V7.19577C3.12764 7.43043 3.31804 7.62087 3.55264 7.62087H4.40264C4.63724 7.62087 4.82764 7.43043 4.82764 7.19577V6.34557C4.82764 6.1107 4.63724 5.92047 4.40264 5.92047ZM4.40264 9.32106H3.55264C3.31804 9.32106 3.12764 9.5115 3.12764 9.74616V10.5964C3.12764 10.8312 3.31804 11.0215 3.55264 11.0215H4.40264C4.63724 11.0215 4.82764 10.8312 4.82764 10.5964V9.74616C4.82764 9.51171 4.63724 9.32106 4.40264 9.32106Z"
         />
       </symbol>
+      <symbol
+        id="invite-user"
+        viewBox="0 0 20 12"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15.351 10.1276V11.7398H5.67752V10.1276C5.67752 10.1276 5.67752 6.90308 10.5143 6.90308C15.351 6.90308 15.351 10.1276 15.351 10.1276ZM12.9326 2.87247C12.9326 2.39416 12.7908 1.9266 12.5251 1.5289C12.2593 1.1312 11.8816 0.82123 11.4397 0.63819C10.9978 0.455149 10.5116 0.407258 10.0425 0.500571C9.57334 0.593884 9.14243 0.824211 8.80421 1.16243C8.466 1.50064 8.23567 1.93155 8.14236 2.40067C8.04905 2.86979 8.09694 3.35604 8.27998 3.79794C8.46302 4.23984 8.77299 4.61753 9.17069 4.88327C9.56838 5.149 10.036 5.29084 10.5143 5.29084C11.1556 5.29084 11.7708 5.03605 12.2243 4.58251C12.6778 4.12898 12.9326 3.51386 12.9326 2.87247ZM15.5122 6.95145C15.9529 7.35798 16.3081 7.84821 16.5573 8.39353C16.8064 8.93885 16.9444 9.52833 16.9632 10.1276V11.7398H19.3816V10.1276C19.3816 10.1276 19.3816 7.34645 15.5122 6.95145ZM14.5449 0.454102C14.3013 0.454248 14.0593 0.492323 13.8274 0.56696C14.299 1.24327 14.5519 2.04795 14.5519 2.87247C14.5519 3.69699 14.299 4.50167 13.8274 5.17798C14.0593 5.25262 14.3013 5.29069 14.5449 5.29084C15.1863 5.29084 15.8014 5.03605 16.2549 4.58251C16.7084 4.12898 16.9632 3.51386 16.9632 2.87247C16.9632 2.23108 16.7084 1.61596 16.2549 1.16243C15.8014 0.708894 15.1863 0.454102 14.5449 0.454102ZM6.48365 4.48471H4.06528V2.06635H2.45304V4.48471H0.034668V6.09696H2.45304V8.51533H4.06528V6.09696H6.48365V4.48471Z"
+        />
+      </symbol>
+      <symbol
+        id="chevron-left"
+        viewBox="0 0 8 14"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M0.292787 7.37629C0.105316 7.18876 0 6.93445 0 6.66929C0 6.40412 0.105316 6.14982 0.292787 5.96229L5.94979 0.305288C6.04203 0.209778 6.15238 0.133596 6.27438 0.0811869C6.39639 0.0287779 6.52761 0.00119157 6.66039 3.77564e-05C6.79316 -0.00111606 6.92484 0.0241859 7.04774 0.0744668C7.17064 0.124748 7.28229 0.199001 7.37618 0.292893C7.47007 0.386786 7.54433 0.498438 7.59461 0.621334C7.64489 0.74423 7.67019 0.87591 7.66904 1.00869C7.66788 1.14147 7.6403 1.27269 7.58789 1.39469C7.53548 1.5167 7.4593 1.62704 7.36379 1.71929L2.41379 6.66929L7.36379 11.6193C7.54594 11.8079 7.64674 12.0605 7.64446 12.3227C7.64218 12.5849 7.53701 12.8357 7.35161 13.0211C7.1662 13.2065 6.91538 13.3117 6.65319 13.314C6.39099 13.3162 6.13839 13.2154 5.94979 13.0333L0.292787 7.37629Z"
+        />
+      </symbol>
+      <symbol
+        id="chevron-right"
+        viewBox="0 0 8 14"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M7.71378 6.62907C7.90132 6.81653 8.00673 7.0708 8.00683 7.33596C8.00693 7.60113 7.90171 7.85547 7.7143 8.04307L2.05941 13.7022C1.9672 13.7977 1.85688 13.8739 1.7349 13.9264C1.61291 13.9789 1.4817 14.0065 1.34892 14.0077C1.21614 14.0089 1.08446 13.9836 0.961541 13.9334C0.838626 13.8832 0.726945 13.809 0.633018 13.7151C0.53909 13.6212 0.464796 13.5096 0.414469 13.3867C0.364142 13.2639 0.338792 13.1322 0.339896 12.9994C0.341001 12.8666 0.368538 12.7354 0.420902 12.6134C0.473265 12.4914 0.549406 12.381 0.644882 12.2887L5.59304 7.33686L0.6412 2.3887C0.458972 2.20016 0.358084 1.9476 0.360265 1.6854C0.362445 1.42321 0.467521 1.17235 0.65286 0.986877C0.838199 0.8014 1.08897 0.696137 1.35117 0.693761C1.61336 0.691385 1.866 0.792086 2.05467 0.974174L7.71378 6.62907Z"
+        />
+      </symbol>
     </svg>
 
     <!-- Header -->
     <header
-      class="sticky top-0 flex items-center justify-between h-25 mb-10 lg:mb-14 px-4 sm:pl-10 lg:pl-17.5 sm:pr-12 lg:pr-19 bg-cultured shadow-header"
+      class="sticky z-10 top-0 flex items-center justify-between h-25 mb-6 sm:mb-10 lg:mb-14 px-4 sm:pl-10 lg:pl-17.5 sm:pr-12 lg:pr-19 bg-cultured shadow-header"
     >
-      <!-- Logo -->
-      <div class="flex font-semibold text-xl sm:text-[32px]">
-        <span class="text-primary"> Dash </span>
-        <span> board </span>
+      <div class="flex items-center gap-x-2">
+        <!-- Menu Toggle -->
+        <div
+          id="toggle-menu"
+          class="sm:hidden bg-primary rounded-lg size-7 sm:size-8.5 p-1.5 sm:p-2 cursor-pointer text-white"
+        >
+          <svg class="size-full">
+            <use href="#menu"></use>
+          </svg>
+        </div>
+        <!-- Logo -->
+        <div class="flex font-semibold sm:text-xl md:text-[32px]">
+          <span class="text-primary"> Dash </span>
+          <span> board </span>
+        </div>
       </div>
       <!-- Search-bar -->
-      <div id="search-bar-container" class="hidden md:block">
+      <div id="search-bar-container" class="hidden md:static md:block">
         <form
           class="flex bg-ghost-white shadow-search-box rounded-lg w-70 lg:w-100 xl:w-173.75 lg:max-w-[48.26vw]"
           action=""
@@ -216,12 +270,77 @@
             <use href="#notification"></use>
           </svg>
         </div>
-        <div
-          class="bg-primary rounded-lg size-7 sm:size-8.5 p-1.5 sm:p-2 cursor-pointer"
-        >
-          <svg class="size-full text-white">
-            <use href="#calendar"></use>
-          </svg>
+        <div class="relative">
+          <div
+            id="calendar-show-btn"
+            class="bg-primary rounded-lg size-7 sm:size-8.5 p-1.5 sm:p-2 cursor-pointer"
+          >
+            <svg class="size-full text-white">
+              <use href="#calendar-icon"></use>
+            </svg>
+          </div>
+          <!-- Calendar -->
+          <div
+            id="calendar"
+            class="opacity-0 invisible absolute -right-2/1 xs:right-0 w-72 sm:w-88 md:w-94.5 bg-ghost-white p-4 sm:px-5 md:px-8 md:py-6 rounded-[14px] shadow-calendar"
+          >
+            <div class="flex items-center justify-between">
+              <span>Calendar</span>
+              <div id="calendar__hide-btn" class="cursor-pointer">
+                <svg class="w-5.5 h-5.5 text-primary">
+                  <use href="#back-arrow-icon"></use>
+                </svg>
+              </div>
+            </div>
+            <input
+              class="w-full my-2 sm:my-3 border border-quick-silver rounded-md px-1.5 sm:px-2.5 py-1 sm:py-2"
+              type="date"
+              name=""
+              id="calendar__input-date"
+            />
+            <div class="flex items-center justify-between">
+              <div
+                id="previous-month-btn"
+                class="size-8 md:size-9 flex items-center justify-center border border-quick-silver rounded-md cursor-pointer"
+              >
+                <svg class="w-1.5 md:w-2 h-2.75 md:h-3.25">
+                  <use href="#chevron-left"></use>
+                </svg>
+              </div>
+              <span id="calendar__month-year">April 2025</span>
+              <div
+                id="next-month-btn"
+                class="size-8 md:size-9 flex items-center justify-center border border-quick-silver rounded-md cursor-pointer"
+              >
+                <svg class="w-1.5 md:w-2 h-2.75 md:h-3.25">
+                  <use href="#chevron-right"></use>
+                </svg>
+              </div>
+            </div>
+            <!-- Calandar Body -->
+            <table
+              id="calendar__items-wrapper"
+              class="text-xs font-semibold text-center mt-3"
+            >
+              <thead id="calendar__thead">
+                <tr class="grid grid-cols-7 gap-x-2 md:gap-x-5">
+                  <th class="calendar__weekday-name">SAT</th>
+                  <th class="calendar__weekday-name">SUN</th>
+                  <th class="calendar__weekday-name">MON</th>
+                  <th class="calendar__weekday-name">TUE</th>
+                  <th class="calendar__weekday-name">WED</th>
+                  <th class="calendar__weekday-name">THU</th>
+                  <th class="calendar__weekday-name">FRI</th>
+                </tr>
+              </thead>
+              <tbody
+                class="flex flex-col gap-y-3 md:gap-y-4 mt-3 md:mt-6"
+                id="calendar__tbody"
+              >
+                <!-- Days Of Month -->
+              </tbody>
+            </table>
+          </div>
         </div>
         <!-- Today -->
         <div class="flex flex-col text-xs sm:text-base" id="today-date">
@@ -230,10 +349,11 @@
         </div>
       </div>
     </header>
-    <div class="flex min-h-[calc(100dvh-140px)] ">
+    <div class="flex min-h-[calc(100dvh-140px)]">
       <!-- Sidebar -->
       <aside
-        class="sticky top-35 lg:top-39 min-w-17 h-[calc(100dvh-140px)] lg:h-[calc(100dvh-156px)] shrink-0 flex flex-col bg-primary px-2.5 lg:px-5.25 pb-7.75 text-white rounded-r-lg"
+        id="sidebar"
+        class="fixed z-10 -left-47 sm:left-0 sm:sticky top-35 lg:top-39 min-w-17 w-47 sm:w-auto lg:w-62.5 xl:w-auto h-[calc(100dvh-140px)] lg:h-[calc(100dvh-156px)] shrink-0 flex flex-col bg-primary px-2.5 lg:px-4 xl:px-5.25 pb-7.75 text-white rounded-r-lg transition-all duration-500"
       >
         <div class="relative pt-12 lg:pt-14">
           <div
@@ -241,84 +361,544 @@
           >
             <img src="./assets/images/users/user-1.jpg" alt="Profile image" />
           </div>
-          <div class="hidden lg:flex flex-col items-center">
-            <span>Sunder Gurung</span>
-            <span>sundargurung360@gmail.com</span>
+          <div class="hidden lg:block">
+            <span class="text-sm xl:text-base text-center line-clamp-1"
+              >Sunder Gurung</span
+            >
+            <span class="text-sm xl:text-base text-center line-clamp-1"
+              >sundargurung360@gmail.com</span
+            >
           </div>
         </div>
-
         <nav
           class="flex flex-col justify-between items-center h-full lg:pt-4.5"
         >
-          <ul class="flex flex-col gap-y-2 *:flex">
+          <ul class="w-full flex flex-col gap-y-2 *:flex">
             <li>
               <a
-                class="inline-block lg:flex gap-x-4 p-3 lg:py-4.5 lg:px-4 rounded-[14px] lg:w-72 bg-white text-primary"
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] w-full lg:w-72 bg-white text-primary"
                 href="./index.html"
               >
-                <svg class="shrink-0 size-5 lg:size-6">
+                <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#dashboard"></use>
                 </svg>
-                <span class="max-lg:hidden"> Dashboard </span>
+                <span class="sm:hidden lg:inline"> Dashboard </span>
               </a>
             </li>
             <li>
               <a
-                class="inline-block lg:flex gap-x-4 p-3 lg:py-4.5 lg:px-4 rounded-[14px] lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] w-full lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
                 href="./index.html"
               >
-                <svg class="shrink-0 size-5 lg:size-6">
+                <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#tasks"></use>
                 </svg>
-                <span class="max-lg:hidden"> My Task </span>
+                <span class="sm:hidden lg:inline"> My Task </span>
               </a>
             </li>
             <li>
               <a
-                class="inline-block lg:flex gap-x-4 p-3 lg:py-4.5 lg:px-4 rounded-[14px] lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] w-full lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
                 href="./index.html"
               >
-                <svg class="shrink-0 size-5 lg:size-6">
+                <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#tasks-category"></use>
                 </svg>
-                <span class="max-lg:hidden"> Task Category </span>
+                <span class="sm:hidden lg:inline"> Task Category </span>
               </a>
             </li>
             <li>
               <a
-                class="inline-block lg:flex gap-x-4 p-3 lg:py-4.5 lg:px-4 rounded-[14px] lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] w-full lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
                 href="./index.html"
               >
-                <svg class="shrink-0 size-5 lg:size-6">
+                <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#settings"></use>
                 </svg>
-                <span class="max-lg:hidden"> Settings </span>
+                <span class="sm:hidden lg:inline"> Settings </span>
               </a>
             </li>
             <li>
               <a
-                class="inline-block lg:flex gap-x-4 p-3 lg:py-4.5 lg:px-4 rounded-[14px] lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] w-full lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
                 href="./index.html"
               >
-                <svg class="shrink-0 size-5 lg:size-6">
+                <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#help"></use>
                 </svg>
-                <span class="max-lg:hidden"> Help </span>
+                <span class="sm:hidden lg:inline"> Help </span>
               </a>
             </li>
           </ul>
           <!-- Logout -->
           <a
-            class="inline-block lg:flex gap-x-4 p-3 lg:py-4.5 lg:px-4 mt-auto rounded-[14px] w-min lg:w-72 hover:bg-white/95 hover:text-primary transition-all duration-200"
+            class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 mt-auto rounded-[14px] w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
             href="./index.html"
           >
-            <svg class="shrink-0 size-5 lg:size-6">
+            <svg class="shrink-0 size-5 xl:size-6">
               <use href="#log-out"></use>
             </svg>
-            <span class="max-lg:hidden"> Logout </span>
+            <span class="sm:hidden lg:inline"> Logout </span>
           </a>
         </nav>
-      </aside>      
+      </aside>
+      <!-- Main -->
+      <main class="mx-auto px-4 sm:px-5">
+        <div class="flex justify-between items-center">
+          <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium">
+            Welcome Sundar 👋
+          </h1>
+          <button
+            class="w-18 sm:w-24.5 h-6 sm:h-9 flex items-center justify-center gap-x-1 sm:gap-x-2 text-xs sm:text-[14px] text-primary hover:text-white hover:bg-primary font-medium border border-primary rounded-md sm:rounded-lg transition-colors duration-150 cursor-pointer"
+          >
+            <svg class="w-4 h-3">
+              <use href="#invite-user"></use>
+            </svg>
+            Invite
+          </button>
+        </div>
+
+        <div
+          class="border border-quick-silver/63 mt-4 md:mt-6 lg:mt-8.5 mb-7.5"
+        >
+          <!-- To-Do -->
+          <div
+            class="flex flex-col-reverse md:flex-row gap-x-4 px-5 xl:px-6.5 py-5"
+          >
+            <!-- To-Do Section -->
+            <section
+              class="px-3 lg:px-4 xl:px-4.5 2xl:px-6 py-5.5 shadow-section rounded-[14px]"
+            >
+              <!-- Header Section -->
+              <div class="flex justify-between">
+                <div>
+                  <h2 class="flex gap-x-1">
+                    <svg class="w-7 h-8"><use href="#task-pending"></use></svg>
+                    <span class="font-medium text-primary"> To-Do </span>
+                  </h2>
+                  <p class="flex gap-x-2.5 text-xs mt-2.5">
+                    <span>20 June</span>
+                    <span class="text-quick-silver">• Today</span>
+                  </p>
+                </div>
+                <button
+                  class="h-fit my-auto flex items-center gap-x-2 text-xs text-quick-silver cursor-pointer"
+                >
+                  <span class="plus-icon"></span>
+                  Add task
+                </button>
+              </div>
+
+              <!-- Body Section -->
+              <div class="flex flex-col gap-y-2.5 lg:px-2.5 pt-4.5">
+                <!-- Task -->
+                <div
+                  class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]"
+                >
+                  <!-- Circle Shape-->
+                  <div
+                    class="absolute top-3 xl:top-3.5 left-3 xl:left-3.5 size-2.5 xl:size-3 border-danger border-2 rounded-full"
+                  ></div>
+                  <!-- Menu Icon -->
+                  <div
+                    class="absolute top-2.5 right-3 xl:right-3.5 flex gap-x-0.5 cursor-pointer py-1"
+                  >
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                  </div>
+
+                  <div class="flex gap-x-2 xl:gap-x-2.5">
+                    <div>
+                      <p
+                        class="text-sm xl:text-base/[19px] font-semibold line-clamp-2"
+                      >
+                        Attend Nischal’s Birthday Party
+                      </p>
+                      <p
+                        class="text-xs xl:text-sm/[17px] line-clamp-4 mt-2 xl:mt-2.5"
+                      >
+                        Buy gifts on the way and pick up cake from the bakery.
+                        (6 PM | Fresh Elements).....
+                      </p>
+                    </div>
+                    <div class="flex items-end size-20 lg:size-22 shrink-0">
+                      <img
+                        class="rounded-xl lg:rounded-[14px] overflow-hidden"
+                        src="./assets/images/todoes/team-meeting.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    class="flex justify-between gap-x-0.5 text-[10px] mt-3 xl:mt-3.5"
+                  >
+                    <span>
+                      Priority:
+                      <span class="block xl:inline text-picton-blue"
+                        >Medium</span
+                      >
+                    </span>
+                    <span>
+                      Status:
+                      <span class="block xl:inline text-danger"
+                        >Not Started</span
+                      >
+                    </span>
+                    <span class="text-quick-silver">
+                      Created on:
+                      <span class="block xl:inline">23/03/2025</span>
+                    </span>
+                  </div>
+                </div>
+                <!-- Task -->
+                <div
+                  class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]"
+                >
+                  <!-- Circle Shape-->
+                  <div
+                    class="absolute top-3 xl:top-3.5 left-3 xl:left-3.5 size-2.5 xl:size-3 border-danger border-2 rounded-full"
+                  ></div>
+                  <!-- Menu Icon -->
+                  <div
+                    class="absolute top-2.5 right-3 xl:right-3.5 flex gap-x-0.5 cursor-pointer py-1"
+                  >
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                  </div>
+
+                  <div class="flex gap-x-2 xl:gap-x-2.5">
+                    <div>
+                      <p
+                        class="text-sm xl:text-base/[19px] font-semibold line-clamp-2"
+                      >
+                        Attend Nischal’s Birthday Party
+                      </p>
+                      <p
+                        class="text-xs xl:text-sm/[17px] line-clamp-4 mt-2 xl:mt-2.5"
+                      >
+                        Buy gifts on the way and pick up cake from the bakery.
+                        (6 PM | Fresh Elements).....
+                      </p>
+                    </div>
+                    <div class="flex items-end size-20 lg:size-22 shrink-0">
+                      <img
+                        class="rounded-xl lg:rounded-[14px] overflow-hidden"
+                        src="./assets/images/todoes/team-meeting.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    class="flex justify-between gap-x-0.5 text-[10px] mt-3 xl:mt-3.5"
+                  >
+                    <span>
+                      Priority:
+                      <span class="block xl:inline text-picton-blue"
+                        >Medium</span
+                      >
+                    </span>
+                    <span>
+                      Status:
+                      <span class="block xl:inline text-danger"
+                        >Not Started</span
+                      >
+                    </span>
+                    <span class="text-quick-silver">
+                      Created on:
+                      <span class="block xl:inline">23/03/2025</span>
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Line -->
+                <div
+                  class="w-[calc(100%+24px)] lg:w-[calc(100%+56px)] 2xl:w-[calc(100%+68px)] -ml-3 lg:-ml-7 2xl:-ml-8.5 my-3 lg:my-6 h-px bg-quick-silver/41"
+                ></div>
+                <!-- Task -->
+                <div
+                  class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]"
+                >
+                  <!-- Circle Shape-->
+                  <div
+                    class="absolute top-3 xl:top-3.5 left-3 xl:left-3.5 size-2.5 xl:size-3 border-danger border-2 rounded-full"
+                  ></div>
+                  <!-- Menu Icon -->
+                  <div
+                    class="absolute top-2.5 right-3 xl:right-3.5 flex gap-x-0.5 cursor-pointer py-1"
+                  >
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                  </div>
+
+                  <div class="flex gap-x-2 xl:gap-x-2.5">
+                    <div>
+                      <p
+                        class="text-sm xl:text-base/[19px] font-semibold line-clamp-2"
+                      >
+                        Attend Nischal’s Birthday Party
+                      </p>
+                      <p
+                        class="text-xs xl:text-sm/[17px] line-clamp-4 mt-2 xl:mt-2.5"
+                      >
+                        Buy gifts on the way and pick up cake from the bakery.
+                        (6 PM | Fresh Elements).....
+                      </p>
+                    </div>
+                    <div class="flex items-end size-20 lg:size-22 shrink-0">
+                      <img
+                        class="rounded-xl lg:rounded-[14px] overflow-hidden"
+                        src="./assets/images/todoes/team-meeting.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  
+                  <div
+                    class="flex justify-between gap-x-0.5 text-[10px] mt-3 xl:mt-3.5"
+                  >
+                    <span>
+                      Priority:
+                      <span class="block xl:inline text-picton-blue"
+                        >Medium</span
+                      >
+                    </span>
+                    <span>
+                      Status:
+                      <span class="block xl:inline text-danger"
+                        >Not Started</span
+                      >
+                    </span>
+                    <span class="text-quick-silver">
+                      Created on:
+                      <span class="block xl:inline">23/03/2025</span>
+                    </span>
+                  </div>
+                </div>
+                <!-- Task -->
+                <div
+                  class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]"
+                >
+                  <!-- Circle Shape-->
+                  <div
+                    class="absolute top-3 xl:top-3.5 left-3 xl:left-3.5 size-2.5 xl:size-3 border-danger border-2 rounded-full"
+                  ></div>
+                  <!-- Menu Icon -->
+                  <div
+                    class="absolute top-2.5 right-3 xl:right-3.5 flex gap-x-0.5 cursor-pointer py-1"
+                  >
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                  </div>
+
+                  <div class="flex gap-x-2 xl:gap-x-2.5">
+                    <div>
+                      <p
+                        class="text-sm xl:text-base/[19px] font-semibold line-clamp-2"
+                      >
+                        Attend Nischal’s Birthday Party
+                      </p>
+                      <p
+                        class="text-xs xl:text-sm/[17px] line-clamp-4 mt-2 xl:mt-2.5"
+                      >
+                        Buy gifts on the way and pick up cake from the bakery.
+                        (6 PM | Fresh Elements).....
+                      </p>
+                    </div>
+                    <div class="flex items-end size-20 lg:size-22 shrink-0">
+                      <img
+                        class="rounded-xl lg:rounded-[14px] overflow-hidden"
+                        src="./assets/images/todoes/team-meeting.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    class="flex justify-between gap-x-0.5 text-[10px] mt-3 xl:mt-3.5"
+                  >
+                    <span>
+                      Priority:
+                      <span class="block xl:inline text-picton-blue"
+                        >Medium</span
+                      >
+                    </span>
+                    <span>
+                      Status:
+                      <span class="block xl:inline text-danger"
+                        >Not Started</span
+                      >
+                    </span>
+                    <span class="text-quick-silver">
+                      Created on:
+                      <span class="block xl:inline">23/03/2025</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Task Status & Completed Task -->
+            <div class="flex flex-col gap-y-4">
+              <!-- Task Status -->
+              <section
+                class="px-3 lg:px-4 xl:px-4.5 2xl:px-5.5 pt-6 pb-7 xl:pb-11 shadow-section rounded-[14px]"
+              >
+                <h2 class="flex gap-x-1">
+                  <svg class="w-7 h-8"><use href="#task-status"></use></svg>
+                  <span class="font-medium text-primary"> Task Status </span>
+                </h2>
+                <!-- Stat -->
+                <div class="flex justify-between mt-4">
+                  <!-- Completed -->
+                  <div>
+                    <div class="donut-chart donut-chart--completed shrink-0">
+                      <span class="donut-chart__title">84%</span>
+                    </div>
+                    <li
+                      class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--success"
+                    >
+                      Completed
+                    </li>
+                  </div>
+                  <!-- In Progress -->
+                  <div>
+                    <div class="donut-chart donut-chart--in-progress shrink-0">
+                      <span class="donut-chart__title">46%</span>
+                    </div>
+                    <li
+                      class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--blue-bonnet"
+                    >
+                      In Progress
+                    </li>
+                  </div>
+                  <!-- Not Started -->
+                  <div>
+                    <div class="donut-chart donut-chart--not-started shrink-0">
+                      <span class="donut-chart__title">13%</span>
+                    </div>
+                    <li
+                      class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--danger"
+                    >
+                      Not Started
+                    </li>
+                  </div>
+                </div>
+              </section>
+              <!-- Completed Task -->
+              <section
+                class="px-3 lg:px-4 xl:px-4.5 2xl:px-6 py-5.5 shadow-section rounded-[14px]"
+              >
+                <h2 class="flex items-center gap-x-1">
+                  <svg class="w-6 h-7 text-quick-silver">
+                    <use href="#tasks"></use>
+                  </svg>
+                  <span class="font-medium text-primary"> Completed Task </span>
+                </h2>
+                <!-- Body Section -->
+                <div class="flex flex-col gap-y-2.5 lg:px-2.5 pt-4.5">
+                  <!-- Task -->
+                  <div
+                    class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]"
+                  >
+                    <!-- Circle Shape-->
+                    <div
+                      class="absolute top-3 xl:top-3.5 left-3 xl:left-3.5 size-2.5 xl:size-3 border-danger border-2 rounded-full"
+                    ></div>
+                    <!-- Menu Icon -->
+                    <div
+                      class="absolute top-2.5 right-3 xl:right-3.5 flex gap-x-0.5 cursor-pointer py-1"
+                    >
+                      <span
+                        class="size-1 border border-quick-silver rounded-full"
+                      ></span>
+                      <span
+                        class="size-1 border border-quick-silver rounded-full"
+                      ></span>
+                      <span
+                        class="size-1 border border-quick-silver rounded-full"
+                      ></span>
+                    </div>
+
+                    <div class="flex gap-x-2 xl:gap-x-2.5">
+                      <div>
+                        <p
+                          class="text-sm xl:text-base/[19px] font-semibold line-clamp-2"
+                        >
+                          Attend Nischal’s Birthday Party
+                        </p>
+                        <p
+                          class="text-xs xl:text-sm/[17px] line-clamp-4 mt-2 xl:mt-2.5"
+                        >
+                          Buy gifts on the way and pick up cake from the bakery.
+                          (6 PM | Fresh Elements).....
+                        </p>
+                      </div>
+                      <div class="flex items-end size-20 lg:size-22 shrink-0">
+                        <img
+                          class="rounded-xl lg:rounded-[14px] overflow-hidden"
+                          src="./assets/images/todoes/team-meeting.png"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+
+                    <div
+                      class="flex justify-between gap-x-0.5 text-[10px] mt-3 xl:mt-3.5"
+                    >
+                      <span>
+                        Priority:
+                        <span class="block xl:inline text-picton-blue"
+                          >Medium</span
+                        >
+                      </span>
+                      <span>
+                        Status:
+                        <span class="block xl:inline text-danger"
+                          >Not Started</span
+                        >
+                      </span>
+                      <span class="text-quick-silver">
+                        Created on:
+                        <span class="block xl:inline">23/03/2025</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
     <div
       id="overlay"
@@ -327,5 +907,7 @@
 
     <!-- JavaScript -->
     <script type="module" src="./javascripts/app.js"></script>
+
+    <script type="module" src="./javascripts/modules/calendar.js"></script>
   </body>
 </html>
