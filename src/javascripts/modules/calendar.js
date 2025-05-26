@@ -1,8 +1,16 @@
 "use strict";
 
+import {
+  hideOverlay,
+  hideTransparentOverlay,
+  showOverlay,
+  showTransparentOverlay,
+} from "./shared.js";
+import { convertMonthToMonthName } from "./utils.js";
+
 const date = new Date();
 
-let weekday = date.getDay();
+let weekday = date.getDay() + 1;
 let currentMonth = date.getMonth() + 1;
 let currentDay = date.getDate();
 let currentYear = date.getFullYear();
@@ -68,43 +76,22 @@ function calcNumberOfDaysOnMonth() {
   }
 }
 
-function convertMonthToMonthName(month) {
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  return monthNames[month - 1];
-}
-
 function insertMonthYearOnCalendar() {
   document.getElementById("calendar__month-year").innerHTML = `
     ${convertMonthToMonthName(currentMonth)} ${currentYear}`;
 }
 
-function calcFisrtDayOfMonthOnWeekV3() {
+function calcFisrtDayOfMonthOnWeek() {
   let fisrtDayOfMonthOnWeek = new Date(
     `${currentYear}-${currentMonth}-1`
   ).getDay();
 
-  if (fisrtDayOfMonthOnWeek === 0) {
-    fisrtDayOfMonthOnWeek = 7;
-  }
+  fisrtDayOfMonthOnWeek = (fisrtDayOfMonthOnWeek + 2) % 7;
 
   return fisrtDayOfMonthOnWeek;
 }
 
-function calcFisrtDayOfMonthOnWeek() {
+function calcFisrtDayOfMonthOnWeekV1() {
   let fisrtDayOfMonthOnWeek = weekday;
 
   let difference = -(currentDay % 7) + 1;
@@ -214,11 +201,8 @@ function updateCalendar(changeEvent) {
   currentMonth = Number(date.slice(5, 7)) || 1;
   currentDay = Number(date.slice(8, 10)) || 1;
 
-  fisrtDayOfMonthOnWeek = calcFisrtDayOfMonthOnWeekV3();
-  console.log(
-    "🚀 ~ updateCalendar ~ fisrtDayOfMonthOnWeek:",
-    fisrtDayOfMonthOnWeek
-  );
+  fisrtDayOfMonthOnWeek = calcFisrtDayOfMonthOnWeek();
+
   insertDaysOnCalendar();
   insertMonthYearOnCalendar();
 }
@@ -240,16 +224,14 @@ document
   });
 
 function showCalendar() {
+  showTransparentOverlay();
   document
     .getElementById("calendar")
     .classList.remove("opacity-0", "invisible");
 }
 
-document
-  .getElementById("calendar-show-btn")
-  .addEventListener("click", showCalendar);
-
 function hideCalendar() {
+  hideTransparentOverlay();
   document.getElementById("calendar").classList.add("opacity-0", "invisible");
 }
 
@@ -268,3 +250,5 @@ document
 
 //   return month < 6 ? 31 : month < 11 ? 30 : year % 4 === 3 ? 30 : 29;
 // }
+
+export { showCalendar, hideCalendar };
