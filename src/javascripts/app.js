@@ -2,7 +2,7 @@
 
 import { getUser } from "./apis/users.api.js";
 import { hideCalendar, showCalendar } from "./modules/calendar.js";
-// import { hideCreateTodoModal } from "./modules/create-task.js";
+import { hideCreateTodoModal } from "./modules/create-task.js";
 import {
   hideNotifications,
   showNotifications,
@@ -88,7 +88,7 @@ function hideVisibleContent() {
   hideNotifications();
   hideCalendar();
 
-  // hideCreateTodoModal();
+  hideCreateTodoModal();
 }
 
 const overlay = document.getElementById("overlay");

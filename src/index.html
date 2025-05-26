@@ -1139,6 +1139,158 @@
         </div>
       </main>
     </div>
+    <!-- -------------------------- Add New Task Modal -------------------------- -->
+    <div
+      id="create-todo-modal"
+      class="invisible opacity-0 fixed z-20 top-1/2 -translate-y-1/2 left-0 right-0 mx-auto md:w-160 lg:w-200 xl:w-225 p-4 sm:px-6 lg:px-10 xl:px-15.5 sm:pt-6 lg:pt-8 xl:pt-11.5 sm:pb-6 lg:pb-10 xl:pb-12.5 bg-white transition-all rounded-[5px]"
+    >
+      <!-- Header -->
+      <div class="flex items-center justify-between">
+        <span class="font-montserrat font-semibold"
+          >Add New Task
+          <span class="block h-0.5 w-24 bg-orioles-orange"></span>
+        </span>
+        <button
+          id="close-new-task-modal"
+          class="font-montserrat font-semibold text-sm underline underline-offset-3 cursor-pointer"
+        >
+          Go Back
+        </button>
+      </div>
+      <form id="new-todo-form" action="">
+        <div
+          class="sm:border border-quick-silver/64 sm:py-3.5 p-2.5 sm:px-4 mt-2 sm:mt-4 lg:mt-6 xl:mt-10"
+        >
+          <div class="w-full xs:w-58/100 xl:w-68/100">
+            <label class="block font-montserrat text-sm font-semibold" for=""
+              >Title</label
+            >
+            <input
+              class="w-full h-9 text-sm md:text-base px-2.5 md:px-4 mt-1 xs:mt-2 border border-quick-silver rounded-md"
+              type="text"
+              name=""
+              id="new-todo-title"
+            />
+          </div>
+          <div class="w-full xs:w-58/100 xl:w-68/100 mt-2.5 xs:mt-4">
+            <label class="block font-montserrat text-sm font-semibold" for=""
+              >Date</label
+            >
+            <input
+              class="w-full h-9 text-sm md:text-base px-2.5 md:px-4 mt-1 xs:mt-2 border border-quick-silver rounded-md"
+              type="datetime-local"
+              name=""
+              id="new-todo-date"
+            />
+          </div>
+
+          <div class="w-full xs:w-58/100 xl:w-68/100 mt-2.5 xs:mt-3">
+            <span class="font-montserrat font-semibold text-sm">Priority</span>
+            <div
+              id="priority-tasks-container"
+              class="flex justify-between lg:gap-x-13.5 mt-1 xs:mt-2.5"
+            >
+              <div class="flex items-center gap-x-2.5">
+                <label
+                  class="text-[13px] text-quick-silver dot-icon before:bg-danger"
+                  for="priority-high"
+                  >High</label
+                >
+                <input
+                  class="priority-task accent-primary"
+                  type="checkbox"
+                  name="priority-task"
+                  id="priority-high"
+                  data-task-priority="high"
+                />
+              </div>
+              <div class="flex items-center gap-x-2.5">
+                <label
+                  class="text-[13px] text-quick-silver dot-icon before:bg-picton-blue"
+                  for="priority-medium"
+                  >Medium</label
+                >
+                <input
+                  class="priority-task accent-primary"
+                  type="checkbox"
+                  name="priority-task"
+                  id="priority-medium"
+                  data-task-priority="medium"
+                />
+              </div>
+              <div class="flex items-center gap-x-2.5">
+                <label
+                  class="text-[13px] text-quick-silver dot-icon before:bg-success"
+                  for="priority-low"
+                  >Low</label
+                >
+                <input
+                  class="priority-task accent-primary"
+                  type="checkbox"
+                  name="priority-task"
+                  id="priority-low"
+                  data-task-priority="low"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="flex justify-between flex-col-reverse xs:flex-row gap-y-2.5 mt-4 font-montserrat"
+          >
+            <div class="w-full xs:w-58/100 xl:w-68/100">
+              <label class="font-semibold text-sm" for=""
+                >Task Description</label
+              >
+              <textarea
+                class="text-[13px] max-h-92.5 w-full h-40 xs:h-50 lg:h-51.25 p-2.5 sm:py-3.5 sm:px-4 mt-1 xs:mt-2.5 border border-quick-silver rounded-md"
+                col
+                name=""
+                id="new-todo-description"
+                placeholder="Start writting here..."
+              ></textarea>
+            </div>
+            <div class="">
+              <span class="font-semibold text-sm">Upload Image</span>
+              <label
+                class="relative flex justify-center items-center size-40 xs:size-50 lg:w-53.5 lg:h-51.25 px-2.5 sm:px-6 lg:px-9.5 py-4 lg:py-5.5 mx-auto xs:mx-0 mt-1 xs:mt-2.5 text-quick-silver text-center border border-quick-silver rounded-md"
+              >
+                <div id="todo-cover-upload-label">
+                  <svg class="w-12 xs:w-16 h-10 xs:h-14 text-white mx-auto">
+                    <use href="#upload-img-icon"></use>
+                  </svg>
+                  <span class="text-xs xs:text-[13px] block mt-2.5 xs:mt-6">
+                    Drag & Drop files here or
+                  </span>
+                  <span
+                    class="text-xs xs:text-[13px] font-medium py-1 xs:py-1.5 px-2 xs:px-3 border border-quick-silver rounded-md mt-2 xs:mt-2.5 inline-block cursor-pointer"
+                    >Browse</span
+                  >
+                </div>
+                <div
+                  class="absolute inset-4 max-h-full max-w-full rounded-md overflow-hidden"
+                  id="todo-cover-preview"
+                >
+                  <img class="aspect-square" src="" alt="" />
+                </div>
+                <input
+                  type="file"
+                  id="new-todo-cover"
+                  hidden
+                  accept=".jpg, .png, .jpeg, .webp"
+                />
+              </label>
+            </div>
+          </div>
+        </div>
+        <button
+          id="create-todo-btn"
+          class="w-16 xs:w-22.5 h-7 xs:h-8.5 sm:mt-4 lg:mt-6 xl:mt-10 ml-2.5 sm:ml-5 font-montserrat text-xs xs:text-sm bg-orioles-orange text-white rounded-md cursor-pointer"
+        >
+          Done
+        </button>
+      </form>
+    </div>
     <div
       id="overlay"
       class="fixed top-0 left-0 w-full h-0 z-10 bg-black/74 transition-all duration-700"
@@ -1153,5 +1305,8 @@
     <script type="module" src="./javascripts/pages/index.js"></script>
 
     <!-- <script type="module" src="./javascripts/modules/calendar.js"></script> -->
+    <script type="module" src="./javascripts/modules/create-task.js"></script>
+
+    <script src="../node_modules/sweetalert/dist/sweetalert.min.js"></script>
   </body>
 </html>

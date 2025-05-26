@@ -8,10 +8,10 @@ import {
 } from "../modules/utils.js";
 import { getUser } from "../apis/users.api.js";
 import { getStatistics } from "../apis/statistics.api.js";
-// import {
-//   hideCreateTodoModal,
-//   showCreateTodoModal,
-// } from "../modules/create-task.js";
+import {
+  hideCreateTodoModal,
+  showCreateTodoModal,
+} from "../modules/create-task.js";
 
 let user = {};
 let statistics = {};
@@ -178,14 +178,14 @@ function insertCompletedTodos(todos) {
   todosCompletedContainer.innerHTML = template;
 }
 
-// const showCreateTodoModalBtn = document.getElementById(
-//   "show-create-todo-modal"
-// );
+const showCreateTodoModalBtn = document.getElementById(
+  "show-create-todo-modal"
+);
 
-// showCreateTodoModalBtn.addEventListener("click", showCreateTodoModal);
+showCreateTodoModalBtn.addEventListener("click", showCreateTodoModal);
 
-// const closeCreateTodoModalBtn = document.getElementById("close-new-task-modal");
-// closeCreateTodoModalBtn.addEventListener("click", hideCreateTodoModal);
+const closeCreateTodoModalBtn = document.getElementById("close-new-task-modal");
+closeCreateTodoModalBtn.addEventListener("click", hideCreateTodoModal);
 
 function updateTodos() {
   const newTodos = getFromLocalStorage("myTodos");
