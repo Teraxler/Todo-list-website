@@ -1,48 +1,31 @@
 "use strict";
 
 import { getUser } from "./apis/users.api.js";
+import { hideCalendar, showCalendar } from "./modules/calendar.js";
+// import { hideCreateTodoModal } from "./modules/create-task.js";
+import {
+  hideNotifications,
+  showNotifications,
+} from "./modules/notification.js";
+import {
+  hideTransparentOverlay,
+  showTransparentOverlay,
+} from "./modules/shared.js";
 import { getDateTime, searchTodo } from "./modules/utils.js";
 
 const todos = [];
 let user = {};
 
 let isSidebarVisible = window.innerWidth >= 600;
-console.log("🚀 ~ isSidebarVisible:", isSidebarVisible);
-
-function insertDate() {
-  const todayDateContainer = document.getElementById("today-date");
-
-  const dateTime = getDateTime();
-
-  todayDateContainer.innerHTML = `<span>${dateTime.weekdayName}</span>
-          <span class="text-picton-blue">${dateTime.date}</span>`;
-}
-
-const headerSearchResultContainer = document.getElementById(
-  "search-result-container"
-);
-
-function insertSearchResultHandler(keyupEvent) {
-  const searchValue = keyupEvent.target.value.trim();
-
-  if (searchValue.length > 2) {
-    const searchResult = searchTodo(searchValue, todos);
-
-    insertSearchResult(searchResult, headerSearchResultContainer);
-  } else {
-    headerSearchResultContainer.innerHTML = `
-      <li class="px-3.75 py-1.5 lg:py-2.5">
-        <span class="text-quick-silver">You must type at least 3 characters</span>
-      </li>`;
-  }
-}
 
 function showSidebar() {
+  hideVisibleContent();
+
   const sidebar = document.getElementById("sidebar");
   sidebar.classList.remove("-left-47");
   sidebar.classList.add("left-0");
 
-  showOverlay();
+  showTransparentOverlay();
 }
 
 function hideSidebar() {
@@ -50,7 +33,7 @@ function hideSidebar() {
   sidebar.classList.add("-left-47");
   sidebar.classList.remove("left-0");
 
-  hideOverlay();
+  hideTransparentOverlay();
 }
 
 function toggleMenu() {
@@ -66,12 +49,10 @@ function toggleMenu() {
 const toggleSidebarBtn = document.getElementById("toggle-menu");
 toggleSidebarBtn.addEventListener("click", toggleMenu);
 
-function showOverlay() {
-  document.getElementById("overlay").classList.add("h-full");
-}
-
 function showSerachBar() {
-  showOverlay();
+  hideVisibleContent();
+  // showOverlay();
+  showTransparentOverlay();
 
   const searchBarContainer = document.getElementById("search-bar-container");
   searchBarContainer.classList.remove("hidden");
@@ -85,12 +66,9 @@ function showSerachBar() {
   );
 }
 
-function hideOverlay() {
-  document.getElementById("overlay").classList.remove("h-full");
-}
-
 function hideSerachBar() {
-  hideOverlay();
+  // hideOverlay();
+  hideTransparentOverlay();
 
   const searchBarContainer = document.getElementById("search-bar-container");
   searchBarContainer.classList.add("hidden");
@@ -104,22 +82,24 @@ function hideSerachBar() {
   );
 }
 
-function hiddenVisibleContent() {
-  if (isSidebarVisible) {
-    hideSidebar();
-  } else {
-    hideSerachBar();
-  }
+function hideVisibleContent() {
+  hideSidebar();
+  hideSerachBar();
+  hideNotifications();
+  hideCalendar();
+
+  // hideCreateTodoModal();
 }
 
 const overlay = document.getElementById("overlay");
-overlay.addEventListener("click", hiddenVisibleContent);
+overlay.addEventListener("click", hideVisibleContent);
 
 const serachBarIcon = document.getElementById("search-bar-icon");
 serachBarIcon.addEventListener("click", showSerachBar);
 
-const headerSearchInput = document.getElementById("header-search-input");
-headerSearchInput.addEventListener("keyup", insertSearchResultHandler);
+const headerSearchResultContainer = document.getElementById(
+  "search-result-container"
+);
 
 function insertSearchResult(todos, container) {
   if (!container) return;
@@ -163,6 +143,33 @@ function insertSearchResult(todos, container) {
   container.innerHTML = template;
 }
 
+function insertSearchResultHandler(keyupEvent) {
+  const searchValue = keyupEvent.target.value.trim();
+
+  if (searchValue.length > 2) {
+    const searchResult = searchTodo(searchValue, todos);
+
+    insertSearchResult(searchResult, headerSearchResultContainer);
+  } else {
+    headerSearchResultContainer.innerHTML = `
+      <li class="px-3.75 py-1.5 lg:py-2.5">
+        <span class="text-quick-silver">You must type at least 3 characters</span>
+      </li>`;
+  }
+}
+
+const headerSearchInput = document.getElementById("header-search-input");
+headerSearchInput.addEventListener("keyup", insertSearchResultHandler);
+
+function insertDate() {
+  const todayDateContainer = document.getElementById("today-date");
+
+  const dateTime = getDateTime();
+
+  todayDateContainer.innerHTML = `<span>${dateTime.weekdayName}</span>
+          <span class="text-picton-blue">${dateTime.date}</span>`;
+}
+
 window.addEventListener("load", async () => {
   insertDate();
 
@@ -171,3 +178,23 @@ window.addEventListener("load", async () => {
   todos.length = 0;
   todos.push(...user.tasks);
 });
+
+document
+  .getElementById("notification-show-btn")
+  .addEventListener("click", () => {
+    hideVisibleContent();
+    showNotifications();
+  });
+
+document
+  .getElementById("notification__hide-btn")
+  .addEventListener("click", hideNotifications);
+
+document.getElementById("calendar-show-btn").addEventListener("click", () => {
+  hideVisibleContent();
+  showCalendar();
+});
+
+document
+  .getElementById("transparent-overlay")
+  .addEventListener("click", hideVisibleContent);

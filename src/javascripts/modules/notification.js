@@ -1,0 +1,83 @@
+"use strict";
+
+import { calcRelativeDateTimeDifference } from "./utils.js";
+import { getUser } from "../apis/users.api.js";
+import { hideTransparentOverlay, showTransparentOverlay } from "./shared.js";
+
+let user = {},
+  notifications = [];
+
+function showNotifications() {
+  showTransparentOverlay();
+
+  document
+    .getElementById("notification")
+    .classList.remove("opacity-0", "invisible");
+}
+
+function hideNotifications() {
+  hideTransparentOverlay();
+
+  document
+    .getElementById("notification")
+    .classList.add("opacity-0", "invisible");
+}
+
+function insertNotifications() {
+  let template = "";
+  const notificationsContainer = document.getElementById(
+    "notifications-container"
+  );
+
+  if (notifications.length) {
+    notifications.forEach((notification) => {
+      const { id, priority, cover, title } = notification;
+      const relativeDateTime = calcRelativeDateTimeDifference(
+        notification.createdAt
+      );
+
+      template += `
+      <li class="px-3.75 py-1.5 lg:py-2.5">
+        <a
+          class="flex items-center justify-between gap-x-4"
+          href="./pages/id=${id}"
+        >
+          <div>
+            <p class="text-sm lg:text-base/relaxed line-clamp-2">${title}
+              <span class="text-quick-silver font-medium text-xs">${relativeDateTime}</span>
+            </p>
+            <span class="font-medium text-xs">Priority: </span
+            ><span class="font-medium text-xs ${
+              priority === "High"
+                ? "text-danger"
+                : priority === "Medium"
+                ? "text-picton-blue"
+                : "text-success"
+            }">${priority}</span>
+          </div>
+          <div
+            class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
+          >
+            <img src="./assets/images/todoes/${cover.path}" 
+              alt="${cover.alt}" />
+          </div>
+        </a>
+      </li>
+      `;
+    });
+  } else {
+    template = `<li class="px-3.75 py-1.5 lg:py-2.5"> <span class="text-quick-silver">Nothing</span></li>`;
+  }
+
+  notificationsContainer.innerHTML = template;
+}
+
+window.addEventListener("load", async () => {
+  user = await getUser(1);
+  notifications = user.notifications;
+
+  insertNotifications();
+  console.log("🚀 ~ window.addEventListener ~ notifications:", notifications);
+});
+
+export { showNotifications, hideNotifications };
