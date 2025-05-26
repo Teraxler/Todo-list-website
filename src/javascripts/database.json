@@ -1,4 +1,9 @@
 {
+  "statistics": {
+    "completed": 85,
+    "inProgress": 5,
+    "notStarted": 16
+  },
   "users": [
     {
       "id": 1,
@@ -9,14 +14,14 @@
       "password": "securepassword123",
       "phone": "+98-912-3456789",
       "position": "Software Engineer",
-      "createdAt": "2024-05-10T09:00:00Z",
+      "createdAt": "2024-05-10T09:00:00",
       "profile": "",
       "tasks": [
         {
           "id": 101,
           "title": "Develop API Endpoint",
           "status": "Not Started",
-          "createdAt": "2024-05-10T09:00:00Z",
+          "createdAt": "2024-05-10T09:00:00",
           "priority": "High",
           "description": "Create and test the new API endpoint for user authentication",
           "cover": {
@@ -28,7 +33,57 @@
           "id": 102,
           "title": "Fix Database Migration Issue",
           "status": "Not Started",
-          "createdAt": "2024-05-10T10:00:00Z",
+          "createdAt": "2024-05-10T10:00:00",
+          "priority": "Medium",
+          "description": "Resolve compatibility problems with database migration scripts",
+          "cover": {
+            "path": "fix-database.jpeg",
+            "alt": "Database migration task cover image"
+          }
+        },
+        {
+          "id": 102,
+          "title": "Fix Database Migration Issue",
+          "status": "Not Started",
+          "createdAt": "2024-06-10T10:00:00",
+          "priority": "Medium",
+          "description": "Resolve compatibility problems with database migration scripts",
+          "cover": {
+            "path": "fix-database.jpeg",
+            "alt": "Database migration task cover image"
+          }
+        },
+        {
+          "id": 103,
+          "title": "Fix Database Migration Issue",
+          "status": "Finished",
+          "createdAt": "2024-06-10T10:00:00",
+          "priority": "Medium",
+          "description": "Resolve compatibility problems with database migration scripts",
+          "cover": {
+            "path": "fix-database.jpeg",
+            "alt": "Database migration task cover image"
+          }
+        }
+      ],
+      "notifications": [
+        {
+          "id": 101,
+          "title": "Develop API Endpoint",
+          "status": "Not Started",
+          "createdAt": "2024-09-10T09:00:00",
+          "priority": "High",
+          "description": "Create and test the new API endpoint for user authentication",
+          "cover": {
+            "path": "api.png",
+            "alt": "API development task cover image"
+          }
+        },
+        {
+          "id": 103,
+          "title": "Fix Database Migration Issue",
+          "status": "Not Started",
+          "createdAt": "2024-05-10T10:00:00",
           "priority": "Medium",
           "description": "Resolve compatibility problems with database migration scripts",
           "cover": {
@@ -47,14 +102,14 @@
       "password": "strongpass456",
       "phone": "+98-935-6789101",
       "position": "Project Manager",
-      "createdAt": "2024-05-10T09:30:00Z",
+      "createdAt": "2024-05-10T09:30:00",
       "profile": "",
       "tasks": [
         {
           "id": 201,
           "title": "Review Project Timeline",
           "status": "Not Started",
-          "createdAt": "2024-05-10T11:00:00Z",
+          "createdAt": "2024-05-10T11:00:00",
           "priority": "High",
           "description": "Analyze and adjust project deadlines for better efficiency",
           "cover": {
@@ -66,7 +121,7 @@
           "id": 202,
           "title": "Organize Team Meeting",
           "status": "Not Started",
-          "createdAt": "2024-05-10T12:00:00Z",
+          "createdAt": "2024-05-10T12:00:00",
           "priority": "Medium",
           "description": "Schedule and prepare agenda for the upcoming weekly team meeting",
           "cover": {
