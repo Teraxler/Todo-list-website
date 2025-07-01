@@ -10,7 +10,7 @@
       "name": "Ali",
       "family": "Rezai",
       "username": "ali.rezai",
-      "email": "ali.rezai@example.com",
+      "email": "ali.rezai@gamil.com",
       "password": "securepassword123",
       "phone": "+98-912-3456789",
       "position": "Software Engineer",
@@ -26,6 +26,7 @@
           "description": "Create and test the new API endpoint for user authentication",
           "cover": {
             "path": "api.png",
+            "type": "png",
             "alt": "API development task cover image"
           }
         },
@@ -38,6 +39,7 @@
           "description": "Resolve compatibility problems with database migration scripts",
           "cover": {
             "path": "fix-database.jpeg",
+            "type": "jpeg",
             "alt": "Database migration task cover image"
           }
         },
@@ -50,6 +52,7 @@
           "description": "Resolve compatibility problems with database migration scripts",
           "cover": {
             "path": "fix-database.jpeg",
+            "type": "jpeg",
             "alt": "Database migration task cover image"
           }
         },
@@ -62,6 +65,7 @@
           "description": "Resolve compatibility problems with database migration scripts",
           "cover": {
             "path": "fix-database.jpeg",
+            "type": "jpeg",
             "alt": "Database migration task cover image"
           }
         }
@@ -76,6 +80,7 @@
           "description": "Create and test the new API endpoint for user authentication",
           "cover": {
             "path": "api.png",
+            "type": "png",
             "alt": "API development task cover image"
           }
         },
@@ -88,6 +93,7 @@
           "description": "Resolve compatibility problems with database migration scripts",
           "cover": {
             "path": "fix-database.jpeg",
+            "type": "jpeg",
             "alt": "Database migration task cover image"
           }
         }
@@ -98,7 +104,7 @@
       "name": "Sara",
       "family": "Mohammadi",
       "username": "sara.mohammadi",
-      "email": "sara.mohammadi@example.com",
+      "email": "sara.mohammadi@gmail.com",
       "password": "strongpass456",
       "phone": "+98-935-6789101",
       "position": "Project Manager",
@@ -114,6 +120,7 @@
           "description": "Analyze and adjust project deadlines for better efficiency",
           "cover": {
             "path": "review.jpeg",
+            "type": "jpeg",
             "alt": "Project timeline review task cover image"
           }
         },
@@ -126,6 +133,7 @@
           "description": "Schedule and prepare agenda for the upcoming weekly team meeting",
           "cover": {
             "path": "team-meeting.png",
+            "type": "png",
             "alt": "Team meeting task cover image"
           }
         }

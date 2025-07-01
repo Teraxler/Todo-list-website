@@ -1,8 +1,5 @@
-"use strict";
-
 import { getUser } from "./apis/users.api.js";
 import { hideCalendar, showCalendar } from "./modules/calendar.js";
-import { hideCreateTodoModal } from "./modules/create-task.js";
 import {
   hideNotifications,
   showNotifications,
@@ -11,7 +8,11 @@ import {
   hideTransparentOverlay,
   showTransparentOverlay,
 } from "./modules/shared.js";
-import { getDateTime, searchTodo } from "./modules/utils.js";
+import { hideTodoModal } from "./modules/todo-modal.js";
+import {
+  getDateTime,
+  searchTodo,
+} from "./modules/utils.js";
 
 const todos = [];
 let user = {};
@@ -88,7 +89,7 @@ function hideVisibleContent() {
   hideNotifications();
   hideCalendar();
 
-  hideCreateTodoModal();
+  hideTodoModal();
 }
 
 const overlay = document.getElementById("overlay");

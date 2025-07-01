@@ -1,9 +1,7 @@
 "use strict";
 
 import {
-  hideOverlay,
   hideTransparentOverlay,
-  showOverlay,
   showTransparentOverlay,
 } from "./shared.js";
 import { convertMonthToMonthName } from "./utils.js";

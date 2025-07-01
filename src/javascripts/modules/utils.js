@@ -213,6 +213,9 @@ function convertMonthToMonthName(month) {
   return monthNames[month - 1];
 }
 
+// Mathmatics
+const clacDegreesOfPercent = (percents) => (360 * percents) / 100;
+
 // Search
 function searchTodo(searchValue, todos) {
   return todos.filter((todo) =>
@@ -228,6 +231,9 @@ function findUser(userId, users) {
 
   return users[userIndex] ?? null;
 }
+
+const findTaskIndex = (taskId, tasks) =>
+  tasks.findIndex((task) => String(task.id) === String(taskId));
 
 // Sort
 
@@ -253,13 +259,21 @@ function bubbleSort(list, measure, increametal = true) {
 }
 
 // LocalStorage
-
 function getFromLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key)) || null;
 }
 
 function saveToLocalStorage(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    swal({
+      title: "Your Browser Storage is full",
+      text: "Please remove a todo to free space for new todo",
+    });
+
+    return new Error(error);
+  }
 }
 
 //
@@ -287,6 +301,10 @@ function convertImgToCanvas(image) {
   const imageAsDataUrl = imgCanvas.toDataURL("image/png");
 
   return imageAsDataUrl;
+}
+
+function convertDataUrlToBlob(dataUrl) {
+  console.log(dataUrl);
 }
 
 // Error Handlig
@@ -344,14 +362,17 @@ export {
   getDateTime,
   searchTodo,
   findUser,
+  findTaskIndex,
   normalizeDateTime,
   calcRelativeDateTimeDifference,
   convertMonthToMonthName,
   getFromLocalStorage,
   saveToLocalStorage,
   convertImgToCanvas,
+  convertDataUrlToBlob,
   getBase64Image,
   getDateTimeV2,
   formattingDateTime,
   idGenerator,
+  clacDegreesOfPercent,
 };

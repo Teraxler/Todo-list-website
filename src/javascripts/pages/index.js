@@ -1,35 +1,55 @@
-"use strict";
-
 import {
   calcRelativeDateTimeDifference,
+  clacDegreesOfPercent,
   convertMonthToMonthName,
+  findTaskIndex,
   getFromLocalStorage,
   normalizeDateTime,
+  saveToLocalStorage,
 } from "../modules/utils.js";
 import { getUser } from "../apis/users.api.js";
 import { getStatistics } from "../apis/statistics.api.js";
 import {
-  hideCreateTodoModal,
   showCreateTodoModal,
-} from "../modules/create-task.js";
+  showEditTodoModal,
+} from "../modules/todo-modal.js";
+
+const todos = [];
 
 let user = {};
 let statistics = {};
 
 function generateTodo(todo) {
-  const { title, description, cover, createdAt, priority, status } = todo;
+  const { id, title, description, cover, createdAt, priority, status } = todo;
 
   return `
         <div class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]">
           <!-- Circle Shape-->
           <div class="absolute top-3 xl:top-3.5 left-3 xl:left-3.5 size-2.5 xl:size-3 border-danger border-2 rounded-full"></div>
           <!-- Menu Icon -->
-          <div class="absolute top-2.5 right-3 xl:right-3.5 flex gap-x-0.5 cursor-pointer py-1">
-            <span class="size-1 border border-quick-silver rounded-full"></span>
-            <span class="size-1 border border-quick-silver rounded-full"></span>
-            <span class="size-1 border border-quick-silver rounded-full"></span>
+          <div
+            class="task-options absolute top-2.5 right-3 xl:right-3.5">
+            <div class="task-options__icon flex gap-x-0.5 cursor-pointer py-1">
+              <span class="size-1 border border-quick-silver rounded-full"></span>
+              <span class="size-1 border border-quick-silver rounded-full"></span>
+              <span class="size-1 border border-quick-silver rounded-full"></span>
+            </div>
+            <!-- Drop-Down -->
+            <div
+              class="task-options__list invisible opacity-0 absolute right-0 bg-white flex flex-col gap-y-1.25 mt-0.5 px-1.25 pb-1.75 pt-2.25 leading-5 rounded-lg shadow"
+              data-is-visible="false"
+              >
+              <button class="task-options__edit-task text-xs text-start cursor-pointer" onclick="editTaskHandler('${id}')">
+                Edit
+              </button>
+              <button class="task-options__delete-task text-xs text-start cursor-pointer" onclick="deleteTaskHandler('${id}')">
+                Delete
+              </button>
+              <button class="task-options__finish-task text-xs text-start cursor-pointer" onclick="finishTaskHandler('${id}')">
+                Finish
+              </button>
+            </div>
           </div>
-
           <div class="flex justify-between gap-x-2 xl:gap-x-2.5">
             <div>
               <p class="text-sm xl:text-base/[19px] font-semibold line-clamp-2">
@@ -157,8 +177,6 @@ function insertTodosStatistics(statistics) {
   todosStatsContainer.innerHTML = template;
 }
 
-const clacDegreesOfPercent = (percents) => (360 * percents) / 100;
-
 function insertCompletedTodos(todos) {
   let template = "";
   const todosCompletedContainer = document.getElementById(
@@ -178,39 +196,143 @@ function insertCompletedTodos(todos) {
   todosCompletedContainer.innerHTML = template;
 }
 
-const showCreateTodoModalBtn = document.getElementById(
-  "show-create-todo-modal"
-);
-
-showCreateTodoModalBtn.addEventListener("click", showCreateTodoModal);
-
-const closeCreateTodoModalBtn = document.getElementById("close-new-task-modal");
-closeCreateTodoModalBtn.addEventListener("click", hideCreateTodoModal);
-
 function updateTodos() {
   const newTodos = getFromLocalStorage("myTodos");
 
-  const todos = [...newTodos, ...user.tasks];
+  todos.length = 0;
+  todos.push(...newTodos, ...user.tasks);
+
   insertTodos(todos);
+  setTaskOptionsEvent();
 }
 
-document.addEventListener("todoCreated", (event) => {
-  console.log(event);
-  updateTodos();
-});
+document.addEventListener("todoCreated", updateTodos);
+
+function showTaskOptionsList(taskOptionsList) {
+  taskOptionsList.classList.remove("invisible", "opacity-0");
+  taskOptionsList.dataset.isVisible = true;
+}
+
+function hideTaskOptionsList(taskOptionsList) {
+  taskOptionsList.classList.add("invisible", "opacity-0");
+  taskOptionsList.dataset.isVisible = false;
+}
+
+function toggleTaskOptionsList(clickEvent) {
+  console.log(clickEvent.currentTarget);
+  const taskOptionsList = clickEvent.currentTarget.nextElementSibling;
+
+  if (taskOptionsList.dataset.isVisible === "false") {
+    showTaskOptionsList(taskOptionsList);
+  } else {
+    hideTaskOptionsList(taskOptionsList);
+  }
+}
+
+function setTaskOptionsEvent() {
+  [...document.getElementsByClassName("task-options__icon")].forEach(
+    (taskOptionIcon) =>
+      taskOptionIcon.addEventListener("click", toggleTaskOptionsList)
+  );
+}
 
 window.addEventListener("load", async () => {
   user = await getUser(1);
   statistics = await getStatistics();
-  console.log("🚀 ~ window.addEventListener ~ user:", user);
 
-  const newTodos = getFromLocalStorage("myTodos");
-  console.log("🚀 ~ window.addEventListener ~ newTodos:", newTodos);
+  const localTodos = getFromLocalStorage("myTodos");
+  if (localTodos) {
+    todos.push(...localTodos);
+  }
 
-  const todos = [...newTodos, ...user.tasks];
-  console.log("🚀 ~ window.addEventListener ~ todos:", todos);
+  todos.push(...user.tasks);
 
   insertTodos(todos);
   insertCompletedTodos(todos);
   insertTodosStatistics(statistics);
+  setTaskOptionsEvent();
 });
+
+window.editTaskHandler = editTaskHandler;
+
+function editTaskHandler(taskId) {
+  const taskIndex = findTaskIndex(taskId, todos);
+
+  taskIndex !== -1 ? showEditTodoModal(todos[taskIndex]) : null;
+}
+
+function deleteTodo(todoId) {
+  let todos = getFromLocalStorage("myTodos") || [];
+
+  todos = todos.filter((todo) => todo.id !== todoId);
+
+  saveToLocalStorage("myTodos", todos);
+}
+
+window.deleteTaskHandler = deleteTaskHandler;
+
+async function deleteTaskHandler(taskId) {
+  const isDeleteConfirm = await swal({
+    title: "Are you sure?",
+    buttons: ["Cancel", "Delete"],
+  });
+
+  if (isDeleteConfirm) {
+    const remainingTodos = todos.filter(
+      (task) => String(task.id) !== String(taskId)
+    );
+
+    deleteTodo(taskId);
+
+    todos.length = 0;
+    todos.push(...remainingTodos);
+
+    insertTodos(todos);
+    insertCompletedTodos(todos);
+    insertTodosStatistics(statistics);
+    setTaskOptionsEvent();
+  }
+}
+
+window.finishTaskHandler = finishTaskHandler;
+
+function finishTaskHandler(taskId) {
+  const taskIndex = findTaskIndex(taskId, todos);
+
+  if (taskIndex !== -1) {
+    todos[taskIndex].status = "Finished";
+
+    insertTodos(todos);
+    insertCompletedTodos(todos);
+    insertTodosStatistics(statistics);
+    setTaskOptionsEvent();
+  }
+}
+
+const showCreateTodoModalBtn = document.getElementById(
+  "show-create-todo-modal"
+);
+showCreateTodoModalBtn.addEventListener("click", showCreateTodoModal);
+
+function saveNewTodo(newTodo) {
+  console.log("🚀 ~ newTodo:", newTodo);
+  let todos = getFromLocalStorage("myTodos") || [];
+
+  const todoIndex = findTaskIndex(newTodo.id, todos);
+
+  if (todoIndex !== -1) {
+    todos[todoIndex] = newTodo;
+  } else {
+    todos = [newTodo, ...todos];
+  }
+
+  saveToLocalStorage("myTodos", todos);
+}
+
+function saveTodoHandler(event) {
+  saveNewTodo(event.detail);
+  updateTodos();
+}
+
+document.addEventListener("todoCreated", saveTodoHandler);
+document.addEventListener("todoUpdated", saveTodoHandler);
