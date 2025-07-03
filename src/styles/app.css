@@ -724,9 +724,6 @@
   .bg-ghost-white {
     background-color: var(--color-ghost-white);
   }
-  .bg-light-gray {
-    background-color: var(--color-light-gray);
-  }
   .bg-orioles-orange {
     background-color: var(--color-orioles-orange);
   }
@@ -904,8 +901,8 @@
   .text-amber-400 {
     color: var(--color-amber-400);
   }
-  .text-black {
-    color: var(--color-black);
+  .text-blue-bonnet {
+    color: var(--color-blue-bonnet);
   }
   .text-danger {
     color: var(--color-danger);
@@ -1042,6 +1039,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-primary);
+      }
+    }
+  }
+  .hover\:bg-white {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-white);
       }
     }
   }
@@ -1211,6 +1215,11 @@
       margin-left: calc(var(--spacing) * 5);
     }
   }
+  .sm\:flex {
+    @media (width >= 600px) {
+      display: flex;
+    }
+  }
   .sm\:hidden {
     @media (width >= 600px) {
       display: none;
@@ -1356,6 +1365,11 @@
   .md\:mt-6 {
     @media (width >= 768px) {
       margin-top: calc(var(--spacing) * 6);
+    }
+  }
+  .md\:flex {
+    @media (width >= 768px) {
+      display: flex;
     }
   }
   .md\:hidden {

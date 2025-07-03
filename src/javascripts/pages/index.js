@@ -1,5 +1,6 @@
 import {
   calcRelativeDateTimeDifference,
+  capitalize,
   clacDegreesOfPercent,
   convertMonthToMonthName,
   findTodoIndex,
@@ -18,7 +19,7 @@ let DB = {};
 let user = {};
 let statistics = {};
 
-function generateTodo(todo) {
+function generateTodoTemplate(todo) {
   const { id, title, description, cover, createdAt, priority, status } = todo;
 
   return `
@@ -76,16 +77,22 @@ function generateTodo(todo) {
             <span>
               Priority:
               <span class="block xl:inline ${
-                priority === "High"
+                priority.toLowerCase() === "high"
                   ? "text-danger"
-                  : priority === "Medium"
+                  : priority.toLowerCase() === "medium"
                   ? "text-amber-400"
                   : "text-picton-blue"
               } ">${priority}</span>
             </span>
             <span>
               Status:
-              <span class="block xl:inline text-danger">${status}</span>
+              <span class="block xl:inline ${
+                status.toLowerCase() === "not started"
+                  ? "text-danger"
+                  : status.toLowerCase() === "in progress"
+                  ? "text-blue-bonnet"
+                  : "text-success"
+              } ">${capitalize(status)}</span>
             </span>
             <span class="text-quick-silver">
               Created on:
@@ -128,7 +135,7 @@ function insertTodos(todos) {
       }
 
       createdAt = todo.createdAt.slice(0, 10);
-      template += generateTodo(todo);
+      template += generateTodoTemplate(todo);
     });
   } else {
     template =
@@ -191,7 +198,7 @@ function insertCompletedTodos(todos) {
   if (todos.length) {
     todos.forEach((todo) => {
       if (todo.status === "Finished") {
-        template += generateTodo(todo);
+        template += generateTodoTemplate(todo);
       }
     });
   }

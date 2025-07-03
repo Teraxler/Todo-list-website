@@ -48,18 +48,21 @@ function insertNotifications() {
             </p>
             <span class="font-medium text-xs">Priority: </span
             ><span class="font-medium text-xs ${
-              priority === "High"
+              priority.toLowerCase() === "high"
                 ? "text-danger"
-                : priority === "Medium"
-                ? "text-picton-blue"
-                : "text-success"
+                : priority.toLowerCase() === "medium"
+                ? "text-amber-400"
+                : "text-picton-blue"
             }">${priority}</span>
           </div>
           <div
             class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
           >
-            <img src="./assets/images/todoes/${cover.path}" 
-              alt="${cover.alt}" />
+            ${
+              cover.path
+                ? `<img class="aspect-square" src="./assets/images/todoes/${cover.path}" alt="${cover.alt}" />`
+                : `<img class="aspect-square" src="${cover.img}" alt="${cover.alt}" />`
+            }
           </div>
         </a>
       </li>

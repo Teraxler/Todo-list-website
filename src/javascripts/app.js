@@ -11,8 +11,10 @@ import {
   showNotifications,
 } from "./modules/notification.js";
 import {
+  hideOverlay,
   hideTodoOptions,
   hideTransparentOverlay,
+  showOverlay,
   showTransparentOverlay,
 } from "./modules/shared.js";
 import { hideTodoModal } from "./modules/todo-modal.js";
@@ -56,35 +58,17 @@ toggleSidebarBtn.addEventListener("click", toggleMenu);
 
 function showSerachBar() {
   hideVisibleContent();
-  // showOverlay();
-  showTransparentOverlay();
+  showOverlay();
 
-  const searchBarContainer = document.getElementById("search-bar-container");
+  const searchBarContainer = document.getElementById("mobile-search-bar");
   searchBarContainer.classList.remove("hidden");
-  searchBarContainer.classList.add(
-    "absolute",
-    "left-0",
-    "right-0",
-    "w-fit",
-    "z-10",
-    "m-auto"
-  );
 }
 
 function hideSerachBar() {
-  // hideOverlay();
-  hideTransparentOverlay();
+  hideOverlay();
 
-  const searchBarContainer = document.getElementById("search-bar-container");
+  const searchBarContainer = document.getElementById("mobile-search-bar");
   searchBarContainer.classList.add("hidden");
-  searchBarContainer.classList.remove(
-    "absolute",
-    "left-0",
-    "right-0",
-    "w-fit",
-    "z-10",
-    "m-auto"
-  );
 }
 
 function hideVisibleContent() {
@@ -103,8 +87,11 @@ overlay.addEventListener("click", hideVisibleContent);
 const serachBarIcon = document.getElementById("search-bar-icon");
 serachBarIcon.addEventListener("click", showSerachBar);
 
-const headerSearchResultContainer = document.getElementById(
+const searchResultContainer = document.getElementById(
   "search-result-container"
+);
+const mobileSearchResultContainer = document.getElementById(
+  "mobile-search-result"
 );
 
 function insertSearchResult(todos, container) {
@@ -125,18 +112,20 @@ function insertSearchResult(todos, container) {
             <p class="text-sm lg:text-base/relaxed line-clamp-2">${title}</p>
             <span class="font-medium text-xs">Priority: </span
             ><span class="font-medium text-xs ${
-              priority === "High"
+              priority.toLowerCase() === "high"
                 ? "text-danger"
-                : priority === "Medium"
-                ? "text-picton-blue"
-                : "text-success"
+                : priority.toLowerCase() === "medium"
+                ? "text-amber-400"
+                : "text-picton-blue"
             }">${priority}</span>
           </div>
           <div
-            class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
-          >
-            <img src="./assets/images/todoes/${cover.path}" 
-              alt="${cover.alt}" />
+            class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden">
+          ${
+            cover.path
+              ? `<img class="aspect-square" src="./assets/images/todoes/${cover.path}" alt="${cover.alt}" />`
+              : `<img class="aspect-square" src="${cover.img}" alt="${cover.alt}" />`
+          }
           </div>
         </a>
       </li>
@@ -155,9 +144,15 @@ function insertSearchResultHandler(keyupEvent) {
   if (searchValue.length > 2) {
     const searchResult = searchTodo(searchValue, todos);
 
-    insertSearchResult(searchResult, headerSearchResultContainer);
+    insertSearchResult(searchResult, searchResultContainer);
+    insertSearchResult(searchResult, mobileSearchResultContainer);
   } else {
-    headerSearchResultContainer.innerHTML = `
+    searchResultContainer.innerHTML = `
+      <li class="px-3.75 py-1.5 lg:py-2.5">
+        <span class="text-quick-silver">You must type at least 3 characters</span>
+      </li>`;
+
+    mobileSearchResultContainer.innerHTML = `
       <li class="px-3.75 py-1.5 lg:py-2.5">
         <span class="text-quick-silver">You must type at least 3 characters</span>
       </li>`;
@@ -166,6 +161,9 @@ function insertSearchResultHandler(keyupEvent) {
 
 const headerSearchInput = document.getElementById("header-search-input");
 headerSearchInput.addEventListener("keyup", insertSearchResultHandler);
+
+const mobileSearchInput = document.getElementById("mobile-search-input");
+mobileSearchInput.addEventListener("keyup", insertSearchResultHandler);
 
 function insertDate() {
   const todayDateContainer = document.getElementById("today-date");

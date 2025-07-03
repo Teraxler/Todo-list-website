@@ -213,6 +213,11 @@ function convertMonthToMonthName(month) {
   return monthNames[month - 1];
 }
 
+// String
+function capitalize(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+}
+
 // Mathmatics
 const clacDegreesOfPercent = (percents) => (360 * percents) / 100;
 
@@ -267,7 +272,7 @@ function saveToLocalStorage(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
-    console.error(error)
+    console.error(error);
     swal({
       title: "Your Browser Storage is full",
       text: "Please remove a todo to free space for new todo",
@@ -374,4 +379,5 @@ export {
   formattingDateTime,
   idGenerator,
   clacDegreesOfPercent,
+  capitalize,
 };
