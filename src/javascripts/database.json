@@ -44,22 +44,9 @@
           }
         },
         {
-          "id": 102,
-          "title": "Fix Database Migration Issue",
-          "status": "Not Started",
-          "createdAt": "2024-06-10T10:00:00",
-          "priority": "Medium",
-          "description": "Resolve compatibility problems with database migration scripts",
-          "cover": {
-            "path": "fix-database.jpeg",
-            "type": "jpeg",
-            "alt": "Database migration task cover image"
-          }
-        },
-        {
           "id": 103,
-          "title": "Fix Database Migration Issue",
-          "status": "Finished",
+          "title": "Update Database firmware",
+          "status": "Not Started",
           "createdAt": "2024-06-10T10:00:00",
           "priority": "Medium",
           "description": "Resolve compatibility problems with database migration scripts",

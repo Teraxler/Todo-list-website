@@ -38,13 +38,16 @@ function generateTodo(todo) {
               class="task-options__list  invisible opacity-0 absolute z-10 right-0 bg-white flex flex-col gap-y-1.25 mt-0.5 px-1.25 pb-1.75 pt-2.25 leading-5 rounded-lg shadow"
               data-is-visible="false"
               >
-              <button class="task-options__edit-task text-xs text-start cursor-pointer" onclick="editTaskHandler(this,'${id}')">
+              <button class="task-options__edit-task text-xs text-start cursor-pointer" onclick="startTaskHandler('${id}')">
+                Start
+              </button>
+              <button class="task-options__edit-task text-xs text-start cursor-pointer" onclick="editTaskHandler('${id}')">
                 Edit
               </button>
-              <button class="task-options__delete-task text-xs text-start cursor-pointer" onclick="deleteTaskHandler(this,'${id}')">
+              <button class="task-options__delete-task text-xs text-start cursor-pointer" onclick="deleteTaskHandler('${id}')">
                 Delete
               </button>
-              <button class="task-options__finish-task text-xs text-start cursor-pointer" onclick="finishTaskHandler(this,'${id}')">
+              <button class="task-options__finish-task text-xs text-start cursor-pointer" onclick="finishTaskHandler('${id}')">
                 Finish
               </button>
             </div>
@@ -191,7 +194,9 @@ function insertCompletedTodos(todos) {
         template += generateTodo(todo);
       }
     });
-  } else {
+  }
+
+  if (!template) {
     template =
       "<span class='text-center text-davy-grey py-5'>Nothing Completed yet</span>";
   }
@@ -221,10 +226,59 @@ window.addEventListener("load", async () => {
   setTodoOptionsEvent();
 });
 
+function updateStatistics(todos) {
+  let count = todos.length,
+    notStarted,
+    inProgress,
+    finished;
+
+  notStarted = inProgress = finished = 0;
+
+  todos.forEach((todo) => {
+    if (todo.status === "Not Started") {
+      notStarted++;
+    } else if (todo.status === "In Progress") {
+      inProgress++;
+    } else if (todo.status === "Finished") {
+      finished++;
+    }
+  });
+
+  DB.statistics = {
+    completed: ((finished / count) * 100).toFixed(1),
+    inProgress: ((inProgress / count) * 100).toFixed(1),
+    notStarted: ((notStarted / count) * 100).toFixed(1),
+  };
+
+  saveToLocalStorage("DB", DB);
+}
+
+window.startTaskHandler = startTaskHandler;
+
+function startTaskHandler(todoId) {
+  hideTodoOptions();
+
+  const todoIndex = findTodoIndex(todoId, todos);
+
+  if (todoIndex !== -1) {
+    todos[todoIndex].status = "In Progress";
+
+    user.todos = todos;
+    DB.users[0] = user;
+
+    saveToLocalStorage("DB", DB);
+    insertTodos(todos);
+    insertCompletedTodos(todos);
+    updateStatistics(todos);
+    insertTodosStatistics(DB.statistics);
+    setTodoOptionsEvent();
+  }
+}
+
 window.editTaskHandler = editTaskHandler;
 
-function editTaskHandler(btn, taskId) {
-  hideTodoOptions()
+function editTaskHandler(taskId) {
+  hideTodoOptions();
 
   const taskIndex = findTodoIndex(taskId, todos);
 
@@ -233,9 +287,8 @@ function editTaskHandler(btn, taskId) {
 
 window.deleteTaskHandler = deleteTaskHandler;
 
-async function deleteTaskHandler(btn, taskId) {
-  hideTodoOptions()
-
+async function deleteTaskHandler(taskId) {
+  hideTodoOptions();
 
   const isDeleteConfirm = await swal({
     title: "Are you sure?",
@@ -256,15 +309,16 @@ async function deleteTaskHandler(btn, taskId) {
 
     insertTodos(todos);
     insertCompletedTodos(todos);
-    insertTodosStatistics(statistics);
+    updateStatistics(todos);
+    insertTodosStatistics(DB.statistics);
     setTodoOptionsEvent();
   }
 }
 
 window.finishTaskHandler = finishTaskHandler;
 
-function finishTaskHandler(btn, taskId) {
-  hideTodoOptions()
+function finishTaskHandler(taskId) {
+  hideTodoOptions();
 
   const taskIndex = findTodoIndex(taskId, todos);
 
@@ -277,7 +331,8 @@ function finishTaskHandler(btn, taskId) {
 
     insertTodos(todos);
     insertCompletedTodos(todos);
-    insertTodosStatistics(statistics);
+    updateStatistics(todos);
+    insertTodosStatistics(DB.statistics);
     setTodoOptionsEvent();
   }
 }
@@ -288,7 +343,9 @@ const showCreateTodoModalBtn = document.getElementById(
 showCreateTodoModalBtn.addEventListener("click", showCreateTodoModal);
 
 function saveTodoHandler(event) {
-  todos.push(event.detail);
+  let temp = [...todos];
+  todos.length = 0;
+  todos.push(event.detail, ...temp);
 
   user.todos = todos;
   DB.users[0].todos = todos;
@@ -297,6 +354,8 @@ function saveTodoHandler(event) {
   DB = getFromLocalStorage("DB");
 
   insertTodos(todos);
+  updateStatistics(todos);
+  insertTodosStatistics(DB.statistics);
   setTodoOptionsEvent();
 }
 
@@ -315,6 +374,8 @@ function updateTodoHandler(event) {
   }
 
   insertTodos(todos);
+  updateStatistics(todos);
+  insertTodosStatistics(DB.statistics);
   setTodoOptionsEvent();
 }
 
