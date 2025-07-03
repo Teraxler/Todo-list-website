@@ -2,20 +2,19 @@ import {
   calcRelativeDateTimeDifference,
   clacDegreesOfPercent,
   convertMonthToMonthName,
-  findTaskIndex,
+  findTodoIndex,
   getFromLocalStorage,
   normalizeDateTime,
   saveToLocalStorage,
 } from "../modules/utils.js";
-import { getUser } from "../apis/users.api.js";
-import { getStatistics } from "../apis/statistics.api.js";
 import {
   showCreateTodoModal,
   showEditTodoModal,
 } from "../modules/todo-modal.js";
+import { hideTodoOptions, showTodoOptions } from "../modules/shared.js";
 
 const todos = [];
-
+let DB = {};
 let user = {};
 let statistics = {};
 
@@ -36,16 +35,16 @@ function generateTodo(todo) {
             </div>
             <!-- Drop-Down -->
             <div
-              class="task-options__list invisible opacity-0 absolute right-0 bg-white flex flex-col gap-y-1.25 mt-0.5 px-1.25 pb-1.75 pt-2.25 leading-5 rounded-lg shadow"
+              class="task-options__list  invisible opacity-0 absolute z-10 right-0 bg-white flex flex-col gap-y-1.25 mt-0.5 px-1.25 pb-1.75 pt-2.25 leading-5 rounded-lg shadow"
               data-is-visible="false"
               >
-              <button class="task-options__edit-task text-xs text-start cursor-pointer" onclick="editTaskHandler('${id}')">
+              <button class="task-options__edit-task text-xs text-start cursor-pointer" onclick="editTaskHandler(this,'${id}')">
                 Edit
               </button>
-              <button class="task-options__delete-task text-xs text-start cursor-pointer" onclick="deleteTaskHandler('${id}')">
+              <button class="task-options__delete-task text-xs text-start cursor-pointer" onclick="deleteTaskHandler(this,'${id}')">
                 Delete
               </button>
-              <button class="task-options__finish-task text-xs text-start cursor-pointer" onclick="finishTaskHandler('${id}')">
+              <button class="task-options__finish-task text-xs text-start cursor-pointer" onclick="finishTaskHandler(this,'${id}')">
                 Finish
               </button>
             </div>
@@ -128,6 +127,9 @@ function insertTodos(todos) {
       createdAt = todo.createdAt.slice(0, 10);
       template += generateTodo(todo);
     });
+  } else {
+    template =
+      "<span class='text-center text-davy-grey py-5'>No Todo created yet</span>";
   }
 
   todosContainer.innerHTML = template;
@@ -190,88 +192,51 @@ function insertCompletedTodos(todos) {
       }
     });
   } else {
-    template = "<span>Nothing Completed yet</span>";
+    template =
+      "<span class='text-center text-davy-grey py-5'>Nothing Completed yet</span>";
   }
 
   todosCompletedContainer.innerHTML = template;
 }
 
-function updateTodos() {
-  const newTodos = getFromLocalStorage("myTodos");
-
-  todos.length = 0;
-  todos.push(...newTodos, ...user.tasks);
-
-  insertTodos(todos);
-  setTaskOptionsEvent();
-}
-
-document.addEventListener("todoCreated", updateTodos);
-
-function showTaskOptionsList(taskOptionsList) {
-  taskOptionsList.classList.remove("invisible", "opacity-0");
-  taskOptionsList.dataset.isVisible = true;
-}
-
-function hideTaskOptionsList(taskOptionsList) {
-  taskOptionsList.classList.add("invisible", "opacity-0");
-  taskOptionsList.dataset.isVisible = false;
-}
-
-function toggleTaskOptionsList(clickEvent) {
-  console.log(clickEvent.currentTarget);
-  const taskOptionsList = clickEvent.currentTarget.nextElementSibling;
-
-  if (taskOptionsList.dataset.isVisible === "false") {
-    showTaskOptionsList(taskOptionsList);
-  } else {
-    hideTaskOptionsList(taskOptionsList);
-  }
-}
-
-function setTaskOptionsEvent() {
+function setTodoOptionsEvent() {
   [...document.getElementsByClassName("task-options__icon")].forEach(
-    (taskOptionIcon) =>
-      taskOptionIcon.addEventListener("click", toggleTaskOptionsList)
+    (todoOptionIcon) =>
+      todoOptionIcon.addEventListener("click", showTodoOptions)
   );
 }
 
 window.addEventListener("load", async () => {
-  user = await getUser(1);
-  statistics = await getStatistics();
+  DB = getFromLocalStorage("DB");
+  console.log("🚀 ~ window.addEventListener ~ DB:", DB);
 
-  const localTodos = getFromLocalStorage("myTodos");
-  if (localTodos) {
-    todos.push(...localTodos);
-  }
+  user = DB.users[0];
+  statistics = DB.statistics;
 
-  todos.push(...user.tasks);
+  todos.push(...user.todos);
 
   insertTodos(todos);
   insertCompletedTodos(todos);
   insertTodosStatistics(statistics);
-  setTaskOptionsEvent();
+  setTodoOptionsEvent();
 });
 
 window.editTaskHandler = editTaskHandler;
 
-function editTaskHandler(taskId) {
-  const taskIndex = findTaskIndex(taskId, todos);
+function editTaskHandler(btn, taskId) {
+  hideTodoOptions()
+
+  const taskIndex = findTodoIndex(taskId, todos);
 
   taskIndex !== -1 ? showEditTodoModal(todos[taskIndex]) : null;
 }
 
-function deleteTodo(todoId) {
-  let todos = getFromLocalStorage("myTodos") || [];
-
-  todos = todos.filter((todo) => todo.id !== todoId);
-
-  saveToLocalStorage("myTodos", todos);
-}
-
 window.deleteTaskHandler = deleteTaskHandler;
 
-async function deleteTaskHandler(taskId) {
+async function deleteTaskHandler(btn, taskId) {
+  hideTodoOptions()
+
+
   const isDeleteConfirm = await swal({
     title: "Are you sure?",
     buttons: ["Cancel", "Delete"],
@@ -282,30 +247,38 @@ async function deleteTaskHandler(taskId) {
       (task) => String(task.id) !== String(taskId)
     );
 
-    deleteTodo(taskId);
-
     todos.length = 0;
     todos.push(...remainingTodos);
+    user.todos = todos;
+    DB.users[0] = user;
+
+    saveToLocalStorage("DB", DB);
 
     insertTodos(todos);
     insertCompletedTodos(todos);
     insertTodosStatistics(statistics);
-    setTaskOptionsEvent();
+    setTodoOptionsEvent();
   }
 }
 
 window.finishTaskHandler = finishTaskHandler;
 
-function finishTaskHandler(taskId) {
-  const taskIndex = findTaskIndex(taskId, todos);
+function finishTaskHandler(btn, taskId) {
+  hideTodoOptions()
+
+  const taskIndex = findTodoIndex(taskId, todos);
 
   if (taskIndex !== -1) {
     todos[taskIndex].status = "Finished";
 
+    user.todos = todos;
+    DB.users[0] = user;
+    saveToLocalStorage("DB", DB);
+
     insertTodos(todos);
     insertCompletedTodos(todos);
     insertTodosStatistics(statistics);
-    setTaskOptionsEvent();
+    setTodoOptionsEvent();
   }
 }
 
@@ -314,25 +287,36 @@ const showCreateTodoModalBtn = document.getElementById(
 );
 showCreateTodoModalBtn.addEventListener("click", showCreateTodoModal);
 
-function saveNewTodo(newTodo) {
-  console.log("🚀 ~ newTodo:", newTodo);
-  let todos = getFromLocalStorage("myTodos") || [];
+function saveTodoHandler(event) {
+  todos.push(event.detail);
 
-  const todoIndex = findTaskIndex(newTodo.id, todos);
+  user.todos = todos;
+  DB.users[0].todos = todos;
 
-  if (todoIndex !== -1) {
-    todos[todoIndex] = newTodo;
-  } else {
-    todos = [newTodo, ...todos];
-  }
+  saveToLocalStorage("DB", DB);
+  DB = getFromLocalStorage("DB");
 
-  saveToLocalStorage("myTodos", todos);
+  insertTodos(todos);
+  setTodoOptionsEvent();
 }
 
-function saveTodoHandler(event) {
-  saveNewTodo(event.detail);
-  updateTodos();
+function updateTodoHandler(event) {
+  const editedTodo = event.detail;
+  const editedTodoIndex = findTodoIndex(editedTodo.id, todos);
+
+  if (editedTodoIndex !== -1) {
+    todos[editedTodoIndex] = editedTodo;
+
+    user.todos = todos;
+    DB.users[0] = user;
+
+    saveToLocalStorage("DB", DB);
+    DB = getFromLocalStorage("DB");
+  }
+
+  insertTodos(todos);
+  setTodoOptionsEvent();
 }
 
 document.addEventListener("todoCreated", saveTodoHandler);
-document.addEventListener("todoUpdated", saveTodoHandler);
+document.addEventListener("todoUpdated", updateTodoHandler);

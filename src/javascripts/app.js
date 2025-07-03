@@ -1,19 +1,23 @@
-import { getUser } from "./apis/users.api.js";
+import getDB from "./apis/db.api.js";
+import {
+  getDateTime,
+  getFromLocalStorage,
+  saveToLocalStorage,
+  searchTodo,
+} from "./modules/utils.js";
 import { hideCalendar, showCalendar } from "./modules/calendar.js";
 import {
   hideNotifications,
   showNotifications,
 } from "./modules/notification.js";
 import {
+  hideTodoOptions,
   hideTransparentOverlay,
   showTransparentOverlay,
 } from "./modules/shared.js";
 import { hideTodoModal } from "./modules/todo-modal.js";
-import {
-  getDateTime,
-  searchTodo,
-} from "./modules/utils.js";
 
+let DB = {};
 const todos = [];
 let user = {};
 
@@ -90,6 +94,7 @@ function hideVisibleContent() {
   hideCalendar();
 
   hideTodoModal();
+  hideTodoOptions();
 }
 
 const overlay = document.getElementById("overlay");
@@ -171,13 +176,25 @@ function insertDate() {
           <span class="text-picton-blue">${dateTime.date}</span>`;
 }
 
+async function saveDefaultData() {
+  DB = getFromLocalStorage("DB");
+
+  if (!DB) {
+    DB = await getDB();
+
+    saveToLocalStorage("DB", DB);
+  }
+}
+
 window.addEventListener("load", async () => {
   insertDate();
 
-  user = await getUser(1); // Static userId
+  await saveDefaultData();
 
-  todos.length = 0;
-  todos.push(...user.tasks);
+  DB = getFromLocalStorage("DB");
+
+  user = DB.users[0];
+  todos.push(...user.todos);
 });
 
 document

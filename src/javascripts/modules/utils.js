@@ -232,7 +232,7 @@ function findUser(userId, users) {
   return users[userIndex] ?? null;
 }
 
-const findTaskIndex = (taskId, tasks) =>
+const findTodoIndex = (taskId, tasks) =>
   tasks.findIndex((task) => String(task.id) === String(taskId));
 
 // Sort
@@ -267,12 +267,11 @@ function saveToLocalStorage(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
+    console.error(error)
     swal({
       title: "Your Browser Storage is full",
       text: "Please remove a todo to free space for new todo",
     });
-
-    return new Error(error);
   }
 }
 
@@ -362,7 +361,7 @@ export {
   getDateTime,
   searchTodo,
   findUser,
-  findTaskIndex,
+  findTodoIndex,
   normalizeDateTime,
   calcRelativeDateTimeDifference,
   convertMonthToMonthName,

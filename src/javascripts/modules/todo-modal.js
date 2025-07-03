@@ -7,8 +7,10 @@ import {
 } from "./utils.js";
 
 let todoPriority = null;
+let selectedTodo = null;
 
 function resetTodoForm() {
+  todoPriority = null;
   document.getElementById("todo-form").reset();
 }
 
@@ -94,8 +96,9 @@ function prepareEditTodoModal(task) {
     .classList.remove("hidden");
 }
 
-function showEditTodoModal(task) {
-  prepareEditTodoModal(task);
+function showEditTodoModal(todo) {
+  selectedTodo = todo;
+  prepareEditTodoModal(todo);
   showTodoModal();
 }
 
@@ -196,7 +199,6 @@ function createTodoHandler(clickEvent) {
 
 function updateEditedTodo(todoId) {
   const files = document.getElementById("todo-form__cover").files;
-  console.log("🚀 ~ files:", files);
 
   const editedTodo = {
     id: todoId,
@@ -231,14 +233,13 @@ function updateEditedTodo(todoId) {
 
       reader.readAsDataURL(files[0]);
     } else {
-      editedTodo.cover.path = "./default-todo-cover.png";
-      editedTodo.cover.alt = "default todo cover";
-      editedTodo.cover.type = "png";
+      editedTodo.cover = selectedTodo.cover;
 
       document.dispatchEvent(
         new CustomEvent("todoUpdated", { detail: editedTodo })
       );
     }
+
     hideTodoModal();
   }
 }

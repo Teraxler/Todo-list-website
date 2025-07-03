@@ -16,7 +16,7 @@
       "position": "Software Engineer",
       "createdAt": "2024-05-10T09:00:00",
       "profile": "",
-      "tasks": [
+      "todos": [
         {
           "id": 101,
           "title": "Develop API Endpoint",
@@ -110,7 +110,7 @@
       "position": "Project Manager",
       "createdAt": "2024-05-10T09:30:00",
       "profile": "",
-      "tasks": [
+      "todos": [
         {
           "id": 201,
           "title": "Review Project Timeline",
