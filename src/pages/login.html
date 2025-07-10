@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo | Sign In</title>
+
+    <link rel="stylesheet" href="../styles/app.css" />
+  </head>
+  <body
+    class="flex items-center justify-center w-dvw h-dvh bg-[url(../assets/images/backgrounds/istockphoto.png)] bg-primary"
+  >
+    <svg class="hidden" hidden>
+      <symbol id="x-logo" viewBox="0 0 50 50">
+        <path
+          d="M 11 4 C 7.134 4 4 7.134 4 11 L 4 39 C 4 42.866 7.134 46 11 46 L 39 46 C 42.866 46 46 42.866 46 39 L 46 11 C 46 7.134 42.866 4 39 4 L 11 4 z M 13.085938 13 L 21.023438 13 L 26.660156 21.009766 L 33.5 13 L 36 13 L 27.789062 22.613281 L 37.914062 37 L 29.978516 37 L 23.4375 27.707031 L 15.5 37 L 13 37 L 22.308594 26.103516 L 13.085938 13 z M 16.914062 15 L 31.021484 35 L 34.085938 35 L 19.978516 15 L 16.914062 15 z"
+        />
+      </symbol>
+      <symbol id="google-logo" viewBox="0 0 48 48">
+        <path
+          fill="#FFC107"
+          d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+        />
+        <path
+          fill="#FF3D00"
+          d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
+        />
+        <path
+          fill="#4CAF50"
+          d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
+        />
+        <path
+          fill="#1976D2"
+          d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+        />
+      </symbol>
+      <symbol id="facebook-logo" viewBox="0 0 48 48">
+        <path
+          fill="#039be5"
+          d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"
+        ></path>
+        <path
+          fill="#fff"
+          d="M26.572,29.036h4.917l0.772-4.995h-5.69v-2.73c0-2.075,0.678-3.915,2.619-3.915h3.119v-4.359c-0.548-0.074-1.707-0.236-3.897-0.236c-4.573,0-7.254,2.415-7.254,7.917v3.323h-4.701v4.995h4.701v13.729C22.089,42.905,23.032,43,24,43c0.875,0,1.729-0.08,2.572-0.194V29.036z"
+        ></path>
+      </symbol>
+      <symbol
+        id="password-solid"
+        viewBox="0 0 30 30"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15 21.25C15.663 21.25 16.2989 20.9866 16.7678 20.5178C17.2366 20.0489 17.5 19.413 17.5 18.75C17.5 18.087 17.2366 17.4511 16.7678 16.9822C16.2989 16.5134 15.663 16.25 15 16.25C14.337 16.25 13.7011 16.5134 13.2322 16.9822C12.7634 17.4511 12.5 18.087 12.5 18.75C12.5 19.413 12.7634 20.0489 13.2322 20.5178C13.7011 20.9866 14.337 21.25 15 21.25ZM22.5 10C23.163 10 23.7989 10.2634 24.2678 10.7322C24.7366 11.2011 25 11.837 25 12.5V25C25 25.663 24.7366 26.2989 24.2678 26.7678C23.7989 27.2366 23.163 27.5 22.5 27.5H7.5C6.83696 27.5 6.20107 27.2366 5.73223 26.7678C5.26339 26.2989 5 25.663 5 25V12.5C5 11.837 5.26339 11.2011 5.73223 10.7322C6.20107 10.2634 6.83696 10 7.5 10H8.75V7.5C8.75 5.8424 9.40848 4.25269 10.5806 3.08058C11.7527 1.90848 13.3424 1.25 15 1.25C15.8208 1.25 16.6335 1.41166 17.3918 1.72575C18.1501 2.03984 18.8391 2.50022 19.4194 3.08058C19.9998 3.66095 20.4602 4.34994 20.7742 5.10823C21.0883 5.86651 21.25 6.67924 21.25 7.5V10H22.5ZM15 3.75C14.0054 3.75 13.0516 4.14509 12.3483 4.84835C11.6451 5.55161 11.25 6.50544 11.25 7.5V10H18.75V7.5C18.75 6.50544 18.3549 5.55161 17.6517 4.84835C16.9484 4.14509 15.9946 3.75 15 3.75Z"
+          fill="#212427"
+        />
+      </symbol>
+      <symbol
+        id="user-icon"
+        viewBox="0 0 30 30"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15 5C16.3261 5 17.5979 5.52678 18.5355 6.46447C19.4732 7.40215 20 8.67392 20 10C20 11.3261 19.4732 12.5979 18.5355 13.5355C17.5979 14.4732 16.3261 15 15 15C13.6739 15 12.4021 14.4732 11.4645 13.5355C10.5268 12.5979 10 11.3261 10 10C10 8.67392 10.5268 7.40215 11.4645 6.46447C12.4021 5.52678 13.6739 5 15 5ZM15 17.5C20.525 17.5 25 19.7375 25 22.5V25H5V22.5C5 19.7375 9.475 17.5 15 17.5Z"
+          fill="#212427"
+        />
+      </symbol>
+    </svg>
+    <section
+      class="flex bg-white xs:w-60/100 sm:w-855/1000 h-fit my-8 pb-6 pt-9 md:pt-20 lg:pt-36.25 mx-auto rounded-[10px] font-montserrat"
+    >
+      <!-- LEFT -->
+      <div
+        class="flex flex-col items-center sm:items-start w-full sm:w-55/100 md:w-1/2 px-7 sm:px-4 sm:pr-0 sm:pl-7.5 md:pl-9 lg:pl-12.5"
+      >
+        <h1 class="sm:w-auto font-bold text-2xl md:text-3xl xl:text-4xl">
+          Sign In
+        </h1>
+        <form
+          class="text-sm md:text-base font-medium flex flex-col gap-y-4 xl:gap-y-5.5 mt-5.5"
+          action=""
+        >
+          <div class="flex relative">
+            <label
+              class="absolute left-3 xl:left-4 top-1/2 -translate-y-1/2"
+              for="username-input"
+            >
+              <svg class="size-4.5 md:size-5.5 xl:size-7">
+                <use href="#user-icon"></use>
+              </svg>
+            </label>
+            <input
+              class="w-full max-w-135 text-spanish-gray py-2 md:py-3 xl:py-4 pr-3 xl:pr-4.5 pl-9.5 md:pl-11 xl:pl-17.5 border border-davy-grey rounded-lg"
+              type="text"
+              id="username-input"
+              placeholder="Enter Username"
+            />
+          </div>
+
+          <div class="flex relative">
+            <label
+              class="absolute left-3 xl:left-4 top-1/2 -translate-y-1/2"
+              for="password-input"
+            >
+              <svg class="size-4.5 md:size-5.5 xl:size-7">
+                <use href="#password-solid"></use>
+              </svg>
+            </label>
+            <input
+              class="w-full max-w-135 text-spanish-gray py-2 md:py-3 xl:py-4 pr-3 xl:pr-4.5 pl-9.5 md:pl-11 xl:pl-17.5 border border-davy-grey rounded-lg"
+              type="password"
+              id="password-input"
+              placeholder="Enter Password"
+            />
+          </div>
+
+          <div class="flex items-center gap-x-4 md:gap-x-6.5">
+            <input
+              class="text-spanish-gray accent-primary py-4 pr-4.5 pl-17.5 border border-davy-grey rounded-lg"
+              type="checkbox"
+              name=""
+              id="remember-me-checkbox"
+            />
+            <label class="text-dark-gunmetal" for="remember-me-checkbox"
+              >Rememerber me</label
+            >
+          </div>
+
+          <button
+            id="sign-up-btn"
+            class="bg-tulip hover:bg-primary transition-colors cursor-pointer w-28 xl:w-32.5 text-ghost-white-2 py-2.5 xl:py-5 rounded-[5px]"
+            type="button"
+          >
+            Login
+          </button>
+
+          <div>
+            <span class="flex gap-x-5 items-center mb-3.75">
+              Or, Login with
+              <div class="flex gap-x-3 h-7">
+                <a href="javascripts:void(0)">
+                  <svg class="size-7">
+                    <use href="#facebook-logo"></use>
+                  </svg>
+                </a>
+                <a href="javascripts:void(0)">
+                  <svg class="size-7">
+                    <use href="#google-logo"></use>
+                  </svg>
+                </a>
+                <a href="javascripts:void(0)">
+                  <svg class="size-7">
+                    <use href="#x-logo"></use>
+                  </svg>
+                </a>
+              </div>
+            </span>
+            <span class="text-dark-gunmetal">
+              Don't have an account?
+              <a class="hover:underline text-blue-cola" href="./register.html"
+                >Create One</a
+              >
+            </span>
+          </div>
+        </form>
+      </div>
+      <!-- RIGHT -->
+      <div
+        class="hidden sm:flex items-center justify-center w-45/100 md:w-1/2 pt-15.5 -mb-12 pr-3.5"
+      >
+        <img
+          class="aspect-square md:w-90/100"
+          src="../assets/shapes/login.png"
+          alt="Shape"
+        />
+      </div>
+    </section>
+  </body>
+
+  <script src="../javascripts/pages/login.js" type="module"></script>
+
+  <script src="../../node_modules/sweetalert/dist/sweetalert.min.js"></script>
+</html>
