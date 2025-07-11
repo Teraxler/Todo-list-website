@@ -146,77 +146,48 @@ function insertTodos(todos) {
 }
 
 function insertTodosStatistics(statistics) {
-  console.log(statistics);
-
   let template = "",
     title = "",
     donutColorVar = "",
     circleColorClass = "";
   const todosStatsContainer = document.getElementById("todos-stats-container");
 
-  if (statistics) {
-    for (const key in statistics) {
-      if (key === "completed") {
-        title = "Completed";
-        donutColorVar = "--color-success";
-        circleColorClass = "dot-icon--success";
-      } else if (key === "inProgress") {
-        title = "In Progress";
-        donutColorVar = "--color-blue-bonnet";
-        circleColorClass = "dot-icon--blue-bonnet";
-      } else {
-        title = "Not Started";
-        donutColorVar = "--color-danger";
-        circleColorClass = "dot-icon--danger";
-      }
-
-      template += `
-        <div>
-          <div class="donut-chart shrink-0" style="background: conic-gradient(
-      var(${donutColorVar}) 0deg ${clacDegreesOfPercent(statistics[key])}deg,
-      var(--color-light-silver) ${clacDegreesOfPercent(
-        statistics[key]
-      )}deg 360deg
-    );">
-            <span class="donut-chart__title">${statistics[key]}%</span>
-          </div>
-          <li class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon ${circleColorClass}">
-            ${title}
-          </li>
-        </div>`;
+  for (const key in statistics) {
+    if (key === "completed") {
+      title = "Completed";
+      donutColorVar = "--color-success";
+      circleColorClass = "dot-icon--success";
+    } else if (key === "inProgress") {
+      title = "In Progress";
+      donutColorVar = "--color-blue-bonnet";
+      circleColorClass = "dot-icon--blue-bonnet";
+    } else {
+      title = "Not Started";
+      donutColorVar = "--color-danger";
+      circleColorClass = "dot-icon--danger";
     }
-  } else {
-    template = `
-        <div>
-          <div class="donut-chart shrink-0" style="background: conic-gradient(
-        var(--color-success) 0deg 0deg,
-        var(--color-light-silver) 0deg 360deg);">
-          <span class="donut-chart__title">0%</span>
-          </div>
-          <li class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--success">
-            Completed
-          </li>
-        </div>
-        <div>
-          <div class="donut-chart shrink-0" style="background: conic-gradient(
-        var(--color-blue-bonnet) 0deg 0deg,
-        var(--color-light-silver) 0deg 360deg);">
-          <span class="donut-chart__title">0%</span>
-          </div>
-          <li class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--blue-bonnet">
-            In Progress
-          </li>
-        </div>
-        <div>
-          <div class="donut-chart shrink-0" style="background: conic-gradient(
-        var(--color-danger) 0deg 0deg,
-        var(--color-light-silver) 0deg 360deg);">
-          <span class="donut-chart__title">0%</span>
-          </div>
-          <li class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--danger">
-            Not Started
-          </li>
-        </div>`;
+
+    template += `
+  <div>
+    <div
+      class="donut-chart shrink-0"
+      style="
+        background: conic-gradient(
+          var(${donutColorVar}) 0deg 
+          ${clacDegreesOfPercent(statistics[key])}deg,
+          var(--color-light-silver) ${clacDegreesOfPercent(statistics[key])}deg
+            360deg
+        );
+      "
+    >
+      <span class="donut-chart__title">${statistics[key]}%</span>
+    </div>
+    <li
+      class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon ${circleColorClass}"
+    >
+      ${title}
+    </li>
+  </div>`;
   }
 
   todosStatsContainer.innerHTML = template;
@@ -277,28 +248,34 @@ function updateDB(editedUser) {
 }
 
 function updateStatistics(todos) {
-  let count = todos.length,
-    notStarted,
-    inProgress,
-    finished;
+  let notStarted, inProgress, finished;
+  const count = todos.length;
 
   notStarted = inProgress = finished = 0;
 
-  todos.forEach((todo) => {
-    if (todo.status === "Not Started") {
-      notStarted++;
-    } else if (todo.status === "In Progress") {
-      inProgress++;
-    } else if (todo.status === "Finished") {
-      finished++;
-    }
-  });
+  if (count) {
+    todos.forEach((todo) => {
+      if (todo.status === "Not Started") {
+        notStarted++;
+      } else if (todo.status === "In Progress") {
+        inProgress++;
+      } else if (todo.status === "Finished") {
+        finished++;
+      }
+    });
 
-  user.statistics = {
-    completed: ((finished / count) * 100).toFixed(1),
-    inProgress: ((inProgress / count) * 100).toFixed(1),
-    notStarted: ((notStarted / count) * 100).toFixed(1),
-  };
+    user.statistics = {
+      completed: ((finished / count) * 100).toFixed(1),
+      inProgress: ((inProgress / count) * 100).toFixed(1),
+      notStarted: ((notStarted / count) * 100).toFixed(1),
+    };
+  } else {
+    user.statistics = {
+      completed: "0.0",
+      inProgress: "0.0",
+      notStarted: "0.0",
+    };
+  }
 
   updateDB(user);
 }

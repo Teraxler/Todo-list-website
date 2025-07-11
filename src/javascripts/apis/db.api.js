@@ -1,6 +1,6 @@
 export default async function getDB() {
   try {
-    const response = await fetch("../src/javascripts/database.json");
+    const response = await fetch("../javascripts/database.json");
 
     return await response.json();
   } catch (error) {
