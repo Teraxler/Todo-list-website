@@ -1,11 +1,14 @@
 "use strict";
 
-import { calcRelativeDateTimeDifference } from "./utils.js";
+import {
+  calcRelativeDateTimeDifference,
+  findUser,
+  getFromLocalStorage,
+} from "./utils.js";
 import { getUser } from "../apis/users.api.js";
 import { hideTransparentOverlay, showTransparentOverlay } from "./shared.js";
 
-let user = {},
-  notifications = [];
+let user = {};
 
 function showNotifications() {
   showTransparentOverlay();
@@ -23,7 +26,7 @@ function hideNotifications() {
     .classList.add("opacity-0", "invisible");
 }
 
-function insertNotifications() {
+function insertNotifications(notifications) {
   let template = "";
   const notificationsContainer = document.getElementById(
     "notifications-container"
@@ -76,11 +79,12 @@ function insertNotifications() {
 }
 
 window.addEventListener("load", async () => {
-  user = await getUser(1);
-  notifications = user.notifications;
+  const DB = getFromLocalStorage("DB");
+  const currentUser = getFromLocalStorage("currentUser");
 
-  insertNotifications();
-  console.log("🚀 ~ window.addEventListener ~ notifications:", notifications);
+  user = findUser(currentUser.userId, DB.users);
+
+  insertNotifications(user.notifications);
 });
 
 export { showNotifications, hideNotifications };
