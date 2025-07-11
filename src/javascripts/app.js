@@ -1,9 +1,7 @@
-import getDB from "./apis/db.api.js";
 import {
   findUser,
   getDateTime,
   getFromLocalStorage,
-  saveToLocalStorage,
   searchTodo,
 } from "./modules/utils.js";
 import { hideCalendar, showCalendar } from "./modules/calendar.js";
@@ -22,7 +20,6 @@ import { hideTodoModal } from "./modules/todo-modal.js";
 
 let DB = {};
 let user = {};
-
 let isSidebarVisible = window.innerWidth >= 600;
 
 function showSidebar() {
@@ -174,16 +171,6 @@ function insertDate() {
           <span class="text-picton-blue">${dateTime.date}</span>`;
 }
 
-async function saveDefaultData() {
-  DB = getFromLocalStorage("DB");
-
-  if (!DB) {
-    DB = await getDB();
-
-    saveToLocalStorage("DB", DB);
-  }
-}
-
 function routeProtection() {
   const currentUser = getFromLocalStorage("currentUser");
 
@@ -199,7 +186,6 @@ window.addEventListener("load", async () => {
   const currentUser = getFromLocalStorage("currentUser");
   const userId = currentUser.userId;
 
-  await saveDefaultData();
   DB = getFromLocalStorage("DB");
 
   user = findUser(userId, DB.users);
