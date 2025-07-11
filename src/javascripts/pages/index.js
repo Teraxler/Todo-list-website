@@ -4,8 +4,10 @@ import {
   clacDegreesOfPercent,
   convertMonthToMonthName,
   findTodoIndex,
+  findUser,
   getFromLocalStorage,
   normalizeDateTime,
+  removeFromLocalStorage,
   saveToLocalStorage,
 } from "../modules/utils.js";
 import {
@@ -14,10 +16,8 @@ import {
 } from "../modules/todo-modal.js";
 import { hideTodoOptions, showTodoOptions } from "../modules/shared.js";
 
-const todos = [];
 let DB = {};
 let user = {};
-let statistics = {};
 
 function generateTodoTemplate(todo) {
   const { id, title, description, cover, createdAt, priority, status } = todo;
@@ -146,8 +146,9 @@ function insertTodos(todos) {
 }
 
 function insertTodosStatistics(statistics) {
+  console.log(statistics);
+
   let template = "",
-    percents = 0,
     title = "",
     donutColorVar = "",
     circleColorClass = "";
@@ -184,6 +185,38 @@ function insertTodosStatistics(statistics) {
           </li>
         </div>`;
     }
+  } else {
+    template = `
+        <div>
+          <div class="donut-chart shrink-0" style="background: conic-gradient(
+        var(--color-success) 0deg 0deg,
+        var(--color-light-silver) 0deg 360deg);">
+          <span class="donut-chart__title">0%</span>
+          </div>
+          <li class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--success">
+            Completed
+          </li>
+        </div>
+        <div>
+          <div class="donut-chart shrink-0" style="background: conic-gradient(
+        var(--color-blue-bonnet) 0deg 0deg,
+        var(--color-light-silver) 0deg 360deg);">
+          <span class="donut-chart__title">0%</span>
+          </div>
+          <li class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--blue-bonnet">
+            In Progress
+          </li>
+        </div>
+        <div>
+          <div class="donut-chart shrink-0" style="background: conic-gradient(
+        var(--color-danger) 0deg 0deg,
+        var(--color-light-silver) 0deg 360deg);">
+          <span class="donut-chart__title">0%</span>
+          </div>
+          <li class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--danger">
+            Not Started
+          </li>
+        </div>`;
   }
 
   todosStatsContainer.innerHTML = template;
@@ -219,19 +252,29 @@ function setTodoOptionsEvent() {
 }
 
 window.addEventListener("load", async () => {
+  const currentUser = getFromLocalStorage("currentUser");
+  !currentUser.rememberMe && removeFromLocalStorage("currentUser");
+
   DB = getFromLocalStorage("DB");
-  console.log("🚀 ~ window.addEventListener ~ DB:", DB);
 
-  user = DB.users[0];
-  statistics = DB.statistics;
+  user = findUser(currentUser.userId, DB.users);
 
-  todos.push(...user.todos);
-
-  insertTodos(todos);
-  insertCompletedTodos(todos);
-  insertTodosStatistics(statistics);
+  insertTodos(user.todos);
+  insertCompletedTodos(user.todos);
+  insertTodosStatistics(user.statistics);
   setTodoOptionsEvent();
 });
+
+function updateDB(editedUser) {
+  const userIndex = DB.users.findIndex(
+    (user) => String(user.id) === String(editedUser.id)
+  );
+
+  DB.users[userIndex] = editedUser;
+
+  saveToLocalStorage("DB", DB);
+  DB = getFromLocalStorage("DB");
+}
 
 function updateStatistics(todos) {
   let count = todos.length,
@@ -251,13 +294,13 @@ function updateStatistics(todos) {
     }
   });
 
-  DB.statistics = {
+  user.statistics = {
     completed: ((finished / count) * 100).toFixed(1),
     inProgress: ((inProgress / count) * 100).toFixed(1),
     notStarted: ((notStarted / count) * 100).toFixed(1),
   };
 
-  saveToLocalStorage("DB", DB);
+  updateDB(user);
 }
 
 window.startTaskHandler = startTaskHandler;
@@ -265,19 +308,17 @@ window.startTaskHandler = startTaskHandler;
 function startTaskHandler(todoId) {
   hideTodoOptions();
 
-  const todoIndex = findTodoIndex(todoId, todos);
+  const todoIndex = findTodoIndex(todoId, user.todos);
 
   if (todoIndex !== -1) {
-    todos[todoIndex].status = "In Progress";
+    user.todos[todoIndex].status = "In Progress";
 
-    user.todos = todos;
-    DB.users[0] = user;
+    updateDB(user);
 
-    saveToLocalStorage("DB", DB);
-    insertTodos(todos);
-    insertCompletedTodos(todos);
-    updateStatistics(todos);
-    insertTodosStatistics(DB.statistics);
+    insertTodos(user.todos);
+    insertCompletedTodos(user.todos);
+    updateStatistics(user.todos);
+    insertTodosStatistics(user.statistics);
     setTodoOptionsEvent();
   }
 }
@@ -287,9 +328,9 @@ window.editTaskHandler = editTaskHandler;
 function editTaskHandler(taskId) {
   hideTodoOptions();
 
-  const taskIndex = findTodoIndex(taskId, todos);
+  const taskIndex = findTodoIndex(taskId, user.todos);
 
-  taskIndex !== -1 ? showEditTodoModal(todos[taskIndex]) : null;
+  taskIndex !== -1 ? showEditTodoModal(user.todos[taskIndex]) : null;
 }
 
 window.deleteTaskHandler = deleteTaskHandler;
@@ -303,21 +344,17 @@ async function deleteTaskHandler(taskId) {
   });
 
   if (isDeleteConfirm) {
-    const remainingTodos = todos.filter(
+    const remainingTodos = user.todos.filter(
       (task) => String(task.id) !== String(taskId)
     );
 
-    todos.length = 0;
-    todos.push(...remainingTodos);
-    user.todos = todos;
-    DB.users[0] = user;
+    user.todos = [...remainingTodos];
+    updateDB(user);
 
-    saveToLocalStorage("DB", DB);
-
-    insertTodos(todos);
-    insertCompletedTodos(todos);
-    updateStatistics(todos);
-    insertTodosStatistics(DB.statistics);
+    insertTodos(user.todos);
+    insertCompletedTodos(user.todos);
+    updateStatistics(user.todos);
+    insertTodosStatistics(user.statistics);
     setTodoOptionsEvent();
   }
 }
@@ -327,19 +364,16 @@ window.finishTaskHandler = finishTaskHandler;
 function finishTaskHandler(taskId) {
   hideTodoOptions();
 
-  const taskIndex = findTodoIndex(taskId, todos);
+  const taskIndex = findTodoIndex(taskId, user.todos);
 
   if (taskIndex !== -1) {
-    todos[taskIndex].status = "Finished";
+    user.todos[taskIndex].status = "Finished";
+    updateDB(user);
 
-    user.todos = todos;
-    DB.users[0] = user;
-    saveToLocalStorage("DB", DB);
-
-    insertTodos(todos);
-    insertCompletedTodos(todos);
-    updateStatistics(todos);
-    insertTodosStatistics(DB.statistics);
+    insertTodos(user.todos);
+    insertCompletedTodos(user.todos);
+    updateStatistics(user.todos);
+    insertTodosStatistics(user.statistics);
     setTodoOptionsEvent();
   }
 }
@@ -350,39 +384,31 @@ const showCreateTodoModalBtn = document.getElementById(
 showCreateTodoModalBtn.addEventListener("click", showCreateTodoModal);
 
 function saveTodoHandler(event) {
-  let temp = [...todos];
-  todos.length = 0;
-  todos.push(event.detail, ...temp);
+  let temp = [...user.todos];
 
-  user.todos = todos;
-  DB.users[0].todos = todos;
+  user.todos.length = 0;
+  user.todos = [event.detail, ...temp];
+  updateDB(user);
 
-  saveToLocalStorage("DB", DB);
-  DB = getFromLocalStorage("DB");
-
-  insertTodos(todos);
-  updateStatistics(todos);
-  insertTodosStatistics(DB.statistics);
+  insertTodos(user.todos);
+  updateStatistics(user.todos);
+  insertTodosStatistics(user.statistics);
   setTodoOptionsEvent();
 }
 
 function updateTodoHandler(event) {
   const editedTodo = event.detail;
-  const editedTodoIndex = findTodoIndex(editedTodo.id, todos);
+  const editedTodoIndex = findTodoIndex(editedTodo.id, user.todos);
 
   if (editedTodoIndex !== -1) {
-    todos[editedTodoIndex] = editedTodo;
+    user.todos[editedTodoIndex] = editedTodo;
 
-    user.todos = todos;
-    DB.users[0] = user;
-
-    saveToLocalStorage("DB", DB);
-    DB = getFromLocalStorage("DB");
+    updateDB(user);
   }
 
-  insertTodos(todos);
-  updateStatistics(todos);
-  insertTodosStatistics(DB.statistics);
+  insertTodos(user.todos);
+  updateStatistics(user.todos);
+  insertTodosStatistics(user.statistics);
   setTodoOptionsEvent();
 }
 

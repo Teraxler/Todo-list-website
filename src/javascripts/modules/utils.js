@@ -271,12 +271,24 @@ function getFromLocalStorage(key) {
 function saveToLocalStorage(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
+    return true;
   } catch (error) {
     console.error(error);
     swal({
       title: "Your Browser Storage is full",
       text: "Please remove a todo to free space for new todo",
     });
+  }
+}
+
+function removeFromLocalStorage(key) {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    swal({
+      title: "Remove From LocalStorage Failed!",
+    });
+    new Error(error);
   }
 }
 
@@ -372,6 +384,7 @@ export {
   convertMonthToMonthName,
   getFromLocalStorage,
   saveToLocalStorage,
+  removeFromLocalStorage,
   convertImgToCanvas,
   convertDataUrlToBlob,
   getBase64Image,

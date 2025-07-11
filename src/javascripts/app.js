@@ -1,5 +1,6 @@
 import getDB from "./apis/db.api.js";
 import {
+  findUser,
   getDateTime,
   getFromLocalStorage,
   saveToLocalStorage,
@@ -20,7 +21,6 @@ import {
 import { hideTodoModal } from "./modules/todo-modal.js";
 
 let DB = {};
-const todos = [];
 let user = {};
 
 let isSidebarVisible = window.innerWidth >= 600;
@@ -142,7 +142,7 @@ function insertSearchResultHandler(keyupEvent) {
   const searchValue = keyupEvent.target.value.trim();
 
   if (searchValue.length > 2) {
-    const searchResult = searchTodo(searchValue, todos);
+    const searchResult = searchTodo(searchValue, user.todos);
 
     insertSearchResult(searchResult, searchResultContainer);
     insertSearchResult(searchResult, mobileSearchResultContainer);
@@ -184,15 +184,25 @@ async function saveDefaultData() {
   }
 }
 
+function routeProtection() {
+  const currentUser = getFromLocalStorage("currentUser");
+
+  if (!currentUser) {
+    location.href = "./pages/login.html";
+  }
+}
+
 window.addEventListener("load", async () => {
+  routeProtection();
   insertDate();
 
-  await saveDefaultData();
+  const currentUser = getFromLocalStorage("currentUser");
+  const userId = currentUser.userId;
 
+  await saveDefaultData();
   DB = getFromLocalStorage("DB");
 
-  user = DB.users[0];
-  todos.push(...user.todos);
+  user = findUser(userId, DB.users);
 });
 
 document
