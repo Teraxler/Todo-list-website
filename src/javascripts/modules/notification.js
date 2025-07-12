@@ -5,7 +5,6 @@ import {
   findUser,
   getFromLocalStorage,
 } from "./utils.js";
-import { getUser } from "../apis/users.api.js";
 import { hideTransparentOverlay, showTransparentOverlay } from "./shared.js";
 
 let user = {};

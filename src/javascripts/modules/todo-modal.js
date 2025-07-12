@@ -10,7 +10,6 @@ let todoPriority = null;
 let selectedTodo = null;
 
 function resetTodoForm() {
-  todoPriority = null;
   document.getElementById("todo-form").reset();
 }
 
@@ -31,7 +30,6 @@ function hideTodoModal() {
 }
 
 // New Todo
-
 function prepareCreateTodoModal() {
   document.getElementById("todo-form__update-todo-btn").classList.add("hidden");
   document
@@ -54,12 +52,10 @@ function showCreateTodoModal() {
   ).dateTimeISO;
 
   prepareCreateTodoModal();
-
   showTodoModal();
 }
 
 // Edit Todo
-
 function preFillFromInputs(task) {
   const { id, title, description, priority, cover, createdAt } = task;
 
@@ -73,9 +69,9 @@ function preFillFromInputs(task) {
     document.getElementById("todo-form__cover").previousElementSibling
       .children[0];
 
-  todoCoverPreview.src = cover.path
-    ? `./assets/images/todoes/${cover.path}`
-    : cover.img;
+  todoCoverPreview.src = cover.img
+    ? cover.img
+    : `./assets/images/todoes/${cover.path}`;
 
   showTodoCoverPreview();
   hideTodoUploadLabel();
@@ -126,7 +122,7 @@ function showTodoCoverPreviewHandler(changeEvent) {
       const image = new Image();
 
       image.onload = () => {
-        const imgAsDataUrl = convertImgToCanvas(image);
+        convertImgToCanvas(image);
       };
 
       image.src = loadEvent.target.result;
@@ -149,19 +145,29 @@ function hideTodoCoverPreview() {
   document.getElementById("todo-form__cover-preview").classList.add("hidden");
 }
 
-function createTodoHandler(clickEvent) {
-  clickEvent.preventDefault();
-  const files = document.getElementById("todo-form__cover").files;
-
-  const newTodo = {
-    id: idGenerator(),
+function generateNewTodo(todoId, todoCover) {
+  return {
+    id: todoId ?? idGenerator(),
     status: "Not Started",
-    priority: todoPriority,
-    cover: { path: null, alt: null, img: null },
+    priority: document.querySelector(".priority-task:checked").dataset
+      .taskPriority,
+    cover: todoCover ?? {
+      path: "./default-todo-cover.png",
+      alt: "default todo cover",
+      type: "png",
+      img: null,
+    },
     title: document.getElementById("todo-form__title").value.trim(),
     createdAt: document.getElementById("todo-form__date").value,
     description: document.getElementById("todo-form__description").value.trim(),
   };
+}
+
+function createTodoHandler(clickEvent) {
+  clickEvent.preventDefault();
+  const files = document.getElementById("todo-form__cover").files;
+
+  const newTodo = generateNewTodo();
 
   if (isTodoValid(newTodo)) {
     if (files.length) {
@@ -184,10 +190,6 @@ function createTodoHandler(clickEvent) {
 
       reader.readAsDataURL(files[0]);
     } else {
-      newTodo.cover.path = "./default-todo-cover.png";
-      newTodo.cover.alt = "default todo cover";
-      newTodo.cover.type = "png";
-
       document.dispatchEvent(
         new CustomEvent("todoCreated", { detail: newTodo })
       );
@@ -200,16 +202,7 @@ function createTodoHandler(clickEvent) {
 function updateEditedTodo(todoId) {
   const files = document.getElementById("todo-form__cover").files;
 
-  const editedTodo = {
-    id: todoId,
-    status: "Not Started",
-    priority: document.querySelector(".priority-task:checked").dataset
-      .taskPriority,
-    cover: { path: null, alt: null, img: null },
-    title: document.getElementById("todo-form__title").value.trim(),
-    createdAt: document.getElementById("todo-form__date").value,
-    description: document.getElementById("todo-form__description").value.trim(),
-  };
+  const editedTodo = generateNewTodo(todoId, selectedTodo.cover);
 
   if (isTodoValid(editedTodo)) {
     if (files.length) {
@@ -233,8 +226,6 @@ function updateEditedTodo(todoId) {
 
       reader.readAsDataURL(files[0]);
     } else {
-      editedTodo.cover = selectedTodo.cover;
-
       document.dispatchEvent(
         new CustomEvent("todoUpdated", { detail: editedTodo })
       );
@@ -273,7 +264,6 @@ function isTodoValid({ title, description, file: img, createdAt, priority }) {
       title: "Please fill all fields",
       icon: "warning",
     });
-
     return false;
   }
 
@@ -282,7 +272,6 @@ function isTodoValid({ title, description, file: img, createdAt, priority }) {
       title: "Cover must be maximum 500KB",
       icon: "warning",
     });
-
     return false;
   }
 
@@ -291,7 +280,6 @@ function isTodoValid({ title, description, file: img, createdAt, priority }) {
       title: "Cover type must be one of (png, jpg, jpeg, webp)",
       icon: "warning",
     });
-
     return false;
   }
 

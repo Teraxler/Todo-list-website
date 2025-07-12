@@ -163,6 +163,13 @@
     height: calc(100% - 20px);
   }
 
+  .swal-btn--danger{
+    background-color: var(--color-red-500)!important;
+  }
+  .swal-btn--natural{
+    background-color: var(--color-light-gray)!important;
+  }
+
   @media (width >= 1024) {
   }
 

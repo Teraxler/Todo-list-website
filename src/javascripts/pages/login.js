@@ -1,24 +1,21 @@
-import { getFromLocalStorage, saveToLocalStorage } from "../modules/utils.js";
+import {
+  findUserByUserPass,
+  getFromLocalStorage,
+  saveToLocalStorage,
+} from "../modules/utils.js";
 
 const usernameInput = document.getElementById("username-input");
 const passwordInput = document.getElementById("password-input");
 
 const rememberMeCheckbox = document.getElementById("remember-me-checkbox");
-const signUpBtn = document.getElementById("sign-up-btn");
-
-function findUserByUserPass(username, password) {
-  const DB = getFromLocalStorage("DB");
-
-  return DB.users.find(
-    (user) => user.username === username && user.password === password
-  );
-}
 
 async function signInUser() {
+  const DB = getFromLocalStorage("DB");
   const username = usernameInput.value.trim();
   const password = passwordInput.value.trim();
 
-  const user = findUserByUserPass(username, password);
+  const user = findUserByUserPass({ username, password }, DB.users);
+
   if (user) {
     await swal({
       title: `Welcome ${user.name}`,
@@ -42,5 +39,7 @@ async function signInUser() {
     });
   }
 }
+
+const signUpBtn = document.getElementById("sign-up-btn");
 
 signUpBtn.addEventListener("click", signInUser);

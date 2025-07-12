@@ -240,6 +240,12 @@ function findUser(userId, users) {
 const findTodoIndex = (taskId, tasks) =>
   tasks.findIndex((task) => String(task.id) === String(taskId));
 
+function findUserByUserPass({ username, password }, users) {
+  return users.find(
+    (user) => user.username === username && user.password === password
+  );
+}
+
 // Sort
 
 function bubbleSort(list, measure, increametal = true) {
@@ -379,6 +385,7 @@ export {
   searchTodo,
   findUser,
   findTodoIndex,
+  findUserByUserPass,
   normalizeDateTime,
   calcRelativeDateTimeDifference,
   convertMonthToMonthName,

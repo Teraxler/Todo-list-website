@@ -55,21 +55,25 @@ function generateTodoTemplate(todo) {
           </div>
           <div class="flex justify-between gap-x-2 xl:gap-x-2.5">
             <div>
-              <p class="text-sm xl:text-base/[19px] font-semibold line-clamp-2">
-                ${title}
+              <p class="text-sm xl:text-base/[19px] font-semibold">
+                <a class="line-clamp-2" href="./pages/todo-detail.html?id=${id}">
+                  ${title}
+                </a>
               </p>
               <p class="text-xs xl:text-sm/[17px] line-clamp-4 mt-2 xl:mt-2.5">
                 ${description}
               </p>
             </div>
             <div class="my-auto size-20 lg:size-22 shrink-0">
-              <img class="aspect-square h-full rounded-xl lg:rounded-[14px] overflow-hidden"
+              <a href="./pages/todo-detail.html?id=${id}">
+                <img class="aspect-square h-full rounded-xl lg:rounded-[14px] overflow-hidden"
                 ${
-                  cover.path
-                    ? `src="./assets/images/todoes/${cover.path}"`
-                    : `src="${cover.img}"`
+                  cover.img
+                    ? `src="${cover.img}"`
+                    : `src="./assets/images/todoes/${cover.path}"`
                 }
-                alt="${cover.alt}">
+                  alt="${cover.alt}">
+              </a>  
             </div>
           </div>
 
@@ -245,6 +249,7 @@ function updateDB(editedUser) {
 
   saveToLocalStorage("DB", DB);
   DB = getFromLocalStorage("DB");
+  user = DB.users[userIndex];
 }
 
 function updateStatistics(todos) {
@@ -381,12 +386,12 @@ function updateTodoHandler(event) {
     user.todos[editedTodoIndex] = editedTodo;
 
     updateDB(user);
+    insertTodos(user.todos);
+    insertCompletedTodos(user.todos);
+    updateStatistics(user.todos);
+    insertTodosStatistics(user.statistics);
+    setTodoOptionsEvent();
   }
-
-  insertTodos(user.todos);
-  updateStatistics(user.todos);
-  insertTodosStatistics(user.statistics);
-  setTodoOptionsEvent();
 }
 
 document.addEventListener("todoCreated", saveTodoHandler);

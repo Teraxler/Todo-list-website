@@ -2,6 +2,7 @@ import {
   findUser,
   getDateTime,
   getFromLocalStorage,
+  removeFromLocalStorage,
   searchTodo,
 } from "./modules/utils.js";
 import { hideCalendar, showCalendar } from "./modules/calendar.js";
@@ -53,7 +54,7 @@ function toggleMenu() {
 const toggleSidebarBtn = document.getElementById("toggle-menu");
 toggleSidebarBtn.addEventListener("click", toggleMenu);
 
-function showSerachBar() {
+function showSearchBar() {
   hideVisibleContent();
   showOverlay();
 
@@ -61,7 +62,7 @@ function showSerachBar() {
   searchBarContainer.classList.remove("hidden");
 }
 
-function hideSerachBar() {
+function hideSearchBar() {
   hideOverlay();
 
   const searchBarContainer = document.getElementById("mobile-search-bar");
@@ -70,7 +71,7 @@ function hideSerachBar() {
 
 function hideVisibleContent() {
   hideSidebar();
-  hideSerachBar();
+  hideSearchBar();
   hideNotifications();
   hideCalendar();
 
@@ -81,8 +82,8 @@ function hideVisibleContent() {
 const overlay = document.getElementById("overlay");
 overlay.addEventListener("click", hideVisibleContent);
 
-const serachBarIcon = document.getElementById("search-bar-icon");
-serachBarIcon.addEventListener("click", showSerachBar);
+const searchBarIcon = document.getElementById("search-bar-icon");
+searchBarIcon.addEventListener("click", showSearchBar);
 
 const searchResultContainer = document.getElementById(
   "search-result-container"
@@ -119,9 +120,9 @@ function insertSearchResult(todos, container) {
           <div
             class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden">
           ${
-            cover.path
-              ? `<img class="aspect-square" src="./assets/images/todoes/${cover.path}" alt="${cover.alt}" />`
-              : `<img class="aspect-square" src="${cover.img}" alt="${cover.alt}" />`
+            cover.img
+              ? `<img class="aspect-square" src="${cover.img}" alt="${cover.alt}" />`
+              : `<img class="aspect-square" src="./assets/images/todoes/${cover.path}" alt="${cover.alt}" />`
           }
           </div>
         </a>
@@ -136,23 +137,25 @@ function insertSearchResult(todos, container) {
 }
 
 function insertSearchResultHandler(keyupEvent) {
-  const searchValue = keyupEvent.target.value.trim();
+  const typedValue = keyupEvent.target.value.trim();
 
-  if (searchValue.length > 2) {
-    const searchResult = searchTodo(searchValue, user.todos);
+  if (typedValue.length > 2) {
+    const users = getFromLocalStorage("DB").users;
+    const userId = getFromLocalStorage("currentUser").userId;
+    user = findUser(userId, users);
+
+    const searchResult = searchTodo(typedValue, user.todos);
 
     insertSearchResult(searchResult, searchResultContainer);
     insertSearchResult(searchResult, mobileSearchResultContainer);
   } else {
-    searchResultContainer.innerHTML = `
+    const template = `
       <li class="px-3.75 py-1.5 lg:py-2.5">
         <span class="text-quick-silver">You must type at least 3 characters</span>
       </li>`;
 
-    mobileSearchResultContainer.innerHTML = `
-      <li class="px-3.75 py-1.5 lg:py-2.5">
-        <span class="text-quick-silver">You must type at least 3 characters</span>
-      </li>`;
+    searchResultContainer.innerHTML = template;
+    mobileSearchResultContainer.innerHTML = template;
   }
 }
 
@@ -179,16 +182,24 @@ function routeProtection() {
   }
 }
 
+function insertTextContent(content, className) {
+  [...document.getElementsByClassName(className)].forEach((element) => {
+    element.textContent = content;
+  });
+}
+
 window.addEventListener("load", async () => {
   routeProtection();
   insertDate();
 
   const currentUser = getFromLocalStorage("currentUser");
-  const userId = currentUser.userId;
-
   DB = getFromLocalStorage("DB");
 
-  user = findUser(userId, DB.users);
+  user = findUser(currentUser.userId, DB.users);
+
+  insertTextContent(`Welcome ${user.name} 👋`, "user-name");
+  insertTextContent(`${user.name} ${user.family}`, "user-full-name");
+  insertTextContent(user.email, "user-email");
 });
 
 document
@@ -210,3 +221,31 @@ document.getElementById("calendar-show-btn").addEventListener("click", () => {
 document
   .getElementById("transparent-overlay")
   .addEventListener("click", hideVisibleContent);
+
+const logoutBtn = document.getElementsByClassName("logout-btn")[0];
+logoutBtn.addEventListener("click", async (clickEvent) => {
+  clickEvent.preventDefault();
+
+  const isLogoutConfirm = await swal({
+    title: "Are you sure want to logout?",
+    icon: "warning",
+  buttons: {
+    no: {
+      text:"Cancel",
+      value: false,
+      className: "swal-btn--natural"
+    } ,
+    yes:{
+      text:"Yes, logout!",
+      value: true,
+      className: "swal-btn--danger"
+    } 
+  }
+  });
+
+  console.log("🚀 ~ logoutBtn.addEventListener ~ isLogoutConfirm:", isLogoutConfirm)
+  if (isLogoutConfirm) {
+    removeFromLocalStorage("currentUser");
+    location.href = "./pages/login.html";
+  }
+});
