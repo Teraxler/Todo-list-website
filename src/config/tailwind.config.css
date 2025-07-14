@@ -31,7 +31,6 @@
   --color-dark-gunmetal: #212427;
   --color-electric-ultramarine: #3211ff;
 
-
   --shadow-search-box: -17px 69px 28px 0 rgba(0, 0, 0, 1%),
     -9px 39px 24px 0 rgba(0, 0, 0, 2%), -4px 17px 18px 0 rgba(0, 0, 0, 3%),
     -1px 4px 10px 0 rgba(0, 0, 0, 4%);
@@ -45,6 +44,9 @@
     0 6px 12px 0 rgba(0, 0, 0, 10%);
 
   --shadow-header: 0 4px 12px 0 rgba(0, 0, 0, 7%);
+  --shadow-sidebar: 0 4px 12px 0 rgba(0, 0, 0, 8%);
+
+  --shadow-todo: 0 4px 4px 0 rgba(0, 0, 0, 25%);
 }
 
 @layer base {
@@ -163,11 +165,11 @@
     height: calc(100% - 20px);
   }
 
-  .swal-btn--danger{
-    background-color: var(--color-red-500)!important;
+  .swal-btn--danger {
+    background-color: var(--color-red-500) !important;
   }
-  .swal-btn--natural{
-    background-color: var(--color-light-gray)!important;
+  .swal-btn--natural {
+    background-color: var(--color-light-gray) !important;
   }
 
   @media (width >= 1024) {

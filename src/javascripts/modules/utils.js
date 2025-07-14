@@ -229,16 +229,18 @@ function searchTodo(searchValue, todos) {
 }
 
 // Find
-function findUser(userId, users) {
-  const userIndex = users.findIndex(
-    (user) => String(user.id) === String(userId)
-  );
+function findUser(id, users) {
+  const userIndex = users.findIndex((user) => String(user.id) === String(id));
 
   return users[userIndex] ?? null;
 }
 
-const findTodoIndex = (taskId, tasks) =>
-  tasks.findIndex((task) => String(task.id) === String(taskId));
+function findTodo(id, todos) {
+  return todos.find((todo) => todo.id === id);
+}
+
+const findTodoIndex = (id, todos) =>
+  todos.findIndex((todo) => String(todo.id) === String(id));
 
 function findUserByUserPass({ username, password }, users) {
   return users.find(
@@ -296,6 +298,11 @@ function removeFromLocalStorage(key) {
     });
     new Error(error);
   }
+}
+
+// URL
+function getQueryParam(param) {
+  return new URLSearchParams(location.search).get(param);
 }
 
 //
@@ -384,6 +391,7 @@ export {
   getDateTime,
   searchTodo,
   findUser,
+  findTodo,
   findTodoIndex,
   findUserByUserPass,
   normalizeDateTime,
@@ -400,4 +408,5 @@ export {
   idGenerator,
   clacDegreesOfPercent,
   capitalize,
+  getQueryParam,
 };
