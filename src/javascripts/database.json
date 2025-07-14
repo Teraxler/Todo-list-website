@@ -7,17 +7,17 @@
   "users": [
     {
       "id": "mcvmfnouq76ug3bqtv",
-      "name": "Mahdi",
-      "family": "Rezai",
+      "name": "Admin",
+      "family": "",
       "username": "admin",
-      "email": "mahdi@gamil.com",
+      "email": "admin@gamil.com",
       "password": "admin",
       "phone": "+98-912-3456789",
       "position": "Software Engineer",
       "createdAt": "2024-05-10T09:00:00",
       "profile": "",
       "statistics": {
-        "completed": 0,
+        "completed": "0.0",
         "inProgress": 33.3,
         "notStarted": 66.7
       },

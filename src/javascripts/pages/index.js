@@ -6,6 +6,7 @@ import {
   findTodoIndex,
   findUser,
   getFromLocalStorage,
+  insertTextContent,
   normalizeDateTime,
   removeFromLocalStorage,
   saveToLocalStorage,
@@ -234,6 +235,7 @@ window.addEventListener("load", async () => {
 
   user = findUser(currentUser.userId, DB.users);
 
+  insertTextContent(`Welcome ${user.name} 👋`, "user-name");
   insertTodos(user.todos);
   insertCompletedTodos(user.todos);
   insertTodosStatistics(user.statistics);

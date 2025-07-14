@@ -2,6 +2,7 @@ import {
   findUser,
   getDateTime,
   getFromLocalStorage,
+  insertTextContent,
   removeFromLocalStorage,
   searchTodo,
 } from "./modules/utils.js";
@@ -182,12 +183,6 @@ function routeProtection() {
   }
 }
 
-function insertTextContent(content, className) {
-  [...document.getElementsByClassName(className)].forEach((element) => {
-    element.textContent = content;
-  });
-}
-
 window.addEventListener("load", async () => {
   routeProtection();
   insertDate();
@@ -197,7 +192,6 @@ window.addEventListener("load", async () => {
 
   user = findUser(currentUser.userId, DB.users);
 
-  insertTextContent(`Welcome ${user.name} 👋`, "user-name");
   insertTextContent(`${user.name} ${user.family}`, "user-full-name");
   insertTextContent(user.email, "user-email");
 });
@@ -229,21 +223,20 @@ logoutBtn.addEventListener("click", async (clickEvent) => {
   const isLogoutConfirm = await swal({
     title: "Are you sure want to logout?",
     icon: "warning",
-  buttons: {
-    no: {
-      text:"Cancel",
-      value: false,
-      className: "swal-btn--natural"
-    } ,
-    yes:{
-      text:"Yes, logout!",
-      value: true,
-      className: "swal-btn--danger"
-    } 
-  }
+    buttons: {
+      no: {
+        text: "Cancel",
+        value: false,
+        className: "swal-btn--natural",
+      },
+      yes: {
+        text: "Yes, logout!",
+        value: true,
+        className: "swal-btn--danger",
+      },
+    },
   });
 
-  console.log("🚀 ~ logoutBtn.addEventListener ~ isLogoutConfirm:", isLogoutConfirm)
   if (isLogoutConfirm) {
     removeFromLocalStorage("currentUser");
     location.href = "./pages/login.html";

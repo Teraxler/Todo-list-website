@@ -305,6 +305,13 @@ function getQueryParam(param) {
   return new URLSearchParams(location.search).get(param);
 }
 
+// Insert Content
+function insertTextContent(content, className) {
+  [...document.getElementsByClassName(className)].forEach((element) => {
+    element.textContent = content;
+  });
+}
+
 //
 function getBase64Image(img) {
   var canvas = document.createElement("canvas");
@@ -409,4 +416,5 @@ export {
   clacDegreesOfPercent,
   capitalize,
   getQueryParam,
+  insertTextContent,
 };
