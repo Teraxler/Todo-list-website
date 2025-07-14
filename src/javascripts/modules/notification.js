@@ -42,7 +42,7 @@ function insertNotifications(notifications) {
       <li class="px-3.75 py-1.5 lg:py-2.5">
         <a
           class="flex items-center justify-between gap-x-4"
-          href="./pages/id=${id}"
+          href="javascripts:void(0)"
         >
           <div>
             <p class="text-sm lg:text-base/relaxed line-clamp-2">${title}
@@ -62,7 +62,7 @@ function insertNotifications(notifications) {
           >
             ${
               cover.path
-                ? `<img class="aspect-square" src="./assets/images/todoes/${cover.path}" alt="${cover.alt}" />`
+                ? `<img class="aspect-square" src="../../src/assets/images/todoes/${cover.path}" alt="${cover.alt}" />`
                 : `<img class="aspect-square" src="${cover.img}" alt="${cover.alt}" />`
             }
           </div>

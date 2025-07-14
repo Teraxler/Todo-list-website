@@ -71,7 +71,7 @@ function preFillFromInputs(task) {
 
   todoCoverPreview.src = cover.img
     ? cover.img
-    : `./assets/images/todoes/${cover.path}`;
+    : `../../src/assets/images/todoes/${cover.path}`;
 
   showTodoCoverPreview();
   hideTodoUploadLabel();

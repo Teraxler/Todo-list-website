@@ -103,8 +103,8 @@ function insertSearchResult(todos, container) {
       template += `
       <li class="px-3.75 py-1.5 lg:py-2.5">
         <a
-          class="flex items-center justify-between gap-x-4"
-          href="./pages/id=${id}"
+          class="flex items-center justify-between gap-x-4 cursor-pointer"
+          href="../../src/pages/todo-detail.html?id=${id}"
         >
           <div>
             <p class="text-sm lg:text-base/relaxed line-clamp-2">${title}</p>
@@ -122,7 +122,7 @@ function insertSearchResult(todos, container) {
           ${
             cover.img
               ? `<img class="aspect-square" src="${cover.img}" alt="${cover.alt}" />`
-              : `<img class="aspect-square" src="./assets/images/todoes/${cover.path}" alt="${cover.alt}" />`
+              : `<img class="aspect-square" src="../../src/assets/images/todoes/${cover.path}" alt="${cover.alt}" />`
           }
           </div>
         </a>
