@@ -9,10 +9,12 @@ import {
   saveToLocalStorage,
 } from "../modules/utils.js";
 import { showEditTodoModal } from "../modules/todo-modal.js";
+import { hideLoader, showLoader } from "../modules/shared.js";
 
 let user = {};
 
 window.addEventListener("load", async () => {
+  showLoader();
   const userId = getFromLocalStorage("currentUser").userId;
   const DB = getFromLocalStorage("DB");
 
@@ -25,6 +27,7 @@ window.addEventListener("load", async () => {
   !todo ? (location.href = "../index.html") : null;
 
   insertTodoContent(todo);
+  hideLoader();
 });
 
 function insertTodoPriority(priority) {
@@ -178,12 +181,14 @@ function updateDB(editedUser) {
 }
 
 function updateTodoHandler(customeEvent) {
+  showLoader();
   const updatedTodo = customeEvent.detail;
 
   user.todos = updateTodos(user.todos, updatedTodo);
   updateDB(user);
 
   insertTodoContent(updatedTodo);
+  hideLoader();
 }
 
 document.addEventListener("todoUpdated", updateTodoHandler);

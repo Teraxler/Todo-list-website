@@ -34,6 +34,26 @@ function hideTodoOptions() {
   todoOptions?.classList.remove("todo-options--active");
 }
 
+function showLoader() {
+  document
+    .getElementsByClassName("loader")[0]
+    ?.classList.remove("invisible", "opacity-0");
+
+  document
+    .getElementsByClassName("loader-overlay")[0]
+    ?.classList.remove("invisible", "opacity-0");
+}
+
+function hideLoader() {
+  document
+    .getElementsByClassName("loader")[0]
+    ?.classList.add("invisible", "opacity-0");
+
+  document
+    .getElementsByClassName("loader-overlay")[0]
+    ?.classList.add("invisible", "opacity-0");
+}
+
 export {
   showOverlay,
   hideOverlay,
@@ -41,4 +61,6 @@ export {
   hideTransparentOverlay,
   showTodoOptions,
   hideTodoOptions,
+  showLoader,
+  hideLoader,
 };

@@ -15,7 +15,12 @@ import {
   showCreateTodoModal,
   showEditTodoModal,
 } from "../modules/todo-modal.js";
-import { hideTodoOptions, showTodoOptions } from "../modules/shared.js";
+import {
+  hideLoader,
+  hideTodoOptions,
+  showLoader,
+  showTodoOptions,
+} from "../modules/shared.js";
 
 let DB = {};
 let user = {};
@@ -57,7 +62,7 @@ function generateTodoTemplate(todo) {
           <div class="flex justify-between gap-x-2 xl:gap-x-2.5">
             <div>
               <p class="text-sm xl:text-base/[19px] font-semibold">
-                <a class="line-clamp-2" href="./pages/todo-detail.html?id=${id}">
+                <a class="line-clamp-2" href="./pages/todo-details.html?id=${id}">
                   ${title}
                 </a>
               </p>
@@ -66,7 +71,7 @@ function generateTodoTemplate(todo) {
               </p>
             </div>
             <div class="my-auto size-20 lg:size-22 shrink-0">
-              <a href="./pages/todo-detail.html?id=${id}">
+              <a href="./pages/todo-details.html?id=${id}">
                 <img class="aspect-square h-full rounded-xl lg:rounded-[14px] overflow-hidden"
                 ${
                   cover.img
@@ -152,25 +157,30 @@ function insertTodos(todos) {
 
 function insertTodosStatistics(statistics) {
   let template = "",
-    title = "",
-    donutColorVar = "",
-    circleColorClass = "";
+    statistic;
+
   const todosStatsContainer = document.getElementById("todos-stats-container");
 
+  const statisticsMap = {
+    notStarted: {
+      title: "Not Started",
+      donutColorVar: "--color-danger",
+      circleColorClass: "dot-icon--danger",
+    },
+    inProgress: {
+      title: "In Progress",
+      donutColorVar: "--color-blue-bonnet",
+      circleColorClass: "dot-icon--blue-bonnet",
+    },
+    completed: {
+      title: "Completed",
+      donutColorVar: "--color-success",
+      circleColorClass: "dot-icon--success",
+    },
+  };
+
   for (const key in statistics) {
-    if (key === "completed") {
-      title = "Completed";
-      donutColorVar = "--color-success";
-      circleColorClass = "dot-icon--success";
-    } else if (key === "inProgress") {
-      title = "In Progress";
-      donutColorVar = "--color-blue-bonnet";
-      circleColorClass = "dot-icon--blue-bonnet";
-    } else {
-      title = "Not Started";
-      donutColorVar = "--color-danger";
-      circleColorClass = "dot-icon--danger";
-    }
+    statistic = statisticsMap[key];
 
     template += `
   <div>
@@ -178,7 +188,7 @@ function insertTodosStatistics(statistics) {
       class="donut-chart shrink-0"
       style="
         background: conic-gradient(
-          var(${donutColorVar}) 0deg 
+          var(${statistic.donutColorVar}) 0deg 
           ${clacDegreesOfPercent(statistics[key])}deg,
           var(--color-light-silver) ${clacDegreesOfPercent(statistics[key])}deg
             360deg
@@ -188,9 +198,11 @@ function insertTodosStatistics(statistics) {
       <span class="donut-chart__title">${statistics[key]}%</span>
     </div>
     <li
-      class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon ${circleColorClass}"
+      class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon ${
+        statistic.circleColorClass
+      }"
     >
-      ${title}
+      ${statistic.title}
     </li>
   </div>`;
   }
@@ -228,6 +240,7 @@ function setTodoOptionsEvent() {
 }
 
 window.addEventListener("load", async () => {
+  showLoader();
   const currentUser = getFromLocalStorage("currentUser");
   !currentUser.rememberMe && removeFromLocalStorage("currentUser");
 
@@ -240,6 +253,7 @@ window.addEventListener("load", async () => {
   insertCompletedTodos(user.todos);
   insertTodosStatistics(user.statistics);
   setTodoOptionsEvent();
+  hideLoader();
 });
 
 function updateDB(editedUser) {
@@ -368,6 +382,8 @@ const showCreateTodoModalBtn = document.getElementById(
 showCreateTodoModalBtn.addEventListener("click", showCreateTodoModal);
 
 function saveTodoHandler(event) {
+  showLoader();
+
   let temp = [...user.todos];
 
   user.todos.length = 0;
@@ -378,9 +394,13 @@ function saveTodoHandler(event) {
   updateStatistics(user.todos);
   insertTodosStatistics(user.statistics);
   setTodoOptionsEvent();
+
+  hideLoader();
 }
 
 function updateTodoHandler(event) {
+  showLoader();
+
   const editedTodo = event.detail;
   const editedTodoIndex = findTodoIndex(editedTodo.id, user.todos);
 
@@ -394,6 +414,8 @@ function updateTodoHandler(event) {
     insertTodosStatistics(user.statistics);
     setTodoOptionsEvent();
   }
+
+  hideLoader();
 }
 
 document.addEventListener("todoCreated", saveTodoHandler);

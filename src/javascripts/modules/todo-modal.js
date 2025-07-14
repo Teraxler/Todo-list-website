@@ -149,7 +149,7 @@ function generateNewTodo(todoId, todoCover) {
   return {
     id: todoId ?? idGenerator(),
     status: "Not Started",
-    priority: document.querySelector(".priority-task:checked").dataset
+    priority: document.querySelector(".priority-task:checked")?.dataset
       .taskPriority,
     cover: todoCover ?? {
       path: "./default-todo-cover.png",
