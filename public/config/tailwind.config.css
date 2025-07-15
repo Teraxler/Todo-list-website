@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+@theme {
+  --font-inter: "Inter";
+  --font-montserrat: "Montserrat";
+
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 600px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1440px;
+
+  --color-danger: #f21e1e;
+  --color-success: #05a301;
+  --color-primary: #ff6767;
+  --color-cultured: #f8f8f8;
+  --color-light-gray: #d3d3d3;
+  --color-ghost-white: #f5f8ff;
+  --color-ghost-white-2: #f8f9fb;
+  --color-blue-bonnet: #0225ff;
+  --color-picton-blue: #3abeff;
+  --color-sonic-silver: #747474;
+  --color-quick-silver: #a1a3ab;
+  --color-orioles-orange: #f24e1e;
+  --color-light-silver: #d9d9d9;
+  --color-davy-grey: #565454;
+  --color-tulip: #ff9090;
+  --color-spanish-gray: #999999;
+  --color-blue-cola: #008bd9;
+  --color-dark-gunmetal: #212427;
+  --color-electric-ultramarine: #3211ff;
+
+  --shadow-search-box: -17px 69px 28px 0 rgba(0, 0, 0, 1%),
+    -9px 39px 24px 0 rgba(0, 0, 0, 2%), -4px 17px 18px 0 rgba(0, 0, 0, 3%),
+    -1px 4px 10px 0 rgba(0, 0, 0, 4%);
+
+  --shadow-section: 0px 45px 18px 0px rgba(0, 0, 0, 1%),
+    0px 26px 15px 0px rgba(0, 0, 0, 2%), 0px 11px 11px 0px rgba(0, 0, 0, 3%),
+    0px 3px 6px 0px rgba(0, 0, 0, 4%);
+
+  --shadow-modal: 0 89px 35px 0 rgba(0, 0, 0, 1%),
+    0 50px 30px 0 rgba(0, 0, 0, 5%), 0 22px 22px 0 rgba(0, 0, 0, 9%),
+    0 6px 12px 0 rgba(0, 0, 0, 10%);
+
+  --shadow-header: 0 4px 12px 0 rgba(0, 0, 0, 7%);
+  --shadow-sidebar: 8px 4px 12px 0 rgba(0, 0, 0, 8%);
+
+  --shadow-todo: 0 4px 4px 0 rgba(0, 0, 0, 25%);
+}
+
+@layer base {
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("../assets/fonts/inter/Inter-VariableFont_opsz,wght.ttf")
+      format("truetype");
+  }
+  @font-face {
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("../assets/fonts/montserrat/Montserrat-VariableFont_wght.ttf")
+      format("truetype");
+  }
+  body {
+    font-family: var(--font-inter);
+  }
+}
+
+@layer utilities {
+  .calendar {
+  }
+  .calendar__day {
+    @apply size-7.5 flex items-center justify-center cursor-pointer hover:bg-electric-ultramarine/50 rounded-full transition-colors;
+  }
+  .calendar__day--active {
+    @apply size-7.5 flex items-center justify-center rounded-full transition-colors bg-electric-ultramarine text-white;
+  }
+  .calendar__weekday-name {
+    @apply size-7.5 flex items-center justify-center;
+  }
+
+  .plus-icon {
+    display: flex;
+    position: relative;
+    width: 11px;
+    height: 11px;
+  }
+  .plus-icon::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-primary);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 1rem;
+  }
+  .plus-icon::before {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background-color: var(--color-primary);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 1rem;
+  }
+
+  .dot-icon {
+    @apply relative pl-2.5 lg:pl-3 xl:pl-3.5;
+  }
+  .dot-icon::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    /* background-color: var(--color-light-silver); */
+    border-radius: 100%;
+    transform: translateY(-50%);
+  }
+  .dot-icon--success::before {
+    background-color: var(--color-success);
+  }
+  .dot-icon--danger::before {
+    background-color: var(--color-danger);
+  }
+  .dot-icon--blue-bonnet::before {
+    background-color: var(--color-blue-bonnet);
+  }
+
+  .donut-chart {
+    @apply flex justify-center items-center rounded-full size-20 lg:size-22 xl:size-25;
+    background: conic-gradient(var(--color-light-silver) 0deg 360deg);
+  }
+  .donut-chart--completed {
+    background: conic-gradient(
+      var(--color-success) 0deg 302.4deg,
+      var(--color-light-silver) 302.4deg 360deg
+    );
+  }
+  .donut-chart--in-progress {
+    background: conic-gradient(
+      var(--color-blue-bonnet) 0deg 165.6deg,
+      var(--color-light-silver) 165.6deg 360deg
+    );
+  }
+  .donut-chart--not-started {
+    background: conic-gradient(
+      var(--color-danger) 0deg 46.8deg,
+      var(--color-light-silver) 46.8deg 360deg
+    );
+  }
+  .donut-chart__title {
+    @apply flex justify-center items-center font-medium text-lg xl:text-xl bg-ghost-white rounded-full;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+  }
+
+  .swal-btn--danger {
+    background-color: var(--color-red-500) !important;
+  }
+  .swal-btn--natural {
+    background-color: var(--color-light-gray) !important;
+  }
+
+  .loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(farthest-side, var(--color-primary) 94%, #0000)
+        top/8px 8px no-repeat,
+      conic-gradient(#0000 30%, var(--color-primary));
+    -webkit-mask: radial-gradient(
+      farthest-side,
+      #0000 calc(100% - 8px),
+      #000 0
+    );
+    animation: l13 1s infinite linear;
+  }
+  @keyframes l13 {
+    100% {
+      transform: rotate(1turn);
+    }
+  }
+
+  @media (width >= 1024) {
+  }
+
+  @media (width >= 1280) {
+  }
+}

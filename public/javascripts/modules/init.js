@@ -1,0 +1,1 @@
+import a from"../apis/db.api.js";import{getFromLocalStorage as t,saveToLocalStorage as i}from"./utils.js";async function saveDefaultData(){let s=t("DB");Boolean(s)||(s=await a(),i("DB",s))}window.addEventListener("load",async()=>{await saveDefaultData()});
