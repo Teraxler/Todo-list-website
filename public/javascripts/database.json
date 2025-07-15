@@ -1,0 +1,95 @@
+{
+  "statistics": {
+    "completed": "85",
+    "inProgress": "5",
+    "notStarted": "16"
+  },
+  "users": [
+    {
+      "id": "mcvmfnouq76ug3bqtv",
+      "name": "Admin",
+      "family": "",
+      "username": "admin",
+      "email": "admin@gamil.com",
+      "password": "admin",
+      "phone": "+98-912-3456789",
+      "position": "Software Engineer",
+      "createdAt": "2024-05-10T09:00:00",
+      "profile": "",
+      "statistics": {
+        "completed": "0.0",
+        "inProgress": "33.3",
+        "notStarted": "66.7"
+      },
+      "todos": [
+        {
+          "id": "mcxoqppelcnzppc4i4j",
+          "title": "Develop API Endpoint",
+          "status": "In Progress",
+          "createdAt": "2024-05-10T09:00:00",
+          "priority": "High",
+          "description": "Create and test the new API endpoint for user authentication",
+          "cover": {
+            "path": "api.png",
+            "type": "png",
+            "alt": "API development task cover image"
+          }
+        },
+        {
+          "id": "mcxo1zddvwy1r2udfyt",
+          "title": "Fix Database Migration Issue",
+          "status": "Not Started",
+          "createdAt": "2024-05-10T10:00:00",
+          "priority": "Medium",
+          "description": "Resolve compatibility problems with database migration scripts",
+          "cover": {
+            "path": "fix-database.jpeg",
+            "type": "jpeg",
+            "alt": "Database migration task cover image"
+          }
+        },
+        {
+          "id": "mcn7c4atmpjgbb2ho4a",
+          "title": "Update Database firmware",
+          "status": "Not Started",
+          "createdAt": "2024-06-10T10:00:00",
+          "priority": "Medium",
+          "description": "Resolve compatibility problems with database migration scripts",
+          "cover": {
+            "path": "fix-database.jpeg",
+            "type": "jpeg",
+            "alt": "Database migration task cover image"
+          }
+        }
+      ],
+      "notifications": [
+        {
+          "id": "mcn5gy70uszkhh5dsfd",
+          "title": "Develop API Endpoint",
+          "status": "Not Started",
+          "createdAt": "2024-09-10T09:00:00",
+          "priority": "High",
+          "description": "Create and test the new API endpoint for user authentication",
+          "cover": {
+            "path": "api.png",
+            "type": "png",
+            "alt": "API development task cover image"
+          }
+        },
+        {
+          "id": "mcvmt9kux8rei7ivfo8",
+          "title": "Fix Database Migration Issue",
+          "status": "Not Started",
+          "createdAt": "2024-05-10T10:00:00",
+          "priority": "Medium",
+          "description": "Resolve compatibility problems with database migration scripts",
+          "cover": {
+            "path": "fix-database.jpeg",
+            "type": "jpeg",
+            "alt": "Database migration task cover image"
+          }
+        }
+      ]
+    }
+  ]
+}
