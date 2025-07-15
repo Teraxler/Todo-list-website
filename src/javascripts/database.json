@@ -1,8 +1,8 @@
 {
   "statistics": {
-    "completed": 85,
-    "inProgress": 5,
-    "notStarted": 16
+    "completed": "85",
+    "inProgress": "5",
+    "notStarted": "16"
   },
   "users": [
     {
@@ -18,8 +18,8 @@
       "profile": "",
       "statistics": {
         "completed": "0.0",
-        "inProgress": 33.3,
-        "notStarted": 66.7
+        "inProgress": "33.3",
+        "notStarted": "66.7"
       },
       "todos": [
         {

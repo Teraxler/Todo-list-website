@@ -26,7 +26,7 @@ function hideTodoModal() {
   hideTodoCoverPreview();
   showTodoUploadLabel();
 
-  document.getElementById("todo-modal").classList.add("opacity-0", "invisible");
+  document.getElementById("todo-modal")?.classList.add("opacity-0", "invisible");
 }
 
 // New Todo
@@ -101,7 +101,7 @@ function showEditTodoModal(todo) {
 function showTodoUploadLabel() {
   document
     .getElementById("todo-form__cover-upload-label")
-    .classList.remove("hidden");
+    ?.classList.remove("hidden");
 }
 function hideTodoUploadLabel() {
   document
@@ -142,7 +142,7 @@ function showTodoCoverPreview() {
   todoCoverContainer.classList.remove("hidden");
 }
 function hideTodoCoverPreview() {
-  document.getElementById("todo-form__cover-preview").classList.add("hidden");
+  document.getElementById("todo-form__cover-preview")?.classList.add("hidden");
 }
 
 function generateNewTodo(todoId, todoCover) {
@@ -244,7 +244,7 @@ function updateTodoHandler(clickEvent) {
 }
 
 const updateTodoBtn = document.getElementById("todo-form__update-todo-btn");
-updateTodoBtn.addEventListener("click", updateTodoHandler);
+updateTodoBtn?.addEventListener("click", updateTodoHandler);
 
 function isTodoValid({ title, description, file: img, createdAt, priority }) {
   const validImgTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
@@ -317,17 +317,17 @@ const priorityTasksContainer = document.getElementById(
   "todo-form__priority-container"
 );
 
-priorityTasksContainer.addEventListener("click", selectTodoPriorityHandler);
+priorityTasksContainer?.addEventListener("click", selectTodoPriorityHandler);
 
 const createTodoBtn = document.getElementById("todo-form__create-todo-btn");
-createTodoBtn.addEventListener("click", createTodoHandler);
+createTodoBtn?.addEventListener("click", createTodoHandler);
 
 const todoCoverInput = document.getElementById("todo-form__cover");
-todoCoverInput.addEventListener("change", showTodoCoverPreviewHandler);
+todoCoverInput?.addEventListener("change", showTodoCoverPreviewHandler);
 
 const closeCreateTodoModalBtn = document.getElementById(
   "todo-modal__close-btn"
 );
-closeCreateTodoModalBtn.addEventListener("click", hideTodoModal);
+closeCreateTodoModalBtn?.addEventListener("click", hideTodoModal);
 
 export { showCreateTodoModal, showEditTodoModal, hideTodoModal };

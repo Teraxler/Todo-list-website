@@ -3,12 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todo List</title>
-    <link rel="stylesheet" href="./styles/app.css" />
+    <title>Todo Detail</title>
+    <link rel="stylesheet" href="../styles/app.css" />
   </head>
   <body class="font-inter bg-ghost-white">
     <!-- SVG -->
     <svg width="0" height="0" class="hidden">
+      <symbol id="delete-icon" viewBox="0 0 14 18" fill="currentColor">
+        <path
+          d="M1 16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V6C13 4.9 12.1 4 11 4H3C1.9 4 1 4.9 1 6V16ZM13 1H10.5L9.79 0.29C9.61 0.11 9.35 0 9.09 0H4.91C4.65 0 4.39 0.11 4.21 0.29L3.5 1H1C0.45 1 0 1.45 0 2C0 2.55 0.45 3 1 3H13C13.55 3 14 2.55 14 2C14 1.45 13.55 1 13 1Z"
+          fill="white"
+        />
+      </symbol>
+      <symbol id="edit-icon" viewBox="0 0 19 19" fill="currentColor">
+        <path
+          d="M12 0.949786C13.296 0.949786 14.496 1.35979 15.477 2.05979L6.343 11.1928C6.24749 11.285 6.17131 11.3954 6.1189 11.5174C6.06649 11.6394 6.0389 11.7706 6.03775 11.9034C6.0366 12.0362 6.0619 12.1678 6.11218 12.2907C6.16246 12.4136 6.23671 12.5253 6.3306 12.6192C6.4245 12.7131 6.53615 12.7873 6.65905 12.8376C6.78194 12.8879 6.91362 12.9132 7.0464 12.912C7.17918 12.9109 7.3104 12.8833 7.4324 12.8309C7.55441 12.7785 7.66475 12.7023 7.757 12.6068L16.891 3.47279C17.6141 4.48782 18.0019 5.70351 18 6.94979V16.9498C18 17.4802 17.7893 17.9889 17.4142 18.364C17.0391 18.7391 16.5304 18.9498 16 18.9498H2C1.46957 18.9498 0.960859 18.7391 0.585786 18.364C0.210714 17.9889 0 17.4802 0 16.9498V2.94979C0 2.41935 0.210714 1.91065 0.585786 1.53557C0.960859 1.1605 1.46957 0.949786 2 0.949786H12ZM18.657 0.292786C18.8445 0.480314 18.9498 0.734622 18.9498 0.999786C18.9498 1.26495 18.8445 1.51926 18.657 1.70679L16.89 3.47279C16.5006 2.9261 16.0227 2.44821 15.476 2.05879L17.242 0.292786C17.4295 0.105315 17.6838 0 17.949 0C18.2142 0 18.4695 0.105315 18.657 0.292786Z"
+          fill="white"
+        />
+      </symbol>
+
       <symbol
         id="upload-img-icon"
         viewBox="0 0 64 59"
@@ -331,158 +344,7 @@
               id="notifications-container"
               class="bg-ghost-white max-h-103.5 overflow-y-auto"
             >
-              <li class="px-3.75 py-1.5 lg:py-2.5">
-                <a
-                  class="flex items-center justify-between gap-x-4"
-                  href="./pages/id=${id}"
-                >
-                  <div>
-                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
-                      Develop API Endpoint
-                    </p>
-                    <span class="font-medium text-xs">Priority: </span
-                    ><span class="font-medium text-xs text-danger">High</span>
-                  </div>
-                  <div
-                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
-                  >
-                    <img src="./assets/images/todoes/api.png" alt="api" />
-                  </div>
-                </a>
-              </li>
-              <li class="px-3.75 py-1.5 lg:py-2.5">
-                <a
-                  class="flex items-center justify-between gap-x-4"
-                  href="./pages/id=${id}"
-                >
-                  <div>
-                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
-                      Develop API Endpoint
-                    </p>
-                    <span class="font-medium text-xs">Priority: </span
-                    ><span class="font-medium text-xs text-danger">High</span>
-                  </div>
-                  <div
-                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
-                  >
-                    <img src="./assets/images/todoes/api.png" alt="api" />
-                  </div>
-                </a>
-              </li>
-              <li class="px-3.75 py-1.5 lg:py-2.5">
-                <a
-                  class="flex items-center justify-between gap-x-4"
-                  href="./pages/id=${id}"
-                >
-                  <div>
-                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
-                      Develop API Endpoint
-                    </p>
-                    <span class="font-medium text-xs">Priority: </span
-                    ><span class="font-medium text-xs text-danger">High</span>
-                  </div>
-                  <div
-                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
-                  >
-                    <img src="./assets/images/todoes/api.png" alt="api" />
-                  </div>
-                </a>
-              </li>
-              <li class="px-3.75 py-1.5 lg:py-2.5">
-                <a
-                  class="flex items-center justify-between gap-x-4"
-                  href="./pages/id=${id}"
-                >
-                  <div>
-                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
-                      Develop API Endpoint
-                    </p>
-                    <span class="font-medium text-xs">Priority: </span
-                    ><span class="font-medium text-xs text-danger">High</span>
-                  </div>
-                  <div
-                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
-                  >
-                    <img src="./assets/images/todoes/api.png" alt="api" />
-                  </div>
-                </a>
-              </li>
-              <li class="px-3.75 py-1.5 lg:py-2.5">
-                <a
-                  class="flex items-center justify-between gap-x-4"
-                  href="./pages/id=${id}"
-                >
-                  <div>
-                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
-                      Develop API Endpoint
-                    </p>
-                    <span class="font-medium text-xs">Priority: </span
-                    ><span class="font-medium text-xs text-danger">High</span>
-                  </div>
-                  <div
-                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
-                  >
-                    <img src="./assets/images/todoes/api.png" alt="api" />
-                  </div>
-                </a>
-              </li>
-              <li class="px-3.75 py-1.5 lg:py-2.5">
-                <a
-                  class="flex items-center justify-between gap-x-4"
-                  href="./pages/id=${id}"
-                >
-                  <div>
-                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
-                      Develop API Endpoint
-                    </p>
-                    <span class="font-medium text-xs">Priority: </span
-                    ><span class="font-medium text-xs text-danger">High</span>
-                  </div>
-                  <div
-                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
-                  >
-                    <img src="./assets/images/todoes/api.png" alt="api" />
-                  </div>
-                </a>
-              </li>
-              <li class="px-3.75 py-1.5 lg:py-2.5">
-                <a
-                  class="flex items-center justify-between gap-x-4"
-                  href="./pages/id=${id}"
-                >
-                  <div>
-                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
-                      Develop API Endpoint
-                    </p>
-                    <span class="font-medium text-xs">Priority: </span
-                    ><span class="font-medium text-xs text-danger">High</span>
-                  </div>
-                  <div
-                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
-                  >
-                    <img src="./assets/images/todoes/api.png" alt="api" />
-                  </div>
-                </a>
-              </li>
-              <li class="px-3.75 py-1.5 lg:py-2.5">
-                <a
-                  class="flex items-center justify-between gap-x-4"
-                  href="./pages/id=${id}"
-                >
-                  <div>
-                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
-                      Develop API Endpoint
-                    </p>
-                    <span class="font-medium text-xs">Priority: </span
-                    ><span class="font-medium text-xs text-danger">High</span>
-                  </div>
-                  <div
-                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
-                  >
-                    <img src="./assets/images/todoes/api.png" alt="api" />
-                  </div>
-                </a>
-              </li>
+              <!-- Notifications -->
             </ul>
           </div>
         </div>
@@ -603,13 +465,13 @@
       <!-- Sidebar -->
       <aside
         id="sidebar"
-        class="fixed z-10 sm:z-0 -left-47 sm:left-0 sm:sticky top-35 lg:top-39 min-w-17 w-47 sm:w-auto lg:w-62.5 xl:w-82.5 h-[calc(100dvh-140px)] lg:h-[calc(100dvh-156px)] shrink-0 flex flex-col bg-primary px-2.5 lg:px-4 xl:px-5.25 pb-7.75 text-white rounded-r-lg transition-all duration-500"
+        class="fixed z-10 sm:z-0 -left-47 sm:left-0 sm:sticky top-35 lg:top-39 min-w-17 w-47 sm:w-auto lg:w-62.5 xl:w-82.5 h-[calc(100dvh-140px)] lg:h-[calc(100dvh-156px)] shrink-0 flex flex-col bg-primary px-2.5 lg:px-4 xl:px-5.25 pb-7.75 text-white rounded-r-lg transition-all duration-500 shadow-sidebar"
       >
         <div class="relative pt-12 lg:pt-14">
           <div
             class="absolute -top-4/10 left-0 right-0 mx-auto rounded-full overflow-hidden size-12 lg:size-21.5"
           >
-            <img src="./assets/images/users/user-1.jpg" alt="Profile image" />
+            <img src="../assets/images/users/user-1.jpg" alt="Profile image" />
           </div>
           <div class="hidden lg:block">
             <span
@@ -628,8 +490,8 @@
           <ul class="w-full flex flex-col gap-y-2 *:flex">
             <li>
               <a
-                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full bg-white text-primary"
-                href="javascript:void(0)"
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
+                href="../index.html"
               >
                 <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#dashboard"></use>
@@ -661,8 +523,8 @@
             </li>
             <li>
               <a
-                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
-                href="./pages/settings.html"
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full  bg-white text-primary"
+                href="javascript:void(0)"
               >
                 <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#settings"></use>
@@ -695,513 +557,121 @@
         </nav>
       </aside>
       <!-- Main -->
-      <main class="mx-auto px-4 sm:px-5">
-        <div class="flex justify-between items-center">
-          <h1
-            class="user-name text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium"
-          >
-            Welcome Sundar 👋
-          </h1>
-          <button
-            class="w-18 sm:w-24.5 h-6 sm:h-9 flex items-center justify-center gap-x-1 sm:gap-x-2 text-xs sm:text-[14px] text-primary hover:text-white hover:bg-primary font-medium border border-primary rounded-md sm:rounded-lg transition-colors duration-150 cursor-pointer"
-          >
-            <svg class="w-4 h-3">
-              <use href="#invite-user"></use>
-            </svg>
-            Invite
-          </button>
-        </div>
-
+      <main class="w-full px-4 sm:px-11 md:px-18.75">
         <div
-          class="border border-quick-silver/63 mt-4 md:mt-6 lg:mt-8.5 mb-7.5"
+          class="w-full p-4 xs:p-6 md:p-7 mb-8 border border-quick-silver shadow-todo rounded-2xl"
         >
-          <!-- To-Do -->
-          <div
-            class="flex flex-col-reverse md:flex-row gap-x-4 px-5 xl:px-6.5 py-5"
-          >
-            <!-- To-Do Section -->
-            <section
-              class="px-3 lg:px-4 xl:px-4.5 2xl:px-6 py-5.5 shadow-section rounded-[14px]"
-            >
-              <!-- Header Section -->
-              <div class="flex justify-between">
-                <div>
-                  <h2 class="flex gap-x-1">
-                    <svg class="w-7 h-8"><use href="#task-pending"></use></svg>
-                    <span class="font-medium text-primary"> To-Do </span>
-                  </h2>
-                  <p class="flex gap-x-2.5 text-xs mt-2.5">
-                    <span id="todo-date">20 June</span>
-                    <span id="todo-time-difference" class="text-quick-silver"
-                      >• Today</span
-                    >
-                  </p>
-                </div>
-                <button
-                  id="show-create-todo-modal"
-                  class="my-auto flex items-center gap-x-2 text-xs text-quick-silver cursor-pointer"
-                >
-                  <span class="plus-icon"></span>
-                  Add task
-                </button>
-              </div>
-
-              <!-- Body Section -->
-              <div
-                id="todos-container"
-                class="flex flex-col gap-y-2.5 lg:px-2.5 pt-4.5"
+          <!-- Content -->
+          <div class="mb-8 lg:mb-13.75">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xl sm:text-2xl font-semibold">
+                Account Information
+                <span class="block h-0.5 w-30 sm:w-40 bg-orioles-orange"></span>
+              </h3>
+              <a
+                class="shrink-0 ml-auto font-montserrat font-semibold text-sm underline"
+                href="../index.html"
+                >Go Back</a
               >
-                <!-- Tasks container -->
-
-                <!-- Task -->
-                <div
-                  class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]"
-                >
-                  <!-- Circle Shape-->
-                  <div
-                    class="absolute top-3 xl:top-3.5 left-3 xl:left-3.5 size-2.5 xl:size-3 border-danger border-2 rounded-full"
-                  ></div>
-                  <!-- Menu Icon -->
-                  <div
-                    class="absolute top-2.5 right-3 xl:right-3.5 flex gap-x-0.5 cursor-pointer py-1"
-                  >
-                    <span
-                      class="size-1 border border-quick-silver rounded-full"
-                    ></span>
-                    <span
-                      class="size-1 border border-quick-silver rounded-full"
-                    ></span>
-                    <span
-                      class="size-1 border border-quick-silver rounded-full"
-                    ></span>
-                  </div>
-
-                  <div class="flex gap-x-2 xl:gap-x-2.5">
-                    <div>
-                      <p
-                        class="text-sm xl:text-base/[19px] font-semibold line-clamp-2"
-                      >
-                        Attend Nischal’s Birthday Party
-                      </p>
-                      <p
-                        class="text-xs xl:text-sm/[17px] line-clamp-4 mt-2 xl:mt-2.5"
-                      >
-                        Buy gifts on the way and pick up cake from the bakery.
-                        (6 PM | Fresh Elements).....
-                      </p>
-                    </div>
-                    <div
-                      class="my-auto size-20 lg:size-22 shrink-0 *:h-full *:object-cover"
-                    >
-                      <img
-                        class="rounded-xl lg:rounded-[14px] overflow-hidden"
-                        src="./assets/images/todoes/team-meeting.png"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-
-                  <div
-                    class="flex justify-between gap-x-0.5 text-[10px] mt-3 xl:mt-3.5"
-                  >
-                    <span>
-                      Priority:
-                      <span class="block xl:inline text-amber-400">Medium</span>
-                    </span>
-                    <span>
-                      Status:
-                      <span class="block xl:inline text-danger"
-                        >Not Started</span
-                      >
-                    </span>
-                    <span class="text-quick-silver">
-                      Created on:
-                      <span class="block xl:inline">23/03/2025</span>
-                    </span>
-                  </div>
-                </div>
-                <!-- Line -->
-                <div
-                  class="w-[calc(100%+24px)] lg:w-[calc(100%+56px)] 2xl:w-[calc(100%+68px)] -ml-3 lg:-ml-7 2xl:-ml-8.5 my-3 lg:my-6 h-px bg-quick-silver/41"
-                ></div>
-                <!-- Task -->
-                <div
-                  class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]"
-                >
-                  <!-- Circle Shape-->
-                  <div
-                    class="absolute top-3 xl:top-3.5 left-3 xl:left-3.5 size-2.5 xl:size-3 border-danger border-2 rounded-full"
-                  ></div>
-                  <!-- Menu Icon -->
-                  <div
-                    class="absolute top-2.5 right-3 xl:right-3.5 flex gap-x-0.5 cursor-pointer py-1"
-                  >
-                    <span
-                      class="size-1 border border-quick-silver rounded-full"
-                    ></span>
-                    <span
-                      class="size-1 border border-quick-silver rounded-full"
-                    ></span>
-                    <span
-                      class="size-1 border border-quick-silver rounded-full"
-                    ></span>
-                  </div>
-
-                  <div class="flex gap-x-2 xl:gap-x-2.5">
-                    <div>
-                      <p
-                        class="text-sm xl:text-base/[19px] font-semibold line-clamp-2"
-                      >
-                        Attend Nischal’s Birthday Party
-                      </p>
-                      <p
-                        class="text-xs xl:text-sm/[17px] line-clamp-4 mt-2 xl:mt-2.5"
-                      >
-                        Buy gifts on the way and pick up cake from the bakery.
-                        (6 PM | Fresh Elements).....
-                      </p>
-                    </div>
-                    <div
-                      class="my-auto size-20 lg:size-22 shrink-0 *:h-full *:object-cover"
-                    >
-                      <img
-                        class="rounded-xl lg:rounded-[14px] overflow-hidden"
-                        src="./assets/images/todoes/team-meeting.png"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-
-                  <div
-                    class="flex justify-between gap-x-0.5 text-[10px] mt-3 xl:mt-3.5"
-                  >
-                    <span>
-                      Priority:
-                      <span class="block xl:inline text-picton-blue"
-                        >Medium</span
-                      >
-                    </span>
-                    <span>
-                      Status:
-                      <span class="block xl:inline text-danger"
-                        >Not Started</span
-                      >
-                    </span>
-                    <span class="text-quick-silver">
-                      Created on:
-                      <span class="block xl:inline">23/03/2025</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <!-- Task Status & Completed Task -->
-            <div class="flex flex-col gap-y-4">
-              <!-- Task Status -->
-              <section
-                class="px-3 lg:px-4 xl:px-4.5 2xl:px-5.5 pt-6 pb-7 xl:pb-11 shadow-section rounded-[14px]"
-              >
-                <h2 class="flex gap-x-1">
-                  <svg class="w-7 h-8"><use href="#task-status"></use></svg>
-                  <span class="font-medium text-primary"> Task Status </span>
-                </h2>
-                <!-- Stat -->
-                <div
-                  id="todos-stats-container"
-                  class="flex justify-between mt-4"
-                >
-                  <!-- Completed -->
-                  <div>
-                    <div class="donut-chart donut-chart--completed shrink-0">
-                      <span class="donut-chart__title">84%</span>
-                    </div>
-                    <li
-                      class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--success"
-                    >
-                      Completed
-                    </li>
-                  </div>
-                  <!-- In Progress -->
-                  <div>
-                    <div class="donut-chart donut-chart--in-progress shrink-0">
-                      <span class="donut-chart__title">46%</span>
-                    </div>
-                    <li
-                      class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--blue-bonnet"
-                    >
-                      In Progress
-                    </li>
-                  </div>
-                  <!-- Not Started -->
-                  <div>
-                    <div class="donut-chart donut-chart--not-started shrink-0">
-                      <span class="donut-chart__title">13%</span>
-                    </div>
-                    <li
-                      class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--danger"
-                    >
-                      Not Started
-                    </li>
-                  </div>
-                </div>
-              </section>
-              <!-- Completed Task -->
-              <section
-                class="px-3 lg:px-4 xl:px-4.5 2xl:px-6 py-5.5 shadow-section rounded-[14px]"
-              >
-                <h2 class="flex items-center gap-x-1">
-                  <svg class="w-6 h-7 text-quick-silver">
-                    <use href="#tasks"></use>
-                  </svg>
-                  <span class="font-medium text-primary"> Completed Task </span>
-                </h2>
-                <!-- Body Section -->
-                <div
-                  id="todos-completed-container"
-                  class="flex flex-col gap-y-2.5 lg:px-2.5 pt-4.5"
-                >
-                  <!-- Task -->
-                  <div
-                    class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]"
-                  >
-                    <!-- Circle Shape-->
-                    <div
-                      class="absolute top-3 xl:top-3.5 left-3 xl:left-3.5 size-2.5 xl:size-3 border-danger border-2 rounded-full"
-                    ></div>
-                    <!-- Menu Icon -->
-                    <div
-                      class="absolute top-2.5 right-3 xl:right-3.5 flex gap-x-0.5 cursor-pointer py-1"
-                    >
-                      <span
-                        class="size-1 border border-quick-silver rounded-full"
-                      ></span>
-                      <span
-                        class="size-1 border border-quick-silver rounded-full"
-                      ></span>
-                      <span
-                        class="size-1 border border-quick-silver rounded-full"
-                      ></span>
-                    </div>
-
-                    <div class="flex gap-x-2 xl:gap-x-2.5">
-                      <div>
-                        <p
-                          class="text-sm xl:text-base/[19px] font-semibold line-clamp-2"
-                        >
-                          Attend Nischal’s Birthday Party
-                        </p>
-                        <p
-                          class="text-xs xl:text-sm/[17px] line-clamp-4 mt-2 xl:mt-2.5"
-                        >
-                          Buy gifts on the way and pick up cake from the bakery.
-                          (6 PM | Fresh Elements).....
-                        </p>
-                      </div>
-                      <div
-                        class="my-auto size-20 lg:size-22 shrink-0 *:h-full *:object-cover"
-                      >
-                        <img
-                          class="rounded-xl lg:rounded-[14px] overflow-hidden"
-                          src="./assets/images/todoes/team-meeting.png"
-                          alt=""
-                        />
-                      </div>
-                    </div>
-
-                    <div
-                      class="flex justify-between gap-x-0.5 text-[10px] mt-3 xl:mt-3.5"
-                    >
-                      <span>
-                        Priority:
-                        <span class="block xl:inline text-picton-blue"
-                          >Medium</span
-                        >
-                      </span>
-                      <span>
-                        Status:
-                        <span class="block xl:inline text-danger"
-                          >Not Started</span
-                        >
-                      </span>
-                      <span class="text-quick-silver">
-                        Created on:
-                        <span class="block xl:inline">23/03/2025</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </section>
             </div>
+            <!-- Profile -->
+            <div class="flex items-center gap-x-4 mt-8">
+              <div class="size-18 sm:size-21.5 rounded-full overflow-hidden">
+                <img
+                  src="../assets/images/users/user-1.jpg"
+                  alt="user profile"
+                />
+              </div>
+              <div class="flex flex-col gap-y-1">
+                <span class="user-full-name text-lg sm:text-xl font-semibold"
+                  >Sundar Gurung</span
+                >
+                <span class="user-email">sundargurung360@gmail.com</span>
+              </div>
+            </div>
+
+            <!-- Form -->
+            <form
+              class="flex flex-col gap-y-4 w-full px-6 sm:px-8 md:px-9 py-11 mt-7 border border-quick-silver rounded-xl"
+            >
+              <div class="flex flex-col gap-y-2">
+                <label
+                  class="font-montserrat font-semibold text-sm"
+                  for="first-name-input"
+                  >First Name</label
+                >
+                <input
+                  class="w-full max-w-127.5 h-9 px-3.75 border border-quick-silver rounded-md"
+                  id="first-name-input"
+                  type="text"
+                />
+              </div>
+              <div class="flex flex-col gap-y-2">
+                <label
+                  class="font-montserrat font-semibold text-sm"
+                  for="last-name-input"
+                  >Last Name</label
+                >
+                <input
+                  class="w-full max-w-127.5 h-9 px-3.75 border border-quick-silver rounded-md"
+                  id="last-name-input"
+                  type="text"
+                />
+              </div>
+              <div class="flex flex-col gap-y-2">
+                <label
+                  class="font-montserrat font-semibold text-sm"
+                  for="email-input"
+                  >Email</label
+                >
+                <input
+                  class="w-full max-w-127.5 h-9 px-3.75 border border-quick-silver rounded-md"
+                  id="email-input"
+                  type="email"
+                />
+              </div>
+              <div class="flex flex-col gap-y-2">
+                <label
+                  class="font-montserrat font-semibold text-sm"
+                  for="current-password-input"
+                  >Current Password</label
+                >
+                <input
+                  class="w-full max-w-127.5 h-9 px-3.75 border border-quick-silver rounded-md"
+                  id="current-password-input"
+                  type="password"
+                />
+              </div>
+              <div class="flex flex-col gap-y-2">
+                <label
+                  class="font-montserrat font-semibold text-sm"
+                  for="new-password-input"
+                  >New Password</label
+                >
+                <input
+                  class="w-full max-w-127.5 h-9 px-3.75 border border-quick-silver rounded-md"
+                  id="new-password-input"
+                  type="password"
+                />
+              </div>
+
+              <div class="flex gap-x-1.25">
+                <button
+                  id="save-changes-btn"
+                  class="bg-orioles-orange text-sm sm:text-base text-white cursor-pointer rounded-md py-2 px-5 sm:px-9"
+                >
+                  Save Changes
+                </button>
+                <a
+                  href="../index.html"
+                  class="bg-orioles-orange text-sm sm:text-base text-white cursor-pointer rounded-md py-2 px-5 sm:px-9"
+                  >Cancel</a
+                >
+              </div>
+            </form>
           </div>
         </div>
       </main>
-    </div>
-    <!-- -------------------------- Add New Task Modal -------------------------- -->
-
-    <!-- -------------------------- Todo Modal -------------------------- -->
-    <div
-      id="todo-modal"
-      class="invisible opacity-0 fixed z-20 top-1/2 -translate-y-1/2 left-0 right-0 mx-auto md:w-160 lg:w-200 xl:w-225 p-4 sm:px-6 lg:px-10 xl:px-15.5 sm:pt-6 lg:pt-8 xl:pt-11.5 sm:pb-6 lg:pb-10 xl:pb-12.5 bg-white transition-all rounded-[5px]"
-    >
-      <!-- Header -->
-      <div class="flex items-center justify-between">
-        <div class="font-montserrat font-semibold">
-          <span class="hidden" id="todo-modal__new-todo-title">
-            Add New Task
-          </span>
-          <span class="hidden" id="todo-modal__edit-todo-title">
-            Edit Task
-          </span>
-          <span class="block h-0.5 w-24 bg-orioles-orange"></span>
-        </div>
-        <button
-          id="todo-modal__close-btn"
-          class="font-montserrat font-semibold text-sm underline underline-offset-3 cursor-pointer"
-        >
-          Go Back
-        </button>
-      </div>
-      <form id="todo-form" action="">
-        <div
-          class="sm:border border-quick-silver/64 sm:py-3.5 p-2.5 sm:px-4 mt-2 sm:mt-4 lg:mt-6 xl:mt-10"
-        >
-          <div class="w-full xs:w-58/100 xl:w-68/100">
-            <label class="block font-montserrat text-sm font-semibold" for=""
-              >Title</label
-            >
-            <input
-              class="w-full h-9 text-sm md:text-base px-2.5 md:px-4 mt-1 xs:mt-2 border border-quick-silver rounded-md"
-              type="text"
-              name=""
-              id="todo-form__title"
-            />
-          </div>
-          <div class="w-full xs:w-58/100 xl:w-68/100 mt-2.5 xs:mt-4">
-            <label class="block font-montserrat text-sm font-semibold"
-              >Date</label
-            >
-            <input
-              class="w-full h-9 text-sm md:text-base px-2.5 md:px-4 mt-1 xs:mt-2 border border-quick-silver rounded-md"
-              type="datetime-local"
-              name=""
-              id="todo-form__date"
-            />
-          </div>
-
-          <div class="w-full xs:w-58/100 xl:w-68/100 mt-2.5 xs:mt-3">
-            <span class="font-montserrat font-semibold text-sm">Priority</span>
-            <div
-              id="todo-form__priority-container"
-              class="flex justify-between lg:gap-x-13.5 mt-1 xs:mt-2.5"
-            >
-              <div class="flex items-center gap-x-2.5">
-                <label
-                  class="text-[13px] text-quick-silver dot-icon before:bg-danger"
-                  for="priority-high"
-                  >High</label
-                >
-                <input
-                  class="priority-task accent-primary"
-                  type="checkbox"
-                  name="priority-task"
-                  id="priority-high"
-                  data-task-priority="high"
-                />
-              </div>
-              <div class="flex items-center gap-x-2.5">
-                <label
-                  class="text-[13px] text-quick-silver dot-icon before:bg-picton-blue"
-                  for="priority-medium"
-                  >Medium</label
-                >
-                <input
-                  class="priority-task accent-primary"
-                  type="checkbox"
-                  name="priority-task"
-                  id="priority-medium"
-                  data-task-priority="medium"
-                />
-              </div>
-              <div class="flex items-center gap-x-2.5">
-                <label
-                  class="text-[13px] text-quick-silver dot-icon before:bg-success"
-                  for="priority-low"
-                  >Low</label
-                >
-                <input
-                  class="priority-task accent-primary"
-                  type="checkbox"
-                  name="priority-task"
-                  id="priority-low"
-                  data-task-priority="low"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="flex justify-between flex-col-reverse xs:flex-row gap-y-2.5 mt-4 font-montserrat"
-          >
-            <div class="w-full xs:w-58/100 xl:w-68/100">
-              <label class="font-semibold text-sm" for=""
-                >Task Description</label
-              >
-              <textarea
-                class="text-[13px] max-h-92.5 w-full h-40 xs:h-50 lg:h-51.25 p-2.5 sm:py-3.5 sm:px-4 mt-1 xs:mt-2.5 border border-quick-silver rounded-md"
-                col
-                name=""
-                id="todo-form__description"
-                placeholder="Start writting here..."
-              ></textarea>
-            </div>
-            <div class="">
-              <span class="font-semibold text-sm">Upload Image</span>
-              <label
-                class="relative flex justify-center items-center size-40 xs:size-50 lg:w-53.5 lg:h-51.25 px-2.5 sm:px-6 lg:px-9.5 py-4 lg:py-5.5 mx-auto xs:mx-0 mt-1 xs:mt-2.5 text-quick-silver text-center border border-quick-silver rounded-md"
-              >
-                <div id="todo-form__cover-upload-label">
-                  <svg class="w-12 xs:w-16 h-10 xs:h-14 text-white mx-auto">
-                    <use href="#upload-img-icon"></use>
-                  </svg>
-                  <span class="text-xs xs:text-[13px] block mt-2.5 xs:mt-6">
-                    Drag & Drop files here or
-                  </span>
-                  <span
-                    class="text-xs xs:text-[13px] font-medium py-1 xs:py-1.5 px-2 xs:px-3 border border-quick-silver rounded-md mt-2 xs:mt-2.5 inline-block cursor-pointer"
-                    >Browse</span
-                  >
-                </div>
-                <div
-                  class="absolute inset-4 max-h-full max-w-full rounded-md overflow-hidden"
-                  id="todo-form__cover-preview"
-                >
-                  <img class="aspect-square" src="" alt="" />
-                </div>
-                <input
-                  type="file"
-                  id="todo-form__cover"
-                  hidden
-                  accept=".jpg, .png, .jpeg, .webp"
-                />
-              </label>
-            </div>
-          </div>
-        </div>
-        <button
-          id="todo-form__create-todo-btn"
-          class="hidden w-16 xs:w-22.5 h-7 xs:h-8.5 sm:mt-4 lg:mt-6 xl:mt-10 ml-2.5 sm:ml-5 font-montserrat text-xs xs:text-sm bg-orioles-orange text-white rounded-md cursor-pointer"
-        >
-          Done
-        </button>
-        <button
-          id="todo-form__update-todo-btn"
-          data-task-id=""
-          class="hidden w-24 xs:w-29 h-7 xs:h-8.5 sm:mt-4 lg:mt-6 xl:mt-10 ml-2.5 sm:ml-5 font-montserrat text-xs xs:text-sm bg-orioles-orange text-white rounded-md cursor-pointer"
-        >
-          Save Changes
-        </button>
-      </form>
     </div>
 
     <div
@@ -1217,10 +687,10 @@
     <div class="loader fixed inset-1/2 z-50"></div>
 
     <!-- JavaScript -->
-    <script type="module" src="./javascripts/app.js"></script>
-    <script type="module" src="./javascripts/pages/index.js"></script>
+    <script type="module" src="../javascripts/app.js"></script>
+    <script type="module" src="../javascripts/pages/settings.js"></script>
 
     <!-- Libraries -->
-    <script src="../node_modules/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../../node_modules/sweetalert/dist/sweetalert.min.js"></script>
   </body>
 </html>
