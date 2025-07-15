@@ -71,7 +71,7 @@ function preFillFromInputs(task) {
 
   todoCoverPreview.src = cover.img
     ? cover.img
-    : `../../src/assets/images/todoes/${cover.path}`;
+    : `/src/assets/images/todoes/${cover.path}`;
 
   showTodoCoverPreview();
   hideTodoUploadLabel();
@@ -259,7 +259,7 @@ function isTodoValid({ title, description, file: img, createdAt, priority }) {
   const isPriorityValid = validPriorities.includes(priority);
   const isImgSizeValid = img?.size <= 500 * 1000; // 500KB
 
-  if (!hasAllFieldsValue) {
+  if (hasAllFieldsValue == null) {
     swal({
       title: "Please fill all fields",
       icon: "warning",
@@ -267,7 +267,7 @@ function isTodoValid({ title, description, file: img, createdAt, priority }) {
     return false;
   }
 
-  if (img && !isImgSizeValid) {
+  if (img && isImgSizeValid == null) {
     swal({
       title: "Cover must be maximum 500KB",
       icon: "warning",
@@ -275,7 +275,7 @@ function isTodoValid({ title, description, file: img, createdAt, priority }) {
     return false;
   }
 
-  if (img && !isImgTypeValid) {
+  if (img && isImgTypeValid == null) {
     swal({
       title: "Cover type must be one of (png, jpg, jpeg, webp)",
       icon: "warning",
@@ -283,7 +283,7 @@ function isTodoValid({ title, description, file: img, createdAt, priority }) {
     return false;
   }
 
-  if (!isPriorityValid) {
+  if (isPriorityValid == null) {
     swal({
       title: "Priority must be (High, Medium or low)",
       icon: "warning",

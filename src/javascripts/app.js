@@ -94,7 +94,7 @@ const mobileSearchResultContainer = document.getElementById(
 );
 
 function insertSearchResult(todos, container) {
-  if (!container) return;
+  if (container == null) return;
   let template = "";
 
   if (todos.length) {
@@ -105,7 +105,7 @@ function insertSearchResult(todos, container) {
       <li class="px-3.75 py-1.5 lg:py-2.5">
         <a
           class="flex items-center justify-between gap-x-4 cursor-pointer"
-          href="../../src/pages/todo-details.html?id=${id}"
+          href="/src/pages/todo-details.html?id=${id}"
         >
           <div>
             <p class="text-sm lg:text-base/relaxed line-clamp-2">${title}</p>
@@ -123,7 +123,7 @@ function insertSearchResult(todos, container) {
           ${
             cover.img
               ? `<img class="aspect-square" src="${cover.img}" alt="${cover.alt}" />`
-              : `<img class="aspect-square" src="../../src/assets/images/todoes/${cover.path}" alt="${cover.alt}" />`
+              : `<img class="aspect-square" src="/src/assets/images/todoes/${cover.path}" alt="${cover.alt}" />`
           }
           </div>
         </a>
@@ -178,8 +178,8 @@ function insertDate() {
 function routeProtection() {
   const currentUser = getFromLocalStorage("currentUser");
 
-  if (!currentUser) {
-    location.href = "./pages/login.html";
+  if (currentUser == null) {
+    location.href = "/src/pages/login.html";
   }
 }
 
@@ -239,6 +239,6 @@ logoutBtn.addEventListener("click", async (clickEvent) => {
 
   if (isLogoutConfirm) {
     removeFromLocalStorage("currentUser");
-    location.href = "./pages/login.html";
+    location.href = "/src/pages/login.html";
   }
 });

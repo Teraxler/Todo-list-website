@@ -3,7 +3,7 @@ import { getFromLocalStorage, saveToLocalStorage } from "./utils.js";
 
 async function saveDefaultData() {
   let DB = getFromLocalStorage("DB");
-  if (!Boolean(DB)) {
+  if (DB == null) {
     DB = await getDB();
 
     saveToLocalStorage("DB", DB);
