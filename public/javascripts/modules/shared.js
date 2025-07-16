@@ -1,1 +1,66 @@
-function showOverlay(){document.getElementById("overlay").classList.add("h-full")}function hideOverlay(){document.getElementById("overlay").classList.remove("h-full")}function showTransparentOverlay(){document.getElementById("transparent-overlay").classList.add("h-full")}function hideTransparentOverlay(){document.getElementById("transparent-overlay").classList.remove("h-full")}function showTodoOptions(e){showTransparentOverlay();let s=e.currentTarget.nextElementSibling;s?.classList.remove("invisible","opacity-0"),s?.classList.add("todo-options--active")}function hideTodoOptions(){hideTransparentOverlay();let e=document.getElementsByClassName("todo-options--active")[0];e?.classList.add("invisible","opacity-0"),e?.classList.remove("todo-options--active")}function showLoader(){document.getElementsByClassName("loader")[0]?.classList.remove("invisible","opacity-0"),document.getElementsByClassName("loader-overlay")[0]?.classList.remove("invisible","opacity-0")}function hideLoader(){document.getElementsByClassName("loader")[0]?.classList.add("invisible","opacity-0"),document.getElementsByClassName("loader-overlay")[0]?.classList.add("invisible","opacity-0")}export{showOverlay,hideOverlay,showTransparentOverlay,hideTransparentOverlay,showTodoOptions,hideTodoOptions,showLoader,hideLoader};
+function showOverlay() {
+  document.getElementById("overlay").classList.add("h-full");
+}
+
+function hideOverlay() {
+  document.getElementById("overlay").classList.remove("h-full");
+}
+
+function showTransparentOverlay() {
+  document.getElementById("transparent-overlay").classList.add("h-full");
+}
+
+function hideTransparentOverlay() {
+  document.getElementById("transparent-overlay").classList.remove("h-full");
+}
+
+function showTodoOptions(clickEvent) {
+  showTransparentOverlay();
+
+  const todoOptions = clickEvent.currentTarget.nextElementSibling;
+
+  todoOptions?.classList.remove("invisible", "opacity-0");
+  todoOptions?.classList.add("todo-options--active");
+}
+
+function hideTodoOptions() {
+  hideTransparentOverlay();
+
+  const todoOptions = document.getElementsByClassName(
+    "todo-options--active"
+  )[0];
+
+  todoOptions?.classList.add("invisible", "opacity-0");
+  todoOptions?.classList.remove("todo-options--active");
+}
+
+function showLoader() {
+  document
+    .getElementsByClassName("loader")[0]
+    ?.classList.remove("invisible", "opacity-0");
+
+  document
+    .getElementsByClassName("loader-overlay")[0]
+    ?.classList.remove("invisible", "opacity-0");
+}
+
+function hideLoader() {
+  document
+    .getElementsByClassName("loader")[0]
+    ?.classList.add("invisible", "opacity-0");
+
+  document
+    .getElementsByClassName("loader-overlay")[0]
+    ?.classList.add("invisible", "opacity-0");
+}
+
+export {
+  showOverlay,
+  hideOverlay,
+  showTransparentOverlay,
+  hideTransparentOverlay,
+  showTodoOptions,
+  hideTodoOptions,
+  showLoader,
+  hideLoader,
+};

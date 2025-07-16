@@ -3,7 +3,7 @@ import { findUser } from "../modules/utils.js";
 
 async function getUser(userId) {
   try {
-    const response = await fetch(`../public/javascripts/database.json`);
+    const response = await fetch(`../src/javascripts/database.json`);
     const data = await response.json();
 
     const user = findUser(userId, data.users);

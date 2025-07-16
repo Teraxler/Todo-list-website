@@ -2,7 +2,7 @@
 
 async function getStatistics() {
   try {
-    const response = await fetch(`../public/javascripts/database.json`);
+    const response = await fetch(`../src/javascripts/database.json`);
     const data = await response.json();
 
     return data.statistics;
