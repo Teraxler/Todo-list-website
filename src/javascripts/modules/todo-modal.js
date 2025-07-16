@@ -148,7 +148,7 @@ function hideTodoCoverPreview() {
 function generateNewTodo(todoId, todoCover) {
   return {
     id: todoId ?? idGenerator(),
-    status: "Not Started",
+    status: "not started",
     priority: document.querySelector(".priority-task:checked")?.dataset
       .taskPriority,
     cover: todoCover ?? {

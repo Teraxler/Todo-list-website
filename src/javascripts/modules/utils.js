@@ -228,6 +228,15 @@ function searchTodo(searchValue, todos) {
   );
 }
 
+// Filter
+function filterCompletedTodos(todos) {
+  return todos.filter((todo) => todo.status === "completed");
+}
+
+function filterNotCompletedTodos(todos) {
+  return todos.filter((todo) => todo.status !== "completed");
+}
+
 // Find
 function findUser(id, users) {
   const userIndex = users.findIndex((user) => String(user.id) === String(id));
@@ -417,4 +426,6 @@ export {
   capitalize,
   getQueryParam,
   insertTextContent,
+  filterCompletedTodos,
+  filterNotCompletedTodos,
 };

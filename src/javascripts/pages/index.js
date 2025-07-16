@@ -1,8 +1,9 @@
 import {
   calcRelativeDateTimeDifference,
-  capitalize,
   clacDegreesOfPercent,
   convertMonthToMonthName,
+  filterCompletedTodos,
+  filterNotCompletedTodos,
   findTodoIndex,
   findUser,
   getFromLocalStorage,
@@ -16,6 +17,8 @@ import {
   showEditTodoModal,
 } from "../modules/todo-modal.js";
 import {
+  getPriorityColorClass,
+  getStatusColorClass,
   hideLoader,
   hideTodoOptions,
   showLoader,
@@ -28,10 +31,13 @@ let user = {};
 function generateTodoTemplate(todo) {
   const { id, title, description, cover, createdAt, priority, status } = todo;
 
+  const priorityColorClass = getPriorityColorClass(priority);
+  const statusColorClass = getStatusColorClass(status);
+
   return `
         <div class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]">
           <!-- Circle Shape-->
-          <div class="absolute top-3 xl:top-3.5 left-3 xl:left-3.5 size-2.5 xl:size-3 border-danger border-2 rounded-full"></div>
+          <div class="absolute top-3 xl:top-3.5 left-3 xl:left-3.5 size-2.5 xl:size-3 border-2 border-${statusColorClass} rounded-full"></div>
           <!-- Menu Icon -->
           <div
             class="task-options absolute top-2.5 right-3 xl:right-3.5">
@@ -86,23 +92,13 @@ function generateTodoTemplate(todo) {
           <div class="flex justify-between gap-x-0.5 text-[10px] mt-3 xl:mt-3.5">
             <span>
               Priority:
-              <span class="block xl:inline ${
-                priority.toLowerCase() === "high"
-                  ? "text-danger"
-                  : priority.toLowerCase() === "medium"
-                  ? "text-amber-400"
-                  : "text-picton-blue"
-              } ">${priority}</span>
+              <span class="capitalize block xl:inline text-${priorityColorClass}">${priority}</span>
             </span>
             <span>
               Status:
-              <span class="block xl:inline ${
-                status.toLowerCase() === "not started"
-                  ? "text-danger"
-                  : status.toLowerCase() === "in progress"
-                  ? "text-blue-bonnet"
-                  : "text-success"
-              } ">${capitalize(status)}</span>
+              <span class="capitalize block xl:inline text-${statusColorClass}">
+                ${status}
+              </span>
             </span>
             <span class="text-quick-silver">
               Created on:
@@ -131,6 +127,7 @@ function insertFirstTodoDate(dateTime) {
 
 function insertTodos(todos) {
   const todosContainer = document.getElementById("todos-container");
+  todos = filterNotCompletedTodos(todos);
 
   let template = "",
     createdAt = null;
@@ -139,13 +136,15 @@ function insertTodos(todos) {
     insertFirstTodoDate(todos[0].createdAt);
 
     todos.forEach((todo) => {
-      if (createdAt && createdAt !== todo.createdAt.slice(0, 10)) {
-        // Only date, not time!
-        template += `<div class="w-[calc(100%+24px)] lg:w-[calc(100%+56px)] 2xl:w-[calc(100%+68px)] -ml-3 lg:-ml-7 2xl:-ml-8.5 my-3 lg:my-6 h-px bg-quick-silver/41"></div>`;
-      }
+      if (todo.status.toLowerCase() !== "completed") {
+        if (createdAt && createdAt !== todo.createdAt.slice(0, 10)) {
+          // Only date, not time!
+          template += `<div class="w-[calc(100%+24px)] lg:w-[calc(100%+56px)] 2xl:w-[calc(100%+68px)] -ml-3 lg:-ml-7 2xl:-ml-8.5 my-3 lg:my-6 h-px bg-quick-silver/41"></div>`;
+        }
 
-      createdAt = todo.createdAt.slice(0, 10);
-      template += generateTodoTemplate(todo);
+        createdAt = todo.createdAt.slice(0, 10);
+        template += generateTodoTemplate(todo);
+      }
     });
   } else {
     template =
@@ -156,31 +155,12 @@ function insertTodos(todos) {
 }
 
 function insertTodosStatistics(statistics) {
-  let template = "",
-    statistic;
+  let template = "";
 
   const todosStatsContainer = document.getElementById("todos-stats-container");
 
-  const statisticsMap = {
-    notStarted: {
-      title: "Not Started",
-      donutColorVar: "--color-danger",
-      circleColorClass: "dot-icon--danger",
-    },
-    inProgress: {
-      title: "In Progress",
-      donutColorVar: "--color-blue-bonnet",
-      circleColorClass: "dot-icon--blue-bonnet",
-    },
-    completed: {
-      title: "Completed",
-      donutColorVar: "--color-success",
-      circleColorClass: "dot-icon--success",
-    },
-  };
-
-  for (const key in statistics) {
-    statistic = statisticsMap[key];
+  for (const status in statistics) {
+    const statusColorClass = getStatusColorClass(status);
 
     template += `
   <div>
@@ -188,21 +168,20 @@ function insertTodosStatistics(statistics) {
       class="donut-chart shrink-0"
       style="
         background: conic-gradient(
-          var(${statistic.donutColorVar}) 0deg 
-          ${clacDegreesOfPercent(statistics[key])}deg,
-          var(--color-light-silver) ${clacDegreesOfPercent(statistics[key])}deg
-            360deg
+          var(--color-${statusColorClass}) 0deg 
+          ${clacDegreesOfPercent(
+            statistics[status]
+          )}deg, var(--color-light-silver) 
+          ${clacDegreesOfPercent(statistics[status])}deg 360deg
         );
       "
     >
-      <span class="donut-chart__title">${statistics[key]}%</span>
+      <span class="donut-chart__title">${statistics[status]}%</span>
     </div>
     <li
-      class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon ${
-        statistic.circleColorClass
-      }"
+      class="capitalize block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--${statusColorClass}"
     >
-      ${statistic.title}
+      ${status}
     </li>
   </div>`;
   }
@@ -212,15 +191,15 @@ function insertTodosStatistics(statistics) {
 
 function insertCompletedTodos(todos) {
   let template = "";
+  todos = filterCompletedTodos(todos);
+
   const todosCompletedContainer = document.getElementById(
     "todos-completed-container"
   );
 
   if (todos.length) {
     todos.forEach((todo) => {
-      if (todo.status === "Finished") {
-        template += generateTodoTemplate(todo);
-      }
+      template += generateTodoTemplate(todo);
     });
   }
 
@@ -249,9 +228,9 @@ window.addEventListener("load", async () => {
   user = findUser(currentUser.userId, DB.users);
 
   insertTextContent(`Welcome ${user.name} 👋`, "user-name");
-  insertTodos(user.todos);
-  insertCompletedTodos(user.todos);
   insertTodosStatistics(user.statistics);
+  insertCompletedTodos(user.todos);
+  insertTodos(user.todos);
   setTodoOptionsEvent();
   hideLoader();
 });
@@ -269,32 +248,38 @@ function updateDB(editedUser) {
 }
 
 function updateStatistics(todos) {
-  let notStarted, inProgress, finished;
+  let notStarted, inProgress, completed;
   const count = todos.length;
 
-  notStarted = inProgress = finished = 0;
+  notStarted = inProgress = completed = 0;
 
   if (count) {
     todos.forEach((todo) => {
-      if (todo.status === "Not Started") {
-        notStarted++;
-      } else if (todo.status === "In Progress") {
-        inProgress++;
-      } else if (todo.status === "Finished") {
-        finished++;
+      switch (todo.status) {
+        case "not started":
+          notStarted++;
+          break;
+        case "in progress":
+          inProgress++;
+          break;
+        case "completed":
+          completed++;
+          break;
+        default:
+          break;
       }
     });
 
     user.statistics = {
-      completed: ((finished / count) * 100).toFixed(1),
-      inProgress: ((inProgress / count) * 100).toFixed(1),
-      notStarted: ((notStarted / count) * 100).toFixed(1),
+      completed: Math.round((completed / count) * 100),
+      "in progress": Math.round((inProgress / count) * 100),
+      "not started": Math.round((notStarted / count) * 100),
     };
   } else {
     user.statistics = {
-      completed: "0.0",
-      inProgress: "0.0",
-      notStarted: "0.0",
+      completed: 0,
+      "in progress": 0,
+      "not started": 0,
     };
   }
 
@@ -309,7 +294,7 @@ function startTaskHandler(todoId) {
   const todoIndex = findTodoIndex(todoId, user.todos);
 
   if (todoIndex !== -1) {
-    user.todos[todoIndex].status = "In Progress";
+    user.todos[todoIndex].status = "in progress";
 
     updateDB(user);
 
@@ -327,7 +312,6 @@ function editTaskHandler(taskId) {
   hideTodoOptions();
 
   const taskIndex = findTodoIndex(taskId, user.todos);
-
   taskIndex !== -1 ? showEditTodoModal(user.todos[taskIndex]) : null;
 }
 
@@ -365,7 +349,7 @@ function finishTaskHandler(taskId) {
   const taskIndex = findTodoIndex(taskId, user.todos);
 
   if (taskIndex !== -1) {
-    user.todos[taskIndex].status = "Finished";
+    user.todos[taskIndex].status = "completed";
     updateDB(user);
 
     insertTodos(user.todos);

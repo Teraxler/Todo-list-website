@@ -53,7 +53,7 @@ function insertTodoStatus(status) {
   const statusColorClass = {
     "not started": "text-danger",
     "in progress": "text-blue-bonnet",
-    finished: "text-success",
+    completed: "text-success",
   };
 
   statusWrapper.classList.remove(
@@ -149,10 +149,10 @@ function completeTodoHandler() {
   const todoIndex = findTodoIndex(todoId, user.todos);
 
   if (todoIndex !== -1) {
-    user.todos[todoIndex].status = "Finished";
+    user.todos[todoIndex].status = "completed";
     updateDB(user);
 
-    insertTodoStatus("Finished");
+    insertTodoStatus("completed");
   }
 }
 

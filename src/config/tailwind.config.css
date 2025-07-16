@@ -197,4 +197,35 @@
 
   @media (width >= 1280) {
   }
+
+  /* DONT REMOVE */
+  /* .text-danger {
+    color: var(--color-danger);
+  }
+  .text-amber-400 {
+    color: var(--color-amber-400);
+  }
+  .text-picton-blue {
+    color: var(--color-picton-blue);
+  }
+
+  .text-danger {
+    color: var(--color-danger);
+  }
+  .text-success {
+    color: var(--color-success);
+  }
+  .text-blue-bonnet {
+    color: var(--color-blue-bonnet);
+  } */
+
+  .border-danger {
+    border-color: var(--color-danger);
+  }
+  .border-success {
+    border-color: var(--color-success);
+  }
+  .border-blue-bonnet {
+    border-color: var(--color-blue-bonnet);
+  }
 }

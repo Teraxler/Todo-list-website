@@ -54,6 +54,30 @@ function hideLoader() {
     ?.classList.add("invisible", "opacity-0");
 }
 
+function getPriorityColorClass(priority) {
+  priority = priority.toLowerCase();
+
+  const priorityColorMap = {
+    high: "danger",
+    medium: "amber-400",
+    low: "picton-blue",
+  };
+
+  return priorityColorMap[priority];
+}
+
+function getStatusColorClass(status) {
+  status = status.toLowerCase();
+
+  const statusColorMap = {
+    "not started": "danger",
+    "in progress": "blue-bonnet",
+    completed: "success",
+  };
+
+  return statusColorMap[status];
+}
+
 export {
   showOverlay,
   hideOverlay,
@@ -63,4 +87,6 @@ export {
   hideTodoOptions,
   showLoader,
   hideLoader,
+  getPriorityColorClass,
+  getStatusColorClass,
 };
