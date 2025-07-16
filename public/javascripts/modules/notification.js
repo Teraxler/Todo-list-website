@@ -14,7 +14,7 @@
           <div
             class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
           >
-            ${n.path?`<img class="aspect-square" src="../../public/assets/images/todoes/${n.path}" alt="${n.alt}" />`:`<img class="aspect-square" src="${n.img}" alt="${n.alt}" />`}
+            ${n.path?`<img class="aspect-square" src="/Todo-list-website/public/assets/images/todoes/${n.path}" alt="${n.alt}" />`:`<img class="aspect-square" src="${n.img}" alt="${n.alt}" />`}
           </div>
         </a>
       </li>
