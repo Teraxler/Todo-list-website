@@ -1,7 +1,7 @@
 import {
   findUserByUserPass,
   getFromLocalStorage,
-  saveToLocalStorage,
+  setCookieUserId,
 } from "../modules/utils.js";
 
 const usernameInput = document.getElementById("username-input");
@@ -17,21 +17,14 @@ async function signInUser() {
   const user = findUserByUserPass({ username, password }, DB.users);
 
   if (user) {
+    setCookieUserId(user.id, rememberMeCheckbox.checked);
+
     await swal({
       title: `Welcome ${user.name}`,
       icon: "success",
     });
 
-    const currentUser = {
-      userId: user.id,
-      rememberMe: rememberMeCheckbox.checked,
-    };
-
-    const isSavedSuccessfull = saveToLocalStorage("currentUser", currentUser);
-
-    if (isSavedSuccessfull) {
-      location.href = "../index.html";
-    }
+    location.href = "../index.html";
   } else {
     swal({
       title: `Username or Password is wrong!`,

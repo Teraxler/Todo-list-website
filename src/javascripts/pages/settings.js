@@ -1,6 +1,7 @@
 import { hideLoader, showLoader } from "../modules/shared.js";
 import {
   findUser,
+  getCookie,
   getFromLocalStorage,
   saveToLocalStorage,
 } from "../modules/utils.js";
@@ -11,10 +12,6 @@ function fillUserInfo(user) {
   const firstNameInput = document.getElementById("first-name-input");
   const lastNameInput = document.getElementById("last-name-input");
   const emailInput = document.getElementById("email-input");
-  const currentPasswordInput = document.getElementById(
-    "current-password-input"
-  );
-  const newPasswordInput = document.getElementById("new-password-input");
 
   firstNameInput.value = user.name;
   lastNameInput.value = user.family;
@@ -35,10 +32,6 @@ function isPasswordCorrect(password) {
 }
 
 function isUserValid({ name, family, email, newPassword }) {
-  console.log("🚀 ~ isUserValid ~ newPassword:", newPassword);
-  console.log("🚀 ~ isUserValid ~ email:", email);
-  console.log("🚀 ~ isUserValid ~ family:", family);
-  console.log("🚀 ~ isUserValid ~ name:", name);
   const patternMap = {
     name: /^[a-zA-Z]{3,16}$/,
     email: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
@@ -158,7 +151,7 @@ saveChangesBtn.addEventListener("click", updateUserHandler);
 window.addEventListener("load", () => {
   showLoader();
 
-  const userId = getFromLocalStorage("currentUser").userId;
+  const userId = getCookie("userId");
   const DB = getFromLocalStorage("DB");
 
   user = findUser(userId, DB.users);

@@ -282,7 +282,7 @@
               type="search"
               id="header-search-input"
               class="peer w-full px-3.75 text-quick-silver font-montserrat font-semibold text-xs outline-0"
-              placeholder="Search your task here..."
+              placeholder="Search your todo here..."
             />
             <!-- Search-bar drop-down -->
             <ul
@@ -441,7 +441,7 @@
             type="search"
             id="mobile-search-input"
             class="peer w-full px-3.75 text-quick-silver font-montserrat font-semibold text-xs outline-0"
-            placeholder="Search your task here..."
+            placeholder="Search your todo here..."
           />
           <!-- Search-bar drop-down -->
           <ul
@@ -490,7 +490,7 @@
           <ul class="w-full flex flex-col gap-y-2 *:flex">
             <li>
               <a
-                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full bg-white text-primary"
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
                 href="../index.html"
               >
                 <svg class="shrink-0 size-5 xl:size-6">
@@ -502,12 +502,12 @@
             <li>
               <a
                 class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
-                href="javascript:void(0)"
+                href="./my-todos.html"
               >
                 <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#tasks"></use>
                 </svg>
-                <span class="sm:hidden lg:inline"> My Task </span>
+                <span class="sm:hidden lg:inline"> My Todos </span>
               </a>
             </li>
             <li>
@@ -518,7 +518,7 @@
                 <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#tasks-category"></use>
                 </svg>
-                <span class="sm:hidden lg:inline"> Task Category </span>
+                <span class="sm:hidden lg:inline"> Todo Category </span>
               </a>
             </li>
             <li>
@@ -658,10 +658,10 @@
       <div class="flex items-center justify-between">
         <div class="font-montserrat font-semibold">
           <span class="hidden" id="todo-modal__new-todo-title">
-            Add New Task
+            Add New Todo
           </span>
           <span class="hidden" id="todo-modal__edit-todo-title">
-            Edit Task
+            Edit Todo
           </span>
           <span class="block h-0.5 w-24 bg-orioles-orange"></span>
         </div>
@@ -755,7 +755,7 @@
           >
             <div class="w-full xs:w-58/100 xl:w-68/100">
               <label class="font-semibold text-sm" for=""
-                >Task Description</label
+                >Todo Description</label
               >
               <textarea
                 class="text-[13px] max-h-92.5 w-full h-40 xs:h-50 lg:h-51.25 p-2.5 sm:py-3.5 sm:px-4 mt-1 xs:mt-2.5 border border-quick-silver rounded-md"

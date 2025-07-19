@@ -9,6 +9,12 @@
   <body class="font-inter bg-ghost-white">
     <!-- SVG -->
     <svg width="0" height="0" class="hidden">
+      <symbol id="plus-icon" viewBox="0 0 448 512">
+        <!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. -->
+        <path
+          d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"
+        />
+      </symbol>
       <symbol
         id="upload-img-icon"
         viewBox="0 0 64 59"
@@ -269,7 +275,7 @@
               type="search"
               id="header-search-input"
               class="peer w-full px-3.75 text-quick-silver font-montserrat font-semibold text-xs outline-0"
-              placeholder="Search your task here..."
+              placeholder="Search your todo here..."
             />
             <!-- Search-bar drop-down -->
             <ul
@@ -579,7 +585,7 @@
             type="search"
             id="mobile-search-input"
             class="peer w-full px-3.75 text-quick-silver font-montserrat font-semibold text-xs outline-0"
-            placeholder="Search your task here..."
+            placeholder="Search your todo here..."
           />
           <!-- Search-bar drop-down -->
           <ul
@@ -640,12 +646,12 @@
             <li>
               <a
                 class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
-                href="javascript:void(0)"
+                href="./pages/my-todos.html"
               >
                 <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#tasks"></use>
                 </svg>
-                <span class="sm:hidden lg:inline"> My Task </span>
+                <span class="sm:hidden lg:inline"> My Todos </span>
               </a>
             </li>
             <li>
@@ -656,7 +662,7 @@
                 <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#tasks-category"></use>
                 </svg>
-                <span class="sm:hidden lg:inline"> Task Category </span>
+                <span class="sm:hidden lg:inline"> Todo Category </span>
               </a>
             </li>
             <li>
@@ -739,10 +745,14 @@
                 </div>
                 <button
                   id="show-create-todo-modal"
-                  class="my-auto flex items-center gap-x-2 text-xs text-quick-silver cursor-pointer"
+                  class="my-auto flex items-center gap-x-2 text-xs text-quick-silver cursor-pointer hover:text-primary transition-all duration-200 hover:*:fill-white hover:*:bg-primary"
                 >
-                  <span class="plus-icon"></span>
-                  Add task
+                  <svg
+                    class="fill-primary p-px size-[15px] transition-all duration-200 rounded-full"
+                  >
+                    <use href="#plus-icon"></use>
+                  </svg>
+                  Add todo
                 </button>
               </div>
 
@@ -751,9 +761,9 @@
                 id="todos-container"
                 class="flex flex-col gap-y-2.5 lg:px-2.5 pt-4.5"
               >
-                <!-- Tasks container -->
+                <!-- Todos container -->
 
-                <!-- Task -->
+                <!-- Todo -->
                 <div
                   class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]"
                 >
@@ -822,9 +832,9 @@
                 </div>
                 <!-- Line -->
                 <div
-                  class="w-[calc(100%+24px)] lg:w-[calc(100%+56px)] 2xl:w-[calc(100%+68px)] -ml-3 lg:-ml-7 2xl:-ml-8.5 my-3 lg:my-6 h-px bg-quick-silver/41"
+                  class="w-[calc(100%+24px)] lg:w-[calc(100%+56px)] 2xl:w-[calc(100%+68px)] -ml-3 lg:-ml-7 2xl:-ml-8.5 my-3 lg:my-6 border-t border-quick-silver/41"
                 ></div>
-                <!-- Task -->
+                <!-- Todo -->
                 <div
                   class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]"
                 >
@@ -896,15 +906,15 @@
               </div>
             </section>
 
-            <!-- Task Status & Completed Task -->
+            <!-- todo Status & Completed todo -->
             <div class="flex flex-col gap-y-4">
-              <!-- Task Status -->
+              <!-- todo Status -->
               <section
                 class="px-3 lg:px-4 xl:px-4.5 2xl:px-5.5 pt-6 pb-7 xl:pb-11 shadow-section rounded-[14px]"
               >
                 <h2 class="flex gap-x-1">
                   <svg class="w-7 h-8"><use href="#task-status"></use></svg>
-                  <span class="font-medium text-primary"> Task Status </span>
+                  <span class="font-medium text-primary"> Todo Status </span>
                 </h2>
                 <!-- Stat -->
                 <div
@@ -946,7 +956,7 @@
                   </div>
                 </div>
               </section>
-              <!-- Completed Task -->
+              <!-- Completed Todo -->
               <section
                 class="px-3 lg:px-4 xl:px-4.5 2xl:px-6 py-5.5 shadow-section rounded-[14px]"
               >
@@ -954,14 +964,14 @@
                   <svg class="w-6 h-7 text-quick-silver">
                     <use href="#tasks"></use>
                   </svg>
-                  <span class="font-medium text-primary"> Completed Task </span>
+                  <span class="font-medium text-primary"> Completed Todo </span>
                 </h2>
                 <!-- Body Section -->
                 <div
                   id="todos-completed-container"
                   class="flex flex-col gap-y-2.5 lg:px-2.5 pt-4.5"
                 >
-                  <!-- Task -->
+                  <!-- Todo -->
                   <div
                     class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]"
                   >
@@ -1037,7 +1047,7 @@
         </div>
       </main>
     </div>
-    <!-- -------------------------- Add New Task Modal -------------------------- -->
+    <!-- -------------------------- Add New Todo Modal -------------------------- -->
 
     <!-- -------------------------- Todo Modal -------------------------- -->
     <div
@@ -1048,10 +1058,10 @@
       <div class="flex items-center justify-between">
         <div class="font-montserrat font-semibold">
           <span class="hidden" id="todo-modal__new-todo-title">
-            Add New Task
+            Add New todo
           </span>
           <span class="hidden" id="todo-modal__edit-todo-title">
-            Edit Task
+            Edit todo
           </span>
           <span class="block h-0.5 w-24 bg-orioles-orange"></span>
         </div>
@@ -1145,7 +1155,7 @@
           >
             <div class="w-full xs:w-58/100 xl:w-68/100">
               <label class="font-semibold text-sm" for=""
-                >Task Description</label
+                >Todo Description</label
               >
               <textarea
                 class="text-[13px] max-h-92.5 w-full h-40 xs:h-50 lg:h-51.25 p-2.5 sm:py-3.5 sm:px-4 mt-1 xs:mt-2.5 border border-quick-silver rounded-md"

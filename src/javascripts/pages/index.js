@@ -6,10 +6,10 @@ import {
   filterNotCompletedTodos,
   findTodoIndex,
   findUser,
+  getCookie,
   getFromLocalStorage,
   insertTextContent,
   normalizeDateTime,
-  removeFromLocalStorage,
   saveToLocalStorage,
 } from "../modules/utils.js";
 import {
@@ -139,7 +139,7 @@ function insertTodos(todos) {
       if (todo.status.toLowerCase() !== "completed") {
         if (createdAt && createdAt !== todo.createdAt.slice(0, 10)) {
           // Only date, not time!
-          template += `<div class="w-[calc(100%+24px)] lg:w-[calc(100%+56px)] 2xl:w-[calc(100%+68px)] -ml-3 lg:-ml-7 2xl:-ml-8.5 my-3 lg:my-6 h-px bg-quick-silver/41"></div>`;
+          template += `<div class="w-[calc(100%+24px)] lg:w-[calc(100%+56px)] 2xl:w-[calc(100%+68px)] -ml-3 lg:-ml-7 2xl:-ml-8.5 my-3 lg:my-6 border-t border-quick-silver/41"></div>`;
         }
 
         createdAt = todo.createdAt.slice(0, 10);
@@ -220,12 +220,10 @@ function setTodoOptionsEvent() {
 
 window.addEventListener("load", async () => {
   showLoader();
-  const currentUser = getFromLocalStorage("currentUser");
-  !currentUser.rememberMe && removeFromLocalStorage("currentUser");
-
+  const userId = getCookie("userId");
   DB = getFromLocalStorage("DB");
 
-  user = findUser(currentUser.userId, DB.users);
+  user = findUser(userId, DB.users);
 
   insertTextContent(`Welcome ${user.name} 👋`, "user-name");
   insertTodosStatistics(user.statistics);

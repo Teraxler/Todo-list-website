@@ -8,6 +8,7 @@ import {
   findTodo,
   findTodoIndex,
   findUser,
+  getCookie,
   getFromLocalStorage,
   insertTextContent,
   normalizeDateTime,
@@ -170,7 +171,7 @@ window.addEventListener("load", () => {
   showLoader();
 
   const DB = getFromLocalStorage("DB");
-  const userId = getFromLocalStorage("currentUser").userId;
+  const userId = getCookie("userId");
 
   user = findUser(userId, DB.users);
 
@@ -338,7 +339,7 @@ function showTodoDetailsHandler(todoId) {
   selectedTodoId = todoId;
 
   const DB = getFromLocalStorage("DB");
-  const userId = getFromLocalStorage("currentUser").userId;
+  const userId = getCookie("userId");
 
   user = findUser(userId, DB.users);
   insertTodos(user.todos);

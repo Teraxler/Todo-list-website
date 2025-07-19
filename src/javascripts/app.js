@@ -1,9 +1,10 @@
 import {
+  deleteCookie,
   findUser,
+  getCookie,
   getDateTime,
   getFromLocalStorage,
   insertTextContent,
-  removeFromLocalStorage,
   searchTodo,
 } from "./modules/utils.js";
 import { hideCalendar, showCalendar } from "./modules/calendar.js";
@@ -142,7 +143,7 @@ function insertSearchResultHandler(keyupEvent) {
 
   if (typedValue.length > 2) {
     const users = getFromLocalStorage("DB").users;
-    const userId = getFromLocalStorage("currentUser").userId;
+    const userId = getCookie("userId");
     user = findUser(userId, users);
 
     const searchResult = searchTodo(typedValue, user.todos);
@@ -176,9 +177,9 @@ function insertDate() {
 }
 
 function routeProtection() {
-  const currentUser = getFromLocalStorage("currentUser");
+  const userId = getCookie("userId");
 
-  if (currentUser == null) {
+  if (userId == null) {
     location.href = "/src/pages/login.html";
   }
 }
@@ -187,10 +188,10 @@ window.addEventListener("load", async () => {
   routeProtection();
   insertDate();
 
-  const currentUser = getFromLocalStorage("currentUser");
+  const userId = getCookie("userId");
   DB = getFromLocalStorage("DB");
 
-  user = findUser(currentUser.userId, DB.users);
+  user = findUser(userId, DB.users);
 
   insertTextContent(`${user.name} ${user.family}`, "user-full-name");
   insertTextContent(user.email, "user-email");
@@ -238,7 +239,7 @@ logoutBtn.addEventListener("click", async (clickEvent) => {
   });
 
   if (isLogoutConfirm) {
-    removeFromLocalStorage("currentUser");
+    deleteCookie("userId", "/src");
     location.href = "/src/pages/login.html";
   }
 });

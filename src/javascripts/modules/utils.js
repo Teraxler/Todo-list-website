@@ -331,6 +331,40 @@ function insertTextContent(content, identifier) {
   }
 }
 
+// Cookie
+function setCookieUserId(userId, rememberMe = false) {
+  const SECENDS_OF_YEAR = 365 * 24 * 60 * 60;
+
+  if (rememberMe) {
+    document.cookie = `userId=${userId}; Max-Age=${SECENDS_OF_YEAR}; Secure; Path=/src`;
+  } else {
+    document.cookie = `userId=${userId}; Secure; Path=/src`;
+  }
+}
+
+function setCookie({ key, value, path = "./" }) {
+  document.cookie = `${key}=${value}; Path=${path}`;
+}
+
+function deleteCookie(name, path = "./") {
+  document.cookie = `${name}=; Path=${path};  Max-Age=0`;
+}
+
+function getAllCookies() {
+  const cookie = document.cookie;
+  let cookies = cookie.split("; ");
+
+  cookies = cookies.map((cookie) => {
+    return cookie.split("=");
+  });
+
+  return Object.fromEntries(cookies);
+}
+
+function getCookie(name) {
+  return getAllCookies()[name] || null;
+}
+
 //
 function getBase64Image(img) {
   var canvas = document.createElement("canvas");
@@ -438,4 +472,8 @@ export {
   insertTextContent,
   filterCompletedTodos,
   filterNotCompletedTodos,
+  setCookieUserId,
+  getAllCookies,
+  getCookie,
+  deleteCookie,
 };

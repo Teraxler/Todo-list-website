@@ -2,7 +2,7 @@ import {
   findTodo,
   findTodoIndex,
   findUser,
-  formattingDateTime,
+  getCookie,
   getFromLocalStorage,
   getQueryParam,
   normalizeDateTime,
@@ -15,7 +15,7 @@ let user = {};
 
 window.addEventListener("load", async () => {
   showLoader();
-  const userId = getFromLocalStorage("currentUser").userId;
+  const userId = getCookie("userId");
   const DB = getFromLocalStorage("DB");
 
   user = findUser(userId, DB.users);

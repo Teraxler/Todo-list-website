@@ -3,6 +3,7 @@
 import {
   calcRelativeDateTimeDifference,
   findUser,
+  getCookie,
   getFromLocalStorage,
 } from "./utils.js";
 import { hideTransparentOverlay, showTransparentOverlay } from "./shared.js";
@@ -79,9 +80,9 @@ function insertNotifications(notifications) {
 
 window.addEventListener("load", async () => {
   const DB = getFromLocalStorage("DB");
-  const currentUser = getFromLocalStorage("currentUser");
+  const userId = getCookie("userId");
 
-  user = findUser(currentUser.userId, DB.users);
+  user = findUser(userId, DB.users);
 
   insertNotifications(user.notifications);
 });
