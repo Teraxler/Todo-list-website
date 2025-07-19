@@ -87,30 +87,37 @@
   .plus-icon {
     display: flex;
     position: relative;
-    width: 11px;
-    height: 11px;
+    width: 15px;
+    height: 15px;
+    transition: all 200ms var(--default-transition-timing-function);
+    border-radius: 100%;
   }
-  .plus-icon::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background-color: var(--color-primary);
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 1rem;
-  }
+  .plus-icon::after,
   .plus-icon::before {
     content: "";
     position: absolute;
-    width: 2px;
-    height: 100%;
     background-color: var(--color-primary);
-    left: 50%;
-    top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 1rem;
+    top: 50%;
+    left: 50%;
+    transition: all 200ms var(--default-transition-timing-function);
+  }
+  .plus-icon::after {
+    width: 11px;
+    height: 2px;
+  }
+  .plus-icon::before {
+    width: 2px;
+    height: 11px;
+  }
+
+  button:hover > .plus-icon::after,
+  button:hover > .plus-icon::before {
+    background-color: var(--color-white);
+  }
+  button:hover > .plus-icon {
+    background-color: var(--color-primary);
   }
 
   .dot-icon {

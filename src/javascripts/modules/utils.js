@@ -315,10 +315,20 @@ function getQueryParam(param) {
 }
 
 // Insert Content
-function insertTextContent(content, className) {
-  [...document.getElementsByClassName(className)].forEach((element) => {
-    element.textContent = content;
-  });
+function insertTextContent(content, identifier) {
+  let elements = [...document.getElementsByClassName(identifier)];
+
+  if (elements.length) {
+    elements?.forEach((element) => {
+      element.textContent = content;
+    });
+  } else {
+    const element = document.getElementById(identifier);
+
+    if (element) {
+      element.textContent = content;
+    }
+  }
 }
 
 //
