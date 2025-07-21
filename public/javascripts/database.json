@@ -1,13 +1,23 @@
 {
   "statistics": {
-    "completed": "85",
-    "inProgress": "5",
-    "notStarted": "16"
+    "completed": 85,
+    "in progress": 5,
+    "not started": 16
   },
+  "categories": [
+    {
+      "name": "status",
+      "values": ["completed", "not started", "in progress"]
+    },
+    {
+      "name": "priority",
+      "values": ["high", "medium", "low"]
+    }
+  ],
   "users": [
     {
       "id": "mcvmfnouq76ug3bqtv",
-      "name": "Admin",
+      "name": "admin",
       "family": "",
       "username": "admin",
       "email": "admin@gamil.com",
@@ -17,9 +27,9 @@
       "createdAt": "2024-05-10T09:00:00",
       "profile": "",
       "statistics": {
-        "completed": "0.0",
-        "inProgress": "33.3",
-        "notStarted": "66.7"
+        "completed": 0,
+        "in progress": 33,
+        "not started": 66
       },
       "todos": [
         {
@@ -27,7 +37,7 @@
           "title": "Develop API Endpoint",
           "status": "In Progress",
           "createdAt": "2024-05-10T09:00:00",
-          "priority": "High",
+          "priority": "high",
           "description": "Create and test the new API endpoint for user authentication",
           "cover": {
             "path": "api.png",
@@ -40,7 +50,7 @@
           "title": "Fix Database Migration Issue",
           "status": "Not Started",
           "createdAt": "2024-05-10T10:00:00",
-          "priority": "Medium",
+          "priority": "medium",
           "description": "Resolve compatibility problems with database migration scripts",
           "cover": {
             "path": "fix-database.jpeg",
@@ -53,7 +63,7 @@
           "title": "Update Database firmware",
           "status": "Not Started",
           "createdAt": "2024-06-10T10:00:00",
-          "priority": "Medium",
+          "priority": "medium",
           "description": "Resolve compatibility problems with database migration scripts",
           "cover": {
             "path": "fix-database.jpeg",
@@ -68,7 +78,7 @@
           "title": "Develop API Endpoint",
           "status": "Not Started",
           "createdAt": "2024-09-10T09:00:00",
-          "priority": "High",
+          "priority": "high",
           "description": "Create and test the new API endpoint for user authentication",
           "cover": {
             "path": "api.png",
@@ -81,7 +91,7 @@
           "title": "Fix Database Migration Issue",
           "status": "Not Started",
           "createdAt": "2024-05-10T10:00:00",
-          "priority": "Medium",
+          "priority": "medium",
           "description": "Resolve compatibility problems with database migration scripts",
           "cover": {
             "path": "fix-database.jpeg",

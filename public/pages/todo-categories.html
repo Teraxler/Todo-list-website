@@ -3,12 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todo Detail</title>
+    <title>Todo Categories</title>
     <link rel="stylesheet" href="../styles/app.css" />
   </head>
   <body class="font-inter bg-ghost-white">
     <!-- SVG -->
     <svg width="0" height="0" class="hidden">
+      <symbol id="plus-icon" viewBox="0 0 448 512">
+        <!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. -->
+        <path
+          d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"
+        />
+      </symbol>
+      <symbol id="delete-icon" viewBox="0 0 14 18" fill="currentColor">
+        <path
+          d="M1 16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V6C13 4.9 12.1 4 11 4H3C1.9 4 1 4.9 1 6V16ZM13 1H10.5L9.79 0.29C9.61 0.11 9.35 0 9.09 0H4.91C4.65 0 4.39 0.11 4.21 0.29L3.5 1H1C0.45 1 0 1.45 0 2C0 2.55 0.45 3 1 3H13C13.55 3 14 2.55 14 2C14 1.45 13.55 1 13 1Z"
+          fill="white"
+        />
+      </symbol>
+      <symbol id="edit-icon" viewBox="0 0 19 19" fill="currentColor">
+        <path
+          d="M12 0.949786C13.296 0.949786 14.496 1.35979 15.477 2.05979L6.343 11.1928C6.24749 11.285 6.17131 11.3954 6.1189 11.5174C6.06649 11.6394 6.0389 11.7706 6.03775 11.9034C6.0366 12.0362 6.0619 12.1678 6.11218 12.2907C6.16246 12.4136 6.23671 12.5253 6.3306 12.6192C6.4245 12.7131 6.53615 12.7873 6.65905 12.8376C6.78194 12.8879 6.91362 12.9132 7.0464 12.912C7.17918 12.9109 7.3104 12.8833 7.4324 12.8309C7.55441 12.7785 7.66475 12.7023 7.757 12.6068L16.891 3.47279C17.6141 4.48782 18.0019 5.70351 18 6.94979V16.9498C18 17.4802 17.7893 17.9889 17.4142 18.364C17.0391 18.7391 16.5304 18.9498 16 18.9498H2C1.46957 18.9498 0.960859 18.7391 0.585786 18.364C0.210714 17.9889 0 17.4802 0 16.9498V2.94979C0 2.41935 0.210714 1.91065 0.585786 1.53557C0.960859 1.1605 1.46957 0.949786 2 0.949786H12ZM18.657 0.292786C18.8445 0.480314 18.9498 0.734622 18.9498 0.999786C18.9498 1.26495 18.8445 1.51926 18.657 1.70679L16.89 3.47279C16.5006 2.9261 16.0227 2.44821 15.476 2.05879L17.242 0.292786C17.4295 0.105315 17.6838 0 17.949 0C18.2142 0 18.4695 0.105315 18.657 0.292786Z"
+          fill="white"
+        />
+      </symbol>
       <symbol
         fill="currentColor"
         id="back-arrow-icon"
@@ -69,7 +87,6 @@
           d="M9.44279 26L8.92537 21.84C8.64511 21.7317 8.3808 21.6017 8.13244 21.45C7.88408 21.2983 7.64176 21.1358 7.40547 20.9625L3.55721 22.5875L0 16.4125L3.33085 13.8775C3.30929 13.7258 3.29851 13.5794 3.29851 13.4381V12.5619C3.29851 12.4206 3.30929 12.2742 3.33085 12.1225L0 9.5875L3.55721 3.4125L7.40547 5.0375C7.64262 4.86417 7.89055 4.70167 8.14925 4.55C8.40796 4.39833 8.66667 4.26833 8.92537 4.16L9.44279 0H16.5572L17.0746 4.16C17.3549 4.26833 17.6192 4.39833 17.8676 4.55C18.1159 4.70167 18.3582 4.86417 18.5945 5.0375L22.4428 3.4125L26 9.5875L22.6692 12.1225C22.6907 12.2742 22.7015 12.4206 22.7015 12.5619V13.4381C22.7015 13.5794 22.6799 13.7258 22.6368 13.8775L25.9677 16.4125L22.4104 22.5875L18.5945 20.9625C18.3574 21.1358 18.1095 21.2983 17.8507 21.45C17.592 21.6017 17.3333 21.7317 17.0746 21.84L16.5572 26H9.44279ZM13.0647 17.55C14.3151 17.55 15.3823 17.1058 16.2662 16.2175C17.1501 15.3292 17.592 14.2567 17.592 13C17.592 11.7433 17.1501 10.6708 16.2662 9.7825C15.3823 8.89417 14.3151 8.45 13.0647 8.45C11.7927 8.45 10.7199 8.89417 9.84637 9.7825C8.9728 10.6708 8.53645 11.7433 8.53732 13C8.53732 14.2567 8.97367 15.3292 9.84637 16.2175C10.7191 17.1058 11.7918 17.55 13.0647 17.55Z"
         />
       </symbol>
-
       <symbol
         id="search"
         viewBox="0 0 17 16"
@@ -82,7 +99,6 @@
           d="M6.65349 0.712191C5.57196 0.790068 4.52474 1.12545 3.59919 1.69037C2.67365 2.25528 1.89661 3.03334 1.33292 3.95963C0.769235 4.88593 0.435234 5.93359 0.358787 7.01522C0.282339 8.09685 0.465663 9.18107 0.893464 10.1774C1.32126 11.1738 1.98114 12.0534 2.81802 12.7429C3.65491 13.4324 4.64455 13.9117 5.70437 14.141C6.76419 14.3702 7.86346 14.3426 8.91047 14.0606C9.95748 13.7786 10.9219 13.2503 11.7232 12.5197L14.8468 15.2242C15.0078 15.3588 15.2151 15.4247 15.4242 15.4078C15.6333 15.391 15.8274 15.2926 15.9647 15.1341C16.102 14.9755 16.1715 14.7693 16.1583 14.56C16.1451 14.3506 16.0501 14.1548 15.894 14.0148L12.7703 11.3103C13.4867 10.2535 13.8912 9.01631 13.9373 7.74037C13.9834 6.46443 13.6694 5.20128 13.0312 4.09547C12.393 2.98967 11.4563 2.08588 10.3284 1.48755C9.20052 0.88922 7.92696 0.620516 6.65349 0.712191ZM1.95468 7.8677C1.85575 6.49212 2.30732 5.13359 3.21004 4.09096C4.11276 3.04833 5.39269 2.407 6.76826 2.30807C8.14384 2.20914 9.50237 2.6607 10.545 3.56342C11.5876 4.46614 12.229 5.74608 12.3279 7.12165C12.4268 8.49722 11.9753 9.85575 11.0725 10.8984C10.1698 11.941 8.88988 12.5823 7.51431 12.6813C6.13874 12.7802 4.78021 12.3286 3.73757 11.4259C2.69494 10.5232 2.05362 9.24327 1.95468 7.8677Z"
         />
       </symbol>
-
       <symbol
         id="tasks"
         viewBox="0 0 24 24"
@@ -182,6 +198,8 @@
             <input
               type="search"
               id="header-search-input"
+              data-categoty=""
+              data-current-value=""
               class="peer w-full px-3.75 text-quick-silver font-montserrat font-semibold text-xs outline-0"
               placeholder="Search your todo here..."
             />
@@ -403,7 +421,7 @@
             <li>
               <a
                 class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
-                href="../pages/my-todos.html"
+                href="./my-todos.html"
               >
                 <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#tasks"></use>
@@ -413,8 +431,8 @@
             </li>
             <li>
               <a
-                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
-                href="./todo-categories.html"
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full bg-white text-primary"
+                href="javascript:void(0)"
               >
                 <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#tasks-category"></use>
@@ -424,8 +442,8 @@
             </li>
             <li>
               <a
-                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full bg-white text-primary"
-                href="javascript:void(0)"
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
+                href="./settings.html"
               >
                 <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#settings"></use>
@@ -458,121 +476,80 @@
         </nav>
       </aside>
       <!-- Main -->
-      <main class="w-full px-4 sm:px-11 md:px-18.75">
+      <main class="w-full px-4 sm:px-10 lg:px-19 mb-7.5">
         <div
-          class="w-full p-4 xs:p-6 md:p-7 mb-8 border border-quick-silver shadow-todo rounded-2xl"
+          class="w-full p-4 xs:p-6 md:p-7 border border-quick-silver shadow-todo rounded-2xl"
         >
-          <!-- Content -->
-          <div class="mb-8 lg:mb-13.75">
-            <div class="flex items-center justify-between">
-              <h3 class="text-xl sm:text-2xl font-semibold">
-                Account Information
-                <span class="block h-0.5 w-30 sm:w-40 bg-orioles-orange"></span>
-              </h3>
-              <a
-                class="shrink-0 ml-auto font-montserrat font-semibold text-sm underline"
-                href="../index.html"
-                >Go Back</a
-              >
-            </div>
-            <!-- Profile -->
-            <div class="flex items-center gap-x-4 mt-8">
-              <div class="size-18 sm:size-21.5 rounded-full overflow-hidden">
-                <img
-                  src="../assets/images/users/user-1.jpg"
-                  alt="user profile"
-                />
-              </div>
-              <div class="flex flex-col gap-y-1">
-                <span class="user-full-name text-lg sm:text-xl font-semibold"
-                  >Sundar Gurung</span
-                >
-                <span class="user-email">sundargurung360@gmail.com</span>
-              </div>
-            </div>
-
-            <!-- Form -->
-            <form
-              class="flex flex-col gap-y-4 w-full px-6 sm:px-8 md:px-9 py-11 mt-7 border border-quick-silver rounded-xl"
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl md:text-2xl font-semibold">
+              Todo Categories
+              <span class="block h-0.5 w-14 bg-orioles-orange"></span>
+            </h3>
+            <a
+              class="shrink-0 ml-auto font-montserrat font-semibold text-xs md:text-sm underline"
+              href="../index.html"
+              >Go Back</a
             >
-              <div class="flex flex-col gap-y-2">
-                <label
-                  class="font-montserrat font-semibold text-sm"
-                  for="first-name-input"
-                  >First Name</label
-                >
-                <input
-                  class="w-full max-w-127.5 h-9 px-3.75 border border-quick-silver rounded-md"
-                  id="first-name-input"
-                  type="text"
-                />
-              </div>
-              <div class="flex flex-col gap-y-2">
-                <label
-                  class="font-montserrat font-semibold text-sm"
-                  for="last-name-input"
-                  >Last Name</label
-                >
-                <input
-                  class="w-full max-w-127.5 h-9 px-3.75 border border-quick-silver rounded-md"
-                  id="last-name-input"
-                  type="text"
-                />
-              </div>
-              <div class="flex flex-col gap-y-2">
-                <label
-                  class="font-montserrat font-semibold text-sm"
-                  for="email-input"
-                  >Email</label
-                >
-                <input
-                  class="w-full max-w-127.5 h-9 px-3.75 border border-quick-silver rounded-md"
-                  id="email-input"
-                  type="email"
-                />
-              </div>
-              <div class="flex flex-col gap-y-2">
-                <label
-                  class="font-montserrat font-semibold text-sm"
-                  for="current-password-input"
-                  >Current Password</label
-                >
-                <input
-                  class="w-full max-w-127.5 h-9 px-3.75 border border-quick-silver rounded-md"
-                  id="current-password-input"
-                  type="password"
-                />
-              </div>
-              <div class="flex flex-col gap-y-2">
-                <label
-                  class="font-montserrat font-semibold text-sm"
-                  for="new-password-input"
-                  >New Password</label
-                >
-                <input
-                  class="w-full max-w-127.5 h-9 px-3.75 border border-quick-silver rounded-md"
-                  id="new-password-input"
-                  type="password"
-                />
-              </div>
-
-              <div class="flex gap-x-1.25">
-                <button
-                  id="save-changes-btn"
-                  class="bg-orioles-orange text-sm sm:text-base text-white cursor-pointer rounded-md py-2 px-5 sm:px-9"
-                >
-                  Save Changes
-                </button>
-                <a
-                  href="../index.html"
-                  class="bg-orioles-orange text-sm sm:text-base text-white cursor-pointer rounded-md py-2 px-5 sm:px-9"
-                  >Cancel</a
-                >
-              </div>
-            </form>
           </div>
+          <button
+            class="text-xs md:text-sm py-1.5 md:py-2 px-3.5 md:px-4.5 mt-5 text-white bg-orioles-orange rounded-md shadow-btn cursor-pointer"
+            id="show-create-category-modal-btn"
+          >
+            Add Category
+          </button>
+          <!-- Categories Container Section -->
+          <section id="categories-container" class="mt-8 md:mt-11">
+            <!-- Categories -->
+          </section>
         </div>
       </main>
+    </div>
+
+    <!-- Category Modal -->
+    <div
+      id="category-modal"
+      class="hidden fixed z-20 top-1/2 -translate-y-1/2 left-0 right-0 mx-auto md:w-160 p-4 sm:px-6 lg:px-10 xl:px-15.5 sm:pt-6 lg:pt-8 xl:pt-11.5 sm:pb-6 lg:pb-10 xl:pb-12.5 bg-white transition-all rounded-[5px]"
+    >
+      <!-- Header -->
+      <div class="flex items-center justify-between">
+        <div class="font-montserrat font-semibold">
+          <span class="" id="category-modal__title"> Add Todo Priority </span>
+          <span class="block h-0.5 w-24 bg-orioles-orange"></span>
+        </div>
+        <button
+          id="category-modal__close-btn"
+          class="font-montserrat font-semibold text-sm underline underline-offset-3 cursor-pointer"
+        >
+          Go Back
+        </button>
+      </div>
+      <form id="category-form">
+        <div
+          class="border border-quick-silver/64 sm:py-3.5 p-2.5 sm:px-4 mt-2 sm:mt-4 lg:mt-6 xl:mt-10"
+        >
+          <div class="-90 xs:w-68/100 xl:w-70/100">
+            <label
+              id="category-form__input-label"
+              class="block font-montserrat text-sm font-semibold"
+              for="category-form__input"
+              >Title</label
+            >
+            <input
+              class="w-full h-9 text-sm md:text-base px-2.5 md:px-4 mt-1 xs:mt-2 border border-quick-silver rounded-md"
+              type="text"
+              name=""
+              id="category-form__input"
+            />
+          </div>
+          <button
+            id="category-modal__save-btn"
+            data-task-id=""
+            class="w-24 xs:w-29 h-7 xs:h-8.5 mt-4 lg:mt-6 xl:mt-10 font-montserrat text-xs xs:text-sm bg-orioles-orange text-white rounded-md cursor-pointer"
+          >
+            Save
+          </button>
+        </div>
+      </form>
     </div>
 
     <div
@@ -589,9 +566,12 @@
 
     <!-- JavaScript -->
     <script type="module" src="../javascripts/app.js"></script>
-    <script type="module" src="../javascripts/pages/settings.js"></script>
+    <script
+      type="module"
+      src="../javascripts/pages/todo-categories.js"
+    ></script>
 
     <!-- Libraries -->
-    <script src="../vendor/sweetalert/sweetalert.min.js"></script>
+  <script src="../vendor/sweetalert/sweetalert.min.js"></script>
   </body>
 </html>
