@@ -272,9 +272,6 @@
   .right-3 {
     right: calc(var(--spacing) * 3);
   }
-  .-left-47 {
-    left: calc(var(--spacing) * -47);
-  }
   .-left-50 {
     left: calc(var(--spacing) * -50);
   }
@@ -580,9 +577,6 @@
   .h-max {
     height: max-content;
   }
-  .h-px {
-    height: 1px;
-  }
   .max-h-87\.5 {
     max-height: calc(var(--spacing) * 87.5);
   }
@@ -666,9 +660,6 @@
   }
   .w-45\/100 {
     width: calc(45/100 * 100%);
-  }
-  .w-47 {
-    width: calc(var(--spacing) * 47);
   }
   .w-50 {
     width: calc(var(--spacing) * 50);
@@ -949,12 +940,6 @@
     background-color: color-mix(in srgb, #a1a3ab 17%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-quick-silver) 17%, transparent);
-    }
-  }
-  .bg-quick-silver\/41 {
-    background-color: color-mix(in srgb, #a1a3ab 41%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-quick-silver) 41%, transparent);
     }
   }
   .bg-transparent {
@@ -1368,12 +1353,6 @@
     &::before {
       content: var(--tw-content);
       background-color: var(--color-picton-blue);
-    }
-  }
-  .before\:bg-success {
-    &::before {
-      content: var(--tw-content);
-      background-color: var(--color-success);
     }
   }
   .\*\:first\:\*\:\*\:mt-4\.5 {
