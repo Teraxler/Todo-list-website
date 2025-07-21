@@ -47,6 +47,7 @@
   --shadow-sidebar: 8px 4px 12px 0 rgba(0, 0, 0, 8%);
 
   --shadow-todo: 0 4px 4px 0 rgba(0, 0, 0, 25%);
+  --shadow-btn: 0 2px 4px 0 rgba(0, 0, 0, 25%);
 }
 
 @layer base {
@@ -193,10 +194,15 @@
     );
     animation: l13 1s infinite linear;
   }
+
   @keyframes l13 {
     100% {
       transform: rotate(1turn);
     }
+  }
+
+  .table-row-rounded-xl thead tr {
+    border-radius: 14px;
   }
 
   @media (width >= 1024) {

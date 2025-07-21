@@ -396,6 +396,16 @@ function convertDataUrlToBlob(dataUrl) {
   console.log(dataUrl);
 }
 
+// Escape HTML
+const escapeHtml = (unsafe) => {
+  return String(unsafe)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+};
+
 // Error Handlig
 function ApiErrorHandler(status, details = null) {
   const statusMap = {
@@ -476,4 +486,5 @@ export {
   getAllCookies,
   getCookie,
   deleteCookie,
+  escapeHtml,
 };

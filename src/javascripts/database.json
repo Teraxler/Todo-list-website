@@ -4,6 +4,16 @@
     "in progress": 5,
     "not started": 16
   },
+  "categories": [
+    {
+      "name": "status",
+      "values": ["completed", "not started", "in progress"]
+    },
+    {
+      "name": "priority",
+      "values": ["high", "medium", "low"]
+    }
+  ],
   "users": [
     {
       "id": "mcvmfnouq76ug3bqtv",

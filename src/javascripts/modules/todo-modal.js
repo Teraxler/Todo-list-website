@@ -26,7 +26,9 @@ function hideTodoModal() {
   hideTodoCoverPreview();
   showTodoUploadLabel();
 
-  document.getElementById("todo-modal")?.classList.add("opacity-0", "invisible");
+  document
+    .getElementById("todo-modal")
+    ?.classList.add("opacity-0", "invisible");
 }
 
 // New Todo

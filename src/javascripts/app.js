@@ -29,7 +29,7 @@ function showSidebar() {
   hideVisibleContent();
 
   const sidebar = document.getElementById("sidebar");
-  sidebar.classList.remove("-left-47");
+  sidebar.classList.remove("-left-50");
   sidebar.classList.add("left-0");
 
   showTransparentOverlay();
@@ -37,7 +37,7 @@ function showSidebar() {
 
 function hideSidebar() {
   const sidebar = document.getElementById("sidebar");
-  sidebar.classList.add("-left-47");
+  sidebar.classList.add("-left-50");
   sidebar.classList.remove("left-0");
 
   hideTransparentOverlay();

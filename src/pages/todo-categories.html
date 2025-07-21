@@ -3,12 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Todos</title>
+    <title>Todo Categories</title>
     <link rel="stylesheet" href="../styles/app.css" />
   </head>
   <body class="font-inter bg-ghost-white">
     <!-- SVG -->
     <svg width="0" height="0" class="hidden">
+      <symbol id="plus-icon" viewBox="0 0 448 512">
+        <!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. -->
+        <path
+          d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"
+        />
+      </symbol>
       <symbol id="delete-icon" viewBox="0 0 14 18" fill="currentColor">
         <path
           d="M1 16C1 17.1 1.9 18 3 18H11C12.1 18 13 17.1 13 16V6C13 4.9 12.1 4 11 4H3C1.9 4 1 4.9 1 6V16ZM13 1H10.5L9.79 0.29C9.61 0.11 9.35 0 9.09 0H4.91C4.65 0 4.39 0.11 4.21 0.29L3.5 1H1C0.45 1 0 1.45 0 2C0 2.55 0.45 3 1 3H13C13.55 3 14 2.55 14 2C14 1.45 13.55 1 13 1Z"
@@ -281,6 +287,8 @@
             <input
               type="search"
               id="header-search-input"
+              data-categoty=""
+              data-current-value=""
               class="peer w-full px-3.75 text-quick-silver font-montserrat font-semibold text-xs outline-0"
               placeholder="Search your todo here..."
             />
@@ -501,8 +509,8 @@
             </li>
             <li>
               <a
-                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full bg-white text-primary"
-                href="javascript:void(0)"
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
+                href="./my-todos.html"
               >
                 <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#tasks"></use>
@@ -512,8 +520,8 @@
             </li>
             <li>
               <a
-                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
-                href="./todo-categories.html"
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full bg-white text-primary"
+                href="javascript:void(0)"
               >
                 <svg class="shrink-0 size-5 xl:size-6">
                   <use href="#tasks-category"></use>
@@ -557,277 +565,79 @@
         </nav>
       </aside>
       <!-- Main -->
-      <main class="mx-auto px-4 md:px-9 xl:px-19 pb-6 w-full">
-        <div class="flex flex-col sm:flex-row gap-y-4 sm:gap-x-3 md:gap-x-4">
-          <!-- Todos Section -->
-          <section
-            class="max-h-dvh sm:max-h-none mx-auto max-w-100 sm:max-w-none w-full sm:w-48/100 md:w-46/100 lg:w-44/100 shrink-0 px-3 lg:px-4 xl:px-4.5 2xl:px-7.25 py-4.5 shadow-todo border border-quick-silver/63 rounded-[14px]"
-          >
-            <!-- Header Section -->
-            <h2 class="font-montserrat font-semibold pb-4.5">
-              My Todos
-              <span class="block w-7.75 h-0.5 bg-primary mt-1"></span>
-            </h2>
-            <!-- Body Section -->
-            <div
-              id="todos-container"
-              class="max-h-87.5 overflow-y-auto overflow-x-hidden sm:overflow-visible sm:max-h-none flex flex-col gap-y-2.5 pr-1.25 sm:pr-0"
+      <main class="w-full px-4 sm:px-10 lg:px-19 mb-7.5">
+        <div
+          class="w-full p-4 xs:p-6 md:p-7 border border-quick-silver shadow-todo rounded-2xl"
+        >
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl md:text-2xl font-semibold">
+              Todo Categories
+              <span class="block h-0.5 w-14 bg-orioles-orange"></span>
+            </h3>
+            <a
+              class="shrink-0 ml-auto font-montserrat font-semibold text-xs md:text-sm underline"
+              href="../index.html"
+              >Go Back</a
             >
-              <!-- Todos container -->
-            </div>
-          </section>
-          <!-- Todo Details Section -->
-          <section
-            id="todo-details-container"
-            class="grow max-w-100 sm:max-w-none max-h-max w-full mx-auto px-3 py-4 md:p-4 2xl:px-5 border border-quick-silver/63 shadow-todo rounded-2xl"
+          </div>
+          <button
+            class="text-xs md:text-sm py-1.5 md:py-2 px-3.5 md:px-4.5 mt-5 text-white bg-orioles-orange rounded-md shadow-btn cursor-pointer"
+            id="show-create-category-modal-btn"
           >
-            <!-- Todo Header -->
-            <div class="flex flex-col sm:flex-row gap-x-3 md:gap-x-4 mb-5">
-              <div class="flex items-center shrink-0">
-                <img
-                  id="todo-cover"
-                  class="h-max w-20 md:w-32.5 xl:w-36 2xl:w-39.5 aspect-square rounded-[14px]"
-                  src="../assets/images/todoes/default-todo-cover.png"
-                  alt=""
-                />
-              </div>
-              <div
-                class="flex flex-col gap-y-1 md:gap-y-1.5 xl:gap-y-4 mt-4 sm:mt-0"
-              >
-                <h2
-                  id="todo-title"
-                  class="font-semibold line-clamp-2 max-w-107.5 mt-2.5 md:mt-4 2xl:mt-9.5"
-                >
-                  Attend Nischal’s Birthday Party
-                </h2>
-                <span class="text-xs">
-                  priority:
-                  <span
-                    id="todo-priority"
-                    class="capitalize text-dark text-danger"
-                    >Medium</span
-                  >
-                </span>
-                <span class="text-xs">
-                  Status:
-                  <span id="todo-status" class="capitalize">Not Started</span>
-                </span>
-                <span class="text-[10px]"
-                  >Created on:
-                  <span id="todo-created-at"> 07/12/2025 </span>
-                </span>
-              </div>
-            </div>
-            <!-- Todo Descriptions -->
-            <p id="todo-description" class="text-sm md:text-base/[1.8]">
-              Buy gifts on the way and pick up cake from the bakery. (6 PM |
-              Fresh Elements)
-            </p>
-            <!-- Todo Options -->
-            <div class="flex gap-x-3 justify-end mt-10.5">
-              <button
-                id="delete-todo-btn"
-                class="size-7.5 sm:size-9 p-2 bg-primary flex items-center justify-center rounded-lg cursor-pointer"
-              >
-                <svg class="w-3.5 h-4.5 max-w-full max-h-full">
-                  <use href="#delete-icon"></use>
-                </svg>
-              </button>
-              <button
-                id="edit-todo-btn"
-                class="size-7.5 sm:size-9 p-2 bg-primary flex items-center justify-center rounded-lg cursor-pointer"
-              >
-                <svg class="w-3.5 h-4.5 max-w-full max-h-full">
-                  <use href="#edit-icon"></use>
-                </svg>
-              </button>
-              <button
-                id="start-todo-btn"
-                class="size-7.5 sm:size-9 p-2 bg-primary flex items-center justify-center rounded-lg cursor-pointer"
-              >
-                <img
-                  class="size-4.75 max-w-full max-h-full"
-                  src="../assets/icons/play-icon.png"
-                  alt="start todo icon"
-                />
-              </button>
-              <button
-                id="complete-todo-btn"
-                class="size-7.5 sm:size-9 p-2 bg-primary flex items-center justify-center rounded-lg cursor-pointer"
-              >
-                <img
-                  class="size-4.75 max-w-full max-h-full"
-                  src="../assets/icons/task-completed-icon.png"
-                  alt="complete todo icon"
-                />
-              </button>
-            </div>
+            Add Category
+          </button>
+          <!-- Categories Container Section -->
+          <section id="categories-container" class="mt-8 md:mt-11">
+            <!-- Categories -->
           </section>
         </div>
       </main>
     </div>
-    <!-- -------------------------- Todo Modal -------------------------- -->
+
+    <!-- Category Modal -->
     <div
-      id="todo-modal"
-      class="invisible opacity-0 fixed z-20 top-1/2 -translate-y-1/2 left-0 right-0 mx-auto md:w-160 lg:w-200 xl:w-225 p-4 sm:px-6 lg:px-10 xl:px-15.5 sm:pt-6 lg:pt-8 xl:pt-11.5 sm:pb-6 lg:pb-10 xl:pb-12.5 bg-white transition-all rounded-[5px]"
+      id="category-modal"
+      class="hidden fixed z-20 top-1/2 -translate-y-1/2 left-0 right-0 mx-auto md:w-160 p-4 sm:px-6 lg:px-10 xl:px-15.5 sm:pt-6 lg:pt-8 xl:pt-11.5 sm:pb-6 lg:pb-10 xl:pb-12.5 bg-white transition-all rounded-[5px]"
     >
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div class="font-montserrat font-semibold">
-          <span class="hidden" id="todo-modal__new-todo-title">
-            Add New Todo
-          </span>
-          <span class="hidden" id="todo-modal__edit-todo-title">
-            Edit Todo
-          </span>
+          <span class="" id="category-modal__title"> Add Todo Priority </span>
           <span class="block h-0.5 w-24 bg-orioles-orange"></span>
         </div>
         <button
-          id="todo-modal__close-btn"
+          id="category-modal__close-btn"
           class="font-montserrat font-semibold text-sm underline underline-offset-3 cursor-pointer"
         >
           Go Back
         </button>
       </div>
-      <form id="todo-form" action="">
+      <form id="category-form">
         <div
-          class="sm:border border-quick-silver/64 sm:py-3.5 p-2.5 sm:px-4 mt-2 sm:mt-4 lg:mt-6 xl:mt-10"
+          class="border border-quick-silver/64 sm:py-3.5 p-2.5 sm:px-4 mt-2 sm:mt-4 lg:mt-6 xl:mt-10"
         >
-          <div class="w-full xs:w-58/100 xl:w-68/100">
-            <label class="block font-montserrat text-sm font-semibold" for=""
+          <div class="-90 xs:w-68/100 xl:w-70/100">
+            <label
+              id="category-form__input-label"
+              class="block font-montserrat text-sm font-semibold"
+              for="category-form__input"
               >Title</label
             >
             <input
               class="w-full h-9 text-sm md:text-base px-2.5 md:px-4 mt-1 xs:mt-2 border border-quick-silver rounded-md"
               type="text"
               name=""
-              id="todo-form__title"
+              id="category-form__input"
             />
           </div>
-          <div class="w-full xs:w-58/100 xl:w-68/100 mt-2.5 xs:mt-4">
-            <label class="block font-montserrat text-sm font-semibold"
-              >Date</label
-            >
-            <input
-              class="w-full h-9 text-sm md:text-base px-2.5 md:px-4 mt-1 xs:mt-2 border border-quick-silver rounded-md"
-              type="datetime-local"
-              name=""
-              id="todo-form__date"
-            />
-          </div>
-
-          <div class="w-full xs:w-58/100 xl:w-68/100 mt-2.5 xs:mt-3">
-            <span class="font-montserrat font-semibold text-sm">Priority</span>
-            <div
-              id="todo-form__priority-container"
-              class="flex justify-between lg:gap-x-13.5 mt-1 xs:mt-2.5"
-            >
-              <div class="flex items-center gap-x-2.5">
-                <label
-                  class="text-[13px] text-quick-silver dot-icon before:bg-danger"
-                  for="priority-high"
-                  >High</label
-                >
-                <input
-                  class="priority-task accent-primary"
-                  type="checkbox"
-                  name="priority-task"
-                  id="priority-high"
-                  data-task-priority="high"
-                />
-              </div>
-              <div class="flex items-center gap-x-2.5">
-                <label
-                  class="text-[13px] text-quick-silver dot-icon before:bg-amber-400"
-                  for="priority-medium"
-                  >Medium</label
-                >
-                <input
-                  class="priority-task accent-primary"
-                  type="checkbox"
-                  name="priority-task"
-                  id="priority-medium"
-                  data-task-priority="medium"
-                />
-              </div>
-              <div class="flex items-center gap-x-2.5">
-                <label
-                  class="text-[13px] text-quick-silver dot-icon before:bg-picton-blue"
-                  for="priority-low"
-                  >Low</label
-                >
-                <input
-                  class="priority-task accent-primary"
-                  type="checkbox"
-                  name="priority-task"
-                  id="priority-low"
-                  data-task-priority="low"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div
-            class="flex justify-between flex-col-reverse xs:flex-row gap-y-2.5 mt-4 font-montserrat"
+          <button
+            id="category-modal__save-btn"
+            data-task-id=""
+            class="w-24 xs:w-29 h-7 xs:h-8.5 mt-4 lg:mt-6 xl:mt-10 font-montserrat text-xs xs:text-sm bg-orioles-orange text-white rounded-md cursor-pointer"
           >
-            <div class="w-full xs:w-58/100 xl:w-68/100">
-              <label class="font-semibold text-sm" for=""
-                >Todo Description</label
-              >
-              <textarea
-                class="text-[13px] max-h-92.5 w-full h-40 xs:h-50 lg:h-51.25 p-2.5 sm:py-3.5 sm:px-4 mt-1 xs:mt-2.5 border border-quick-silver rounded-md"
-                col
-                name=""
-                id="todo-form__description"
-                placeholder="Start writting here..."
-              ></textarea>
-            </div>
-            <div class="">
-              <span class="font-semibold text-sm">Upload Image</span>
-              <label
-                class="relative flex justify-center items-center size-40 xs:size-50 lg:w-53.5 lg:h-51.25 px-2.5 sm:px-6 lg:px-9.5 py-4 lg:py-5.5 mx-auto xs:mx-0 mt-1 xs:mt-2.5 text-quick-silver text-center border border-quick-silver rounded-md"
-              >
-                <div id="todo-form__cover-upload-label">
-                  <svg class="w-12 xs:w-16 h-10 xs:h-14 text-white mx-auto">
-                    <use href="#upload-img-icon"></use>
-                  </svg>
-                  <span class="text-xs xs:text-[13px] block mt-2.5 xs:mt-6">
-                    Drag & Drop files here or
-                  </span>
-                  <span
-                    class="text-xs xs:text-[13px] font-medium py-1 xs:py-1.5 px-2 xs:px-3 border border-quick-silver rounded-md mt-2 xs:mt-2.5 inline-block cursor-pointer"
-                    >Browse</span
-                  >
-                </div>
-                <div
-                  class="absolute inset-4 max-h-full max-w-full rounded-md overflow-hidden"
-                  id="todo-form__cover-preview"
-                >
-                  <img class="aspect-square" src="" alt="" />
-                </div>
-                <input
-                  type="file"
-                  id="todo-form__cover"
-                  hidden
-                  accept=".jpg, .png, .jpeg, .webp"
-                />
-              </label>
-            </div>
-          </div>
+            Save
+          </button>
         </div>
-        <button
-          id="todo-form__create-todo-btn"
-          class="hidden w-16 xs:w-22.5 h-7 xs:h-8.5 sm:mt-4 lg:mt-6 xl:mt-10 ml-2.5 sm:ml-5 font-montserrat text-xs xs:text-sm bg-orioles-orange text-white rounded-md cursor-pointer"
-        >
-          Done
-        </button>
-        <button
-          id="todo-form__update-todo-btn"
-          data-task-id=""
-          class="hidden w-24 xs:w-29 h-7 xs:h-8.5 sm:mt-4 lg:mt-6 xl:mt-10 ml-2.5 sm:ml-5 font-montserrat text-xs xs:text-sm bg-orioles-orange text-white rounded-md cursor-pointer"
-        >
-          Save Changes
-        </button>
       </form>
     </div>
 
@@ -845,7 +655,10 @@
 
     <!-- JavaScript -->
     <script type="module" src="../javascripts/app.js"></script>
-    <script type="module" src="../javascripts/pages/my-todos.js"></script>
+    <script
+      type="module"
+      src="../javascripts/pages/todo-categories.js"
+    ></script>
 
     <!-- Libraries -->
     <script src="../../node_modules/sweetalert/dist/sweetalert.min.js"></script>

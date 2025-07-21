@@ -319,7 +319,9 @@ async function deleteTaskHandler(taskId) {
   hideTodoOptions();
 
   const isDeleteConfirm = await swal({
-    title: "Are you sure?",
+    title: "Delete Todo",
+    text: "are you sure want to delete todo?",
+    icon:"warning",
     buttons: ["Cancel", "Delete"],
   });
 
