@@ -1,23 +1,38 @@
 import {
+  calcStatistics,
+  filterList,
   findTodo,
-  findTodoIndex,
   findUser,
+  formattingDateTime,
   getCookie,
-  getFromLocalStorage,
   getQueryParam,
   normalizeDateTime,
-  saveToLocalStorage,
 } from "../modules/utils.js";
 import { showEditTodoModal } from "../modules/todo-modal.js";
-import { hideLoader, showLoader } from "../modules/shared.js";
+import {
+  deleteUserTodo,
+  getDB,
+  getPriorityColorClass,
+  getStatusColorClass,
+  hideLoader,
+  showLoader,
+  updateDB,
+  updateUsers,
+  updateUserTodos,
+} from "../modules/shared.js";
 
 let user = {};
+let DB = {};
 
 window.addEventListener("load", async () => {
   showLoader();
-  const userId = getCookie("userId");
-  const DB = getFromLocalStorage("DB");
+  initialize();
+  hideLoader();
+});
 
+function initialize() {
+  DB = getDB();
+  const userId = getCookie("userId");
   user = findUser(userId, DB.users);
 
   const todoId = getQueryParam("id");
@@ -27,16 +42,11 @@ window.addEventListener("load", async () => {
   !todo ? (location.href = "../index.html") : null;
 
   insertTodoContent(todo);
-  hideLoader();
-});
+}
 
 function insertTodoPriority(priority) {
   const priorityWrapper = document.getElementById("todo-priority");
-  const priorityColorClass = {
-    high: "text-danger",
-    medium: "text-amber-400",
-    low: "text-picton-blue",
-  };
+  const priorityColorClass = "text-" + getPriorityColorClass(priority);
 
   priorityWrapper.classList.remove(
     "text-danger",
@@ -45,16 +55,12 @@ function insertTodoPriority(priority) {
   );
 
   priorityWrapper.textContent = priority;
-  priorityWrapper.classList.add(priorityColorClass[priority.toLowerCase()]);
+  priorityWrapper.classList.add(priorityColorClass);
 }
 
 function insertTodoStatus(status) {
   const statusWrapper = document.getElementById("todo-status");
-  const statusColorClass = {
-    "not started": "text-danger",
-    "in progress": "text-blue-bonnet",
-    completed: "text-success",
-  };
+  const statusColorClass = "text-" + getStatusColorClass(status);
 
   statusWrapper.classList.remove(
     "text-danger",
@@ -63,7 +69,7 @@ function insertTodoStatus(status) {
   );
 
   statusWrapper.textContent = status;
-  statusWrapper.classList.add(statusColorClass[status.toLowerCase()]);
+  statusWrapper.classList.add(statusColorClass);
 }
 
 function insertTodoContent(todo) {
@@ -81,7 +87,8 @@ function insertTodoContent(todo) {
   insertTodoPriority(todo.priority);
   insertTodoStatus(todo.status);
 
-  createdAtWrapper.textContent = normalizeDateTime(todo.createdAt).date;
+  const dateObj = normalizeDateTime(todo.createdAt);
+  createdAtWrapper.textContent = formattingDateTime(dateObj).date;
 }
 
 const deleteTodoBtn = document.getElementById("delete-todo-btn");
@@ -116,8 +123,9 @@ async function deleteTodoHandler() {
   if (isDeleteConfirm) {
     const todoId = getQueryParam("id");
 
-    user.todos = user.todos.filter((todo) => todo.id !== todoId);
-    updateDB(user);
+    user = deleteUserTodo(todoId, user);
+    DB.users = updateUsers(user, DB.users);
+    updateDB(DB);
 
     location.href = "../index.html";
   }
@@ -133,61 +141,36 @@ function editTodoHandler() {
 function startTodoHandler() {
   const todoId = getQueryParam("id");
 
-  const todoIndex = findTodoIndex(todoId, user.todos);
+  const selectedTodo = findTodo(todoId, user.todos);
+  selectedTodo.status = "in progress";
 
-  if (todoIndex !== -1) {
-    user.todos[todoIndex].status = "In Progress";
+  user = updateUserTodos(selectedTodo, user);
+  DB.users = updateUsers(user, DB.users);
+  updateDB(DB);
 
-    updateDB(user);
-
-    insertTodoStatus("In Progress");
-  }
+  insertTodoStatus("in progress");
 }
 
 function completeTodoHandler() {
   const todoId = getQueryParam("id");
-  const todoIndex = findTodoIndex(todoId, user.todos);
+  const selectedTodo = findTodo(todoId, user.todos);
+  selectedTodo.status = "completed";
 
-  if (todoIndex !== -1) {
-    user.todos[todoIndex].status = "completed";
-    updateDB(user);
+  user = updateUserTodos(selectedTodo, user);
+  DB.users = updateUsers(user, DB.users);
+  updateDB(DB);
 
-    insertTodoStatus("completed");
-  }
-}
-
-function updateTodos(todos, editedTodo) {
-  todos = [...todos];
-
-  const todoIndex = todos.findIndex(
-    (todo) => String(todo.id) === String(editedTodo.id)
-  );
-
-  todos[todoIndex] = editedTodo;
-
-  return todos;
-}
-
-function updateDB(editedUser) {
-  const DB = getFromLocalStorage("DB");
-
-  const userIndex = DB.users.findIndex((user) => user.id === editedUser.id);
-
-  if (userIndex !== -1) {
-    DB.users[userIndex] = editedUser;
-
-    saveToLocalStorage("DB", DB);
-  }
+  insertTodoStatus("completed");
 }
 
 function updateTodoHandler(customeEvent) {
   showLoader();
-  const updatedTodo = customeEvent.detail;
 
-  user.todos = updateTodos(user.todos, updatedTodo);
-  updateDB(user);
+  user = updateUserTodos(customeEvent.detail, user);
+  DB.users = updateUsers(user, DB.users);
+  updateDB(DB);
 
-  insertTodoContent(updatedTodo);
+  insertTodoContent(customeEvent.detail);
   hideLoader();
 }
 

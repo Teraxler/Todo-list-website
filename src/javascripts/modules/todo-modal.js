@@ -2,11 +2,10 @@ import { hideOverlay, showOverlay } from "./shared.js";
 import {
   convertImgToCanvas,
   formattingDateTime,
-  getDateTimeV2,
+  getDateTime,
   idGenerator,
 } from "./utils.js";
 
-let todoPriority = null;
 let selectedTodo = null;
 
 function resetTodoForm() {
@@ -34,6 +33,7 @@ function hideTodoModal() {
 // New Todo
 function prepareCreateTodoModal() {
   document.getElementById("todo-form__update-todo-btn").classList.add("hidden");
+
   document
     .getElementById("todo-modal__edit-todo-title")
     .classList.add("hidden");
@@ -41,6 +41,7 @@ function prepareCreateTodoModal() {
   document
     .getElementById("todo-modal__new-todo-title")
     .classList.remove("hidden");
+
   document
     .getElementById("todo-form__create-todo-btn")
     .classList.remove("hidden");
@@ -50,21 +51,21 @@ function showCreateTodoModal() {
   resetTodoForm();
 
   document.getElementById("todo-form__date").value = formattingDateTime(
-    getDateTimeV2()
-  ).dateTimeISO;
+    getDateTime()
+  ).iso;
 
   prepareCreateTodoModal();
   showTodoModal();
 }
 
 // Edit Todo
-function preFillFromInputs(task) {
-  const { id, title, description, priority, cover, createdAt } = task;
+function preFillFromInputs(todo) {
+  const { id, title, description, priority, cover, createdAt } = todo;
 
   document.getElementById("todo-form__title").value = title;
   document.getElementById("todo-form__date").value = createdAt;
+  document.getElementById(`priority-${priority}`).checked = true;
   document.getElementById("todo-form__description").value = description;
-  document.getElementById(`priority-${priority.toLowerCase()}`).checked = true;
   document.getElementById("todo-form__update-todo-btn").dataset.taskId = id;
 
   const todoCoverPreview =
@@ -89,6 +90,7 @@ function prepareEditTodoModal(task) {
   document
     .getElementById("todo-form__update-todo-btn")
     .classList.remove("hidden");
+
   document
     .getElementById("todo-modal__edit-todo-title")
     .classList.remove("hidden");
@@ -105,6 +107,7 @@ function showTodoUploadLabel() {
     .getElementById("todo-form__cover-upload-label")
     ?.classList.remove("hidden");
 }
+
 function hideTodoUploadLabel() {
   document
     .getElementById("todo-form__cover-upload-label")
@@ -120,14 +123,6 @@ function showTodoCoverPreviewHandler(changeEvent) {
   if (file) {
     reader.onload = (loadEvent) => {
       todoCoverContainer.children[0].src = loadEvent.target.result;
-
-      const image = new Image();
-
-      image.onload = () => {
-        convertImgToCanvas(image);
-      };
-
-      image.src = loadEvent.target.result;
     };
 
     reader.readAsDataURL(file);
@@ -138,19 +133,22 @@ function showTodoCoverPreviewHandler(changeEvent) {
 }
 
 function showTodoCoverPreview() {
-  const todoCoverContainer = document.getElementById(
-    "todo-form__cover-preview"
-  );
-  todoCoverContainer.classList.remove("hidden");
+  document
+    .getElementById("todo-form__cover-preview")
+    ?.classList.remove("hidden");
 }
+
 function hideTodoCoverPreview() {
   document.getElementById("todo-form__cover-preview")?.classList.add("hidden");
 }
 
-function generateNewTodo(todoId, todoCover) {
+function createTodo(todoId, todoCover) {
   return {
     id: todoId ?? idGenerator(),
     status: "not started",
+    createdAt: document.getElementById("todo-form__date").value,
+    title: document.getElementById("todo-form__title").value.trim(),
+    description: document.getElementById("todo-form__description").value.trim(),
     priority: document.querySelector(".priority-task:checked")?.dataset
       .taskPriority,
     cover: todoCover ?? {
@@ -159,90 +157,78 @@ function generateNewTodo(todoId, todoCover) {
       type: "png",
       img: null,
     },
-    title: document.getElementById("todo-form__title").value.trim(),
-    createdAt: document.getElementById("todo-form__date").value,
-    description: document.getElementById("todo-form__description").value.trim(),
   };
 }
 
-function createTodoHandler(clickEvent) {
-  clickEvent.preventDefault();
-  const files = document.getElementById("todo-form__cover").files;
+async function convertImgToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const imgBase64 = { img: null, type: null, size: null };
 
-  const newTodo = generateNewTodo();
+    const reader = new FileReader();
+
+    reader.onload = (loadEvent) => {
+      const img = new Image();
+
+      img.onload = () => {
+        imgBase64.img = convertImgToCanvas(img);
+        imgBase64.type = file.type;
+        imgBase64.type = file.size;
+
+        resolve(imgBase64);
+      };
+
+      img.src = loadEvent.target.result;
+    };
+
+    reader.onerror = (error) =>
+      reject(new Error(`Failed to read file ${error}`));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function createTodoHandler(clickEvent) {
+  clickEvent.preventDefault();
+  const file = document.getElementById("todo-form__cover").files[0];
+
+  const newTodo = createTodo();
 
   if (isTodoValid(newTodo)) {
-    if (files.length) {
-      const reader = new FileReader();
-
-      reader.onload = (loadEvent) => {
-        const img = new Image();
-
-        img.onload = () => {
-          newTodo.cover.img = convertImgToCanvas(img);
-          newTodo.cover.alt = newTodo.title;
-
-          document.dispatchEvent(
-            new CustomEvent("todoCreated", { detail: newTodo })
-          );
-        };
-
-        img.src = loadEvent.target.result;
-      };
-
-      reader.readAsDataURL(files[0]);
-    } else {
-      document.dispatchEvent(
-        new CustomEvent("todoCreated", { detail: newTodo })
-      );
+    if (file) {
+      const imgBase64 = await convertImgToBase64(file);
+      newTodo.cover.img = imgBase64.img;
+      newTodo.cover.type = imgBase64.type;
+      newTodo.cover.alt = newTodo.title;
     }
+
+    document.dispatchEvent(new CustomEvent("todoCreated", { detail: newTodo }));
 
     hideTodoModal();
   }
 }
 
-function updateEditedTodo(todoId) {
-  const files = document.getElementById("todo-form__cover").files;
-
-  const editedTodo = generateNewTodo(todoId, selectedTodo.cover);
-
-  if (isTodoValid(editedTodo)) {
-    if (files.length) {
-      const reader = new FileReader();
-
-      reader.onload = (loadEvent) => {
-        const img = new Image();
-
-        img.onload = () => {
-          editedTodo.cover.img = convertImgToCanvas(img);
-          editedTodo.cover.alt = editedTodo.title;
-          editedTodo.cover.type = files[0].type;
-
-          document.dispatchEvent(
-            new CustomEvent("todoUpdated", { detail: editedTodo })
-          );
-        };
-
-        img.src = loadEvent.target.result;
-      };
-
-      reader.readAsDataURL(files[0]);
-    } else {
-      document.dispatchEvent(
-        new CustomEvent("todoUpdated", { detail: editedTodo })
-      );
-    }
-
-    hideTodoModal();
-  }
-}
-
-function updateTodoHandler(clickEvent) {
+async function updateTodoHandler(clickEvent) {
   clickEvent.preventDefault();
 
-  const todoId = clickEvent.currentTarget.dataset.taskId;
+  const file = document.getElementById("todo-form__cover").files[0];
 
-  updateEditedTodo(todoId);
+  const todoId = clickEvent.currentTarget.dataset.taskId;
+  const editedTodo = createTodo(todoId, selectedTodo.cover);
+
+  if (isTodoValid(editedTodo)) {
+    if (file) {
+      const imgBase64 = await convertImgToBase64(file);
+
+      editedTodo.cover.img = imgBase64.img;
+      editedTodo.cover.type = imgBase64.type;
+    }
+
+    editedTodo.cover.alt = editedTodo.title;
+    document.dispatchEvent(
+      new CustomEvent("todoUpdated", { detail: editedTodo })
+    );
+
+    hideTodoModal();
+  }
 }
 
 const updateTodoBtn = document.getElementById("todo-form__update-todo-btn");
@@ -259,9 +245,9 @@ function isTodoValid({ title, description, file: img, createdAt, priority }) {
 
   const isImgTypeValid = validImgTypes.includes(img?.type);
   const isPriorityValid = validPriorities.includes(priority);
-  const isImgSizeValid = img?.size <= 500 * 1000; // 500KB
+  const isImgSizeValid = img?.size <= 300 * 1000; // 300KB
 
-  if (hasAllFieldsValue == null) {
+  if (!hasAllFieldsValue) {
     swal({
       title: "Please fill all fields",
       icon: "warning",
@@ -269,15 +255,15 @@ function isTodoValid({ title, description, file: img, createdAt, priority }) {
     return false;
   }
 
-  if (img && isImgSizeValid == null) {
+  if (img && !isImgSizeValid) {
     swal({
-      title: "Cover must be maximum 500KB",
+      title: "Cover must be maximum 300KB",
       icon: "warning",
     });
     return false;
   }
 
-  if (img && isImgTypeValid == null) {
+  if (img && !isImgTypeValid) {
     swal({
       title: "Cover type must be one of (png, jpg, jpeg, webp)",
       icon: "warning",
@@ -285,12 +271,11 @@ function isTodoValid({ title, description, file: img, createdAt, priority }) {
     return false;
   }
 
-  if (isPriorityValid == null) {
+  if (!isPriorityValid) {
     swal({
       title: "Priority must be (High, Medium or low)",
       icon: "warning",
     });
-
     return false;
   }
 
@@ -309,9 +294,6 @@ function selectTodoPriorityHandler(clickEvent) {
   if (targetElement.tagName === "INPUT" && targetElement.checked) {
     deSelectPriorityInputs();
     targetElement.checked = true;
-    todoPriority = targetElement.dataset.taskPriority;
-  } else {
-    todoPriority = null;
   }
 }
 

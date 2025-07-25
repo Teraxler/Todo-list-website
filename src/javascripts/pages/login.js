@@ -1,6 +1,7 @@
+import { getDB } from "../modules/shared.js";
 import {
+  capitalize,
   findUserByUserPass,
-  getFromLocalStorage,
   setCookieUserId,
 } from "../modules/utils.js";
 
@@ -10,7 +11,7 @@ const passwordInput = document.getElementById("password-input");
 const rememberMeCheckbox = document.getElementById("remember-me-checkbox");
 
 async function signInUser() {
-  const DB = getFromLocalStorage("DB");
+  const DB = getDB();
   const username = usernameInput.value.trim();
   const password = passwordInput.value.trim();
 
@@ -20,17 +21,19 @@ async function signInUser() {
     setCookieUserId(user.id, rememberMeCheckbox.checked);
 
     await swal({
-      title: `Welcome ${user.name}`,
+      title: `Welcome ${capitalize(user.name)}`,
       icon: "success",
     });
 
     location.href = "../index.html";
-  } else {
-    swal({
-      title: `Username or Password is wrong!`,
-      icon: "error",
-    });
+    return;
   }
+
+  passwordInput.value = "";
+  swal({
+    title: `Username or Password is wrong!`,
+    icon: "error",
+  });
 }
 
 const signUpBtn = document.getElementById("sign-up-btn");

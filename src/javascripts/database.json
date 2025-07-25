@@ -35,7 +35,7 @@
         {
           "id": "mcxoqppelcnzppc4i4j",
           "title": "Develop API Endpoint",
-          "status": "In Progress",
+          "status": "in progress",
           "createdAt": "2024-05-10T09:00:00",
           "priority": "high",
           "description": "Create and test the new API endpoint for user authentication",
@@ -48,7 +48,7 @@
         {
           "id": "mcxo1zddvwy1r2udfyt",
           "title": "Fix Database Migration Issue",
-          "status": "Not Started",
+          "status": "not started",
           "createdAt": "2024-05-10T10:00:00",
           "priority": "medium",
           "description": "Resolve compatibility problems with database migration scripts",
@@ -61,7 +61,7 @@
         {
           "id": "mcn7c4atmpjgbb2ho4a",
           "title": "Update Database firmware",
-          "status": "Not Started",
+          "status": "not started",
           "createdAt": "2024-06-10T10:00:00",
           "priority": "medium",
           "description": "Resolve compatibility problems with database migration scripts",
@@ -76,7 +76,7 @@
         {
           "id": "mcn5gy70uszkhh5dsfd",
           "title": "Develop API Endpoint",
-          "status": "Not Started",
+          "status": "not started",
           "createdAt": "2024-09-10T09:00:00",
           "priority": "high",
           "description": "Create and test the new API endpoint for user authentication",
@@ -89,7 +89,7 @@
         {
           "id": "mcvmt9kux8rei7ivfo8",
           "title": "Fix Database Migration Issue",
-          "status": "Not Started",
+          "status": "not started",
           "createdAt": "2024-05-10T10:00:00",
           "priority": "medium",
           "description": "Resolve compatibility problems with database migration scripts",

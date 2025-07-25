@@ -1,38 +1,46 @@
 import {
   calcRelativeDateTimeDifference,
   clacDegreesOfPercent,
-  convertMonthToMonthName,
   filterCompletedTodos,
   filterNotCompletedTodos,
-  findTodoIndex,
   findUser,
-  getCookie,
-  getFromLocalStorage,
-  insertTextContent,
   normalizeDateTime,
-  saveToLocalStorage,
+  formattingDateTime,
+  getCookie,
+  insertTextContent,
+  findTodo,
+  calcStatistics,
 } from "../modules/utils.js";
 import {
   showCreateTodoModal,
   showEditTodoModal,
 } from "../modules/todo-modal.js";
 import {
+  deleteUserTodo,
+  getDB,
   getPriorityColorClass,
   getStatusColorClass,
   hideLoader,
   hideTodoOptions,
   showLoader,
   showTodoOptions,
+  updateDB,
+  updateUsers,
+  updateUserTodos,
 } from "../modules/shared.js";
 
 let DB = {};
 let user = {};
 
-function generateTodoTemplate(todo) {
+window.showTodoOptions = showTodoOptions;
+
+function generateTodo(todo) {
   const { id, title, description, cover, createdAt, priority, status } = todo;
 
   const priorityColorClass = getPriorityColorClass(priority);
   const statusColorClass = getStatusColorClass(status);
+
+  const dateObj = normalizeDateTime(createdAt);
 
   return `
         <div class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]">
@@ -41,7 +49,7 @@ function generateTodoTemplate(todo) {
           <!-- Menu Icon -->
           <div
             class="task-options absolute top-2.5 right-3 xl:right-3.5">
-            <div class="task-options__icon flex gap-x-0.5 cursor-pointer py-1">
+            <div class="task-options__icon flex gap-x-0.5 cursor-pointer py-1" onclick="showTodoOptions(this)">
               <span class="size-1 border border-quick-silver rounded-full"></span>
               <span class="size-1 border border-quick-silver rounded-full"></span>
               <span class="size-1 border border-quick-silver rounded-full"></span>
@@ -51,16 +59,16 @@ function generateTodoTemplate(todo) {
               class="task-options__list  invisible opacity-0 absolute z-10 right-0 bg-white flex flex-col gap-y-1.25 mt-0.5 px-1.25 pb-1.75 pt-2.25 leading-5 rounded-lg shadow"
               data-is-visible="false"
               >
-              <button class="task-options__edit-task text-xs text-start cursor-pointer" onclick="startTaskHandler('${id}')">
+              <button class="task-options__edit-task text-xs text-start cursor-pointer" onclick="startTodoHandler('${id}')">
                 Start
               </button>
-              <button class="task-options__edit-task text-xs text-start cursor-pointer" onclick="editTaskHandler('${id}')">
+              <button class="task-options__edit-task text-xs text-start cursor-pointer" onclick="editTodoHandler('${id}')">
                 Edit
               </button>
-              <button class="task-options__delete-task text-xs text-start cursor-pointer" onclick="deleteTaskHandler('${id}')">
+              <button class="task-options__delete-task text-xs text-start cursor-pointer" onclick="deleteTodoHandler('${id}')">
                 Delete
               </button>
-              <button class="task-options__finish-task text-xs text-start cursor-pointer" onclick="finishTaskHandler('${id}')">
+              <button class="task-options__finish-task text-xs text-start cursor-pointer" onclick="finishTodoHandler('${id}')">
                 Finish
               </button>
             </div>
@@ -68,27 +76,27 @@ function generateTodoTemplate(todo) {
           <div class="flex justify-between gap-x-2 xl:gap-x-2.5">
             <div>
               <p class="text-sm xl:text-base/[19px] font-semibold">
-                <a class="line-clamp-2" href="./pages/todo-details.html?id=${id}">
+                <a class="line-clamp-1" title="${title}" href="./pages/todo-details.html?id=${id}">
                   ${title}
                 </a>
               </p>
-              <p class="text-xs xl:text-sm/[17px] line-clamp-4 mt-2 xl:mt-2.5">
+              <p class="text-xs xl:text-sm/[17px] line-clamp-2 mt-2 xl:mt-2.5"
+                title="${description}">
                 ${description}
               </p>
             </div>
             <div class="my-auto size-20 lg:size-22 shrink-0">
               <a href="./pages/todo-details.html?id=${id}">
                 <img class="aspect-square h-full rounded-xl lg:rounded-[14px] overflow-hidden"
-                ${
-                  cover.img
-                    ? `src="${cover.img}"`
-                    : `src="./assets/images/todoes/${cover.path}"`
-                }
+                  ${
+                    cover.img
+                      ? `src="${cover.img}"`
+                      : `src="./assets/images/todoes/${cover.path}"`
+                  }
                   alt="${cover.alt}">
               </a>  
             </div>
           </div>
-
           <div class="flex justify-between gap-x-0.5 text-[10px] mt-3 xl:mt-3.5">
             <span>
               Priority:
@@ -103,26 +111,33 @@ function generateTodoTemplate(todo) {
             <span class="text-quick-silver">
               Created on:
               <span class="block xl:inline">${
-                normalizeDateTime(createdAt).date
+                formattingDateTime(dateObj).date
               }</span>
             </span>
           </div>
         </div>`;
 }
 
-function insertFirstTodoDate(dateTime) {
+function insertNewestTodoDate(isoDateTime) {
   const firstTodoDateContainer = document.getElementById("todo-date");
   const timeDifferenceContainer = document.getElementById(
     "todo-time-difference"
   );
 
-  const dateTimeObj = normalizeDateTime(dateTime);
-  const monthName = convertMonthToMonthName(dateTimeObj.months);
+  const dateObj = normalizeDateTime(isoDateTime);
+  const monthName = formattingDateTime(dateObj).monthName;
 
-  firstTodoDateContainer.innerHTML = `${dateTimeObj.days}  ${monthName}`;
-  timeDifferenceContainer.innerHTML = `• ${calcRelativeDateTimeDifference(
-    dateTime
+  firstTodoDateContainer.textContent = `${dateObj.day} ${monthName}`;
+
+  timeDifferenceContainer.textContent = `• ${calcRelativeDateTimeDifference(
+    isoDateTime
   )}`;
+
+  setInterval(() => {
+    timeDifferenceContainer.textContent = `• ${calcRelativeDateTimeDifference(
+      isoDateTime
+    )}`;
+  }, 60000);
 }
 
 function insertTodos(todos) {
@@ -133,18 +148,16 @@ function insertTodos(todos) {
     createdAt = null;
 
   if (todos.length) {
-    insertFirstTodoDate(todos[0].createdAt);
+    insertNewestTodoDate(todos[0].createdAt);
 
     todos.forEach((todo) => {
-      if (todo.status.toLowerCase() !== "completed") {
-        if (createdAt && createdAt !== todo.createdAt.slice(0, 10)) {
-          // Only date, not time!
-          template += `<div class="w-[calc(100%+24px)] lg:w-[calc(100%+56px)] 2xl:w-[calc(100%+68px)] -ml-3 lg:-ml-7 2xl:-ml-8.5 my-3 lg:my-6 border-t border-quick-silver/41"></div>`;
-        }
-
-        createdAt = todo.createdAt.slice(0, 10);
-        template += generateTodoTemplate(todo);
+      if (createdAt && createdAt !== todo.createdAt.slice(0, 10)) {
+        // Only date, not time!
+        template += `<div class="w-[calc(100%+24px)] lg:w-[calc(100%+56px)] 2xl:w-[calc(100%+68px)] -ml-3 lg:-ml-7 2xl:-ml-8.5 my-3 lg:my-6 border-t border-quick-silver/41"></div>`;
       }
+
+      createdAt = todo.createdAt.slice(0, 10);
+      template += generateTodo(todo);
     });
   } else {
     template =
@@ -154,36 +167,38 @@ function insertTodos(todos) {
   todosContainer.innerHTML = template;
 }
 
+function generateDonutChart(status, percent) {
+  const statusColorClass = getStatusColorClass(status);
+
+  return `<div>
+            <div
+              class="donut-chart shrink-0"
+              style="
+                background: conic-gradient(
+                  var(--color-${statusColorClass}) 0deg 
+                  ${clacDegreesOfPercent(
+                    percent
+                  )}deg, var(--color-light-silver) 
+                  ${clacDegreesOfPercent(percent)}deg 360deg
+                );"
+            >
+              <span class="donut-chart__title">${percent}%</span>
+            </div>
+            <li
+              class="capitalize block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--${statusColorClass}"
+            >
+              ${status}
+            </li>
+          </div>`;
+}
+
 function insertTodosStatistics(statistics) {
   let template = "";
 
   const todosStatsContainer = document.getElementById("todos-stats-container");
 
   for (const status in statistics) {
-    const statusColorClass = getStatusColorClass(status);
-
-    template += `
-  <div>
-    <div
-      class="donut-chart shrink-0"
-      style="
-        background: conic-gradient(
-          var(--color-${statusColorClass}) 0deg 
-          ${clacDegreesOfPercent(
-            statistics[status]
-          )}deg, var(--color-light-silver) 
-          ${clacDegreesOfPercent(statistics[status])}deg 360deg
-        );
-      "
-    >
-      <span class="donut-chart__title">${statistics[status]}%</span>
-    </div>
-    <li
-      class="capitalize block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--${statusColorClass}"
-    >
-      ${status}
-    </li>
-  </div>`;
+    template += generateDonutChart(status, statistics[status]);
   }
 
   todosStatsContainer.innerHTML = template;
@@ -199,7 +214,7 @@ function insertCompletedTodos(todos) {
 
   if (todos.length) {
     todos.forEach((todo) => {
-      template += generateTodoTemplate(todo);
+      template += generateTodo(todo);
     });
   }
 
@@ -211,173 +226,104 @@ function insertCompletedTodos(todos) {
   todosCompletedContainer.innerHTML = template;
 }
 
-function setTodoOptionsEvent() {
-  [...document.getElementsByClassName("task-options__icon")].forEach(
-    (todoOptionIcon) =>
-      todoOptionIcon.addEventListener("click", showTodoOptions)
-  );
-}
-
 window.addEventListener("load", async () => {
   showLoader();
-  const userId = getCookie("userId");
-  DB = getFromLocalStorage("DB");
+  initialize();
 
-  user = findUser(userId, DB.users);
+  hideLoader();
+});
 
+function render() {
   insertTextContent(`Welcome ${user.name} 👋`, "user-name");
   insertTodosStatistics(user.statistics);
   insertCompletedTodos(user.todos);
   insertTodos(user.todos);
-  setTodoOptionsEvent();
-  hideLoader();
-});
-
-function updateDB(editedUser) {
-  const userIndex = DB.users.findIndex(
-    (user) => String(user.id) === String(editedUser.id)
-  );
-
-  DB.users[userIndex] = editedUser;
-
-  saveToLocalStorage("DB", DB);
-  DB = getFromLocalStorage("DB");
-  user = DB.users[userIndex];
 }
 
-function updateStatistics(todos) {
-  let notStarted, inProgress, completed;
-  const count = todos.length;
+function initialize() {
+  DB = getDB();
 
-  notStarted = inProgress = completed = 0;
+  const userId = getCookie("userId");
+  user = findUser(userId, DB.users);
 
-  if (count) {
-    todos.forEach((todo) => {
-      switch (todo.status) {
-        case "not started":
-          notStarted++;
-          break;
-        case "in progress":
-          inProgress++;
-          break;
-        case "completed":
-          completed++;
-          break;
-        default:
-          break;
-      }
-    });
-
-    user.statistics = {
-      completed: Math.round((completed / count) * 100),
-      "in progress": Math.round((inProgress / count) * 100),
-      "not started": Math.round((notStarted / count) * 100),
-    };
-  } else {
-    user.statistics = {
-      completed: 0,
-      "in progress": 0,
-      "not started": 0,
-    };
-  }
-
-  updateDB(user);
+  render();
 }
 
-window.startTaskHandler = startTaskHandler;
+window.startTodoHandler = startTodoHandler;
 
-function startTaskHandler(todoId) {
+function startTodoHandler(todoId) {
   hideTodoOptions();
 
-  const todoIndex = findTodoIndex(todoId, user.todos);
+  const selectedTodo = findTodo(todoId, user.todos);
+  selectedTodo.status = "in progress";
 
-  if (todoIndex !== -1) {
-    user.todos[todoIndex].status = "in progress";
+  user = updateUserTodos(selectedTodo, user);
+  DB.users = updateUsers(user, DB.users);
+  updateDB(DB);
 
-    updateDB(user);
-
-    insertTodos(user.todos);
-    insertCompletedTodos(user.todos);
-    updateStatistics(user.todos);
-    insertTodosStatistics(user.statistics);
-    setTodoOptionsEvent();
-  }
+  initialize();
 }
 
-window.editTaskHandler = editTaskHandler;
+window.editTodoHandler = editTodoHandler;
 
-function editTaskHandler(taskId) {
+function editTodoHandler(todoId) {
   hideTodoOptions();
 
-  const taskIndex = findTodoIndex(taskId, user.todos);
-  taskIndex !== -1 ? showEditTodoModal(user.todos[taskIndex]) : null;
+  const selectedTodo = findTodo(todoId, user.todos);
+  selectedTodo && showEditTodoModal(selectedTodo);
 }
 
-window.deleteTaskHandler = deleteTaskHandler;
+window.deleteTodoHandler = deleteTodoHandler;
 
-async function deleteTaskHandler(taskId) {
+async function deleteTodoHandler(todoId) {
   hideTodoOptions();
 
   const isDeleteConfirm = await swal({
     title: "Delete Todo",
     text: "are you sure want to delete todo?",
-    icon:"warning",
+    icon: "warning",
     buttons: ["Cancel", "Delete"],
   });
 
   if (isDeleteConfirm) {
-    const remainingTodos = user.todos.filter(
-      (task) => String(task.id) !== String(taskId)
-    );
+    user = deleteUserTodo(todoId, user);
+    DB.users = updateUsers(user, DB.users);
+    updateDB(DB);
 
-    user.todos = [...remainingTodos];
-    updateDB(user);
-
-    insertTodos(user.todos);
-    insertCompletedTodos(user.todos);
-    updateStatistics(user.todos);
-    insertTodosStatistics(user.statistics);
-    setTodoOptionsEvent();
+    initialize();
   }
 }
 
-window.finishTaskHandler = finishTaskHandler;
+window.finishTodoHandler = finishTodoHandler;
 
-function finishTaskHandler(taskId) {
+function finishTodoHandler(todoId) {
   hideTodoOptions();
 
-  const taskIndex = findTodoIndex(taskId, user.todos);
+  const selectedTodo = findTodo(todoId, user.todos);
+  selectedTodo.status = "completed";
 
-  if (taskIndex !== -1) {
-    user.todos[taskIndex].status = "completed";
-    updateDB(user);
+  user = updateUserTodos(selectedTodo, user);
+  DB.users = updateUsers(user, DB.users);
+  updateDB(DB);
 
-    insertTodos(user.todos);
-    insertCompletedTodos(user.todos);
-    updateStatistics(user.todos);
-    insertTodosStatistics(user.statistics);
-    setTodoOptionsEvent();
-  }
+  initialize();
 }
 
 const showCreateTodoModalBtn = document.getElementById(
   "show-create-todo-modal"
 );
+
 showCreateTodoModalBtn.addEventListener("click", showCreateTodoModal);
 
 function saveTodoHandler(event) {
   showLoader();
 
-  let temp = [...user.todos];
+  user.todos.push(event.detail);
+  user.statistics = calcStatistics(user.todos);
 
-  user.todos.length = 0;
-  user.todos = [event.detail, ...temp];
-  updateDB(user);
-
-  insertTodos(user.todos);
-  updateStatistics(user.todos);
-  insertTodosStatistics(user.statistics);
-  setTodoOptionsEvent();
+  DB.users = updateUsers(user, DB.users);
+  updateDB(DB);
+  initialize();
 
   hideLoader();
 }
@@ -385,20 +331,11 @@ function saveTodoHandler(event) {
 function updateTodoHandler(event) {
   showLoader();
 
-  const editedTodo = event.detail;
-  const editedTodoIndex = findTodoIndex(editedTodo.id, user.todos);
+  user = updateUserTodos(event.detail, user);
+  DB.users = updateUsers(user, DB.users);
+  updateDB(DB);
 
-  if (editedTodoIndex !== -1) {
-    user.todos[editedTodoIndex] = editedTodo;
-
-    updateDB(user);
-    insertTodos(user.todos);
-    insertCompletedTodos(user.todos);
-    updateStatistics(user.todos);
-    insertTodosStatistics(user.statistics);
-    setTodoOptionsEvent();
-  }
-
+  initialize();
   hideLoader();
 }
 

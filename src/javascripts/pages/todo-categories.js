@@ -1,4 +1,9 @@
-import { hideLoader, showOverlay, hideOverlay } from "../modules/shared.js";
+import {
+  hideLoader,
+  showOverlay,
+  hideOverlay,
+  updateDB,
+} from "../modules/shared.js";
 import {
   escapeHtml,
   getFromLocalStorage,
@@ -10,29 +15,33 @@ let categories = [];
 
 const todoCategoriesContainer = document.getElementById("categories-container");
 
-function insertCategories(categories, container) {
-  let template = "";
-
-  if (categories.length) {
-    categories.forEach((category, index) => {
-      template += `
-            <div class="flex items-center justify-between">
+function generateCategoryHeader(categoryName) {
+  return `<div class="flex items-center justify-between">
               <h4 class="font-semibold">
-                Todo ${category.name}
+                Todo ${categoryName}
                 <span class="block h-0.5 w-10 bg-orioles-orange"></span>
               </h4>
               <button
                 class="my-auto flex items-center gap-x-2 text-xs text-quick-silver cursor-pointer hover:text-primary transition-all duration-200 hover:*:fill-white hover:*:bg-primary"
-                onclick="showModal('${category.name}')"
+                onclick="showModal('${categoryName}')"
                 >
                 <svg
                   class="fill-primary p-px size-[15px] transition-all duration-200 rounded-full"
                 >
                   <use href="#plus-icon"></use>
                 </svg>
-                Add New ${category.name}
+                Add New ${categoryName}
               </button>
-            </div>            
+            </div>`;
+}
+
+function insertCategories(categories, container) {
+  let template = "";
+
+  if (categories.length) {
+    categories.forEach((category, index) => {
+      template += `
+            ${generateCategoryHeader(category.name)}
             <div class="overflow-x-auto w-[calc(100%+8px)] -ml-1 px-1 pb-8">
               ${generateTable(category)}
             </div>
@@ -150,8 +159,7 @@ async function deleteCategoryValue(categoryName, value) {
   );
 
   DB.categories = categories;
-  saveToLocalStorage("DB", DB);
-
+  updateDB(DB);
   insertCategories(categories, todoCategoriesContainer);
 }
 
@@ -160,13 +168,17 @@ function findCategoryIndex(name) {
 }
 
 window.addEventListener("load", () => {
-  DB = getFromLocalStorage("DB");
-  categories = DB.categories;
+  initialize();
 
   insertCategories(categories, todoCategoriesContainer);
 
   hideLoader();
 });
+
+function initialize() {
+  DB = getFromLocalStorage("DB");
+  categories = DB.categories;
+}
 
 function prepareModal(categoryName, value) {
   const modalTitle = document.getElementById("category-modal__title");
@@ -188,6 +200,7 @@ function showModal(categoryName, value) {
   showOverlay();
   document.getElementById("category-modal").classList.remove("hidden");
 }
+
 function hideModal() {
   hideOverlay();
   document.getElementById("category-modal").classList.add("hidden");

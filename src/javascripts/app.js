@@ -1,6 +1,7 @@
 import {
   deleteCookie,
   findUser,
+  formattingDateTime,
   getCookie,
   getDateTime,
   getFromLocalStorage,
@@ -21,59 +22,50 @@ import {
 } from "./modules/shared.js";
 import { hideTodoModal } from "./modules/todo-modal.js";
 
-let DB = {};
 let user = {};
-let isSidebarVisible = window.innerWidth >= 600;
+let isSidebarVisible = false;
 
 function showSidebar() {
   hideVisibleContent();
 
   const sidebar = document.getElementById("sidebar");
-  sidebar.classList.remove("-left-50");
-  sidebar.classList.add("left-0");
+  sidebar.classList.replace("-left-50", "left-0");
 
   showTransparentOverlay();
+  isSidebarVisible = true;
 }
 
 function hideSidebar() {
   const sidebar = document.getElementById("sidebar");
-  sidebar.classList.add("-left-50");
-  sidebar.classList.remove("left-0");
+  sidebar.classList.replace("left-0", "-left-50");
 
   hideTransparentOverlay();
+  isSidebarVisible = false;
 }
 
-function toggleMenu() {
-  if (isSidebarVisible) {
-    hideSidebar();
-  } else {
-    showSidebar();
-  }
-
-  isSidebarVisible = !isSidebarVisible;
+function toggleSidebar() {
+  isSidebarVisible ? hideSidebar() : showSidebar();
 }
 
 const toggleSidebarBtn = document.getElementById("toggle-menu");
-toggleSidebarBtn.addEventListener("click", toggleMenu);
+toggleSidebarBtn.addEventListener("click", toggleSidebar);
 
-function showSearchBar() {
+function showSearchBarMobile() {
   hideVisibleContent();
   showOverlay();
 
-  const searchBarContainer = document.getElementById("mobile-search-bar");
-  searchBarContainer.classList.remove("hidden");
+  document.getElementById("mobile-search-bar").classList.remove("hidden");
 }
 
-function hideSearchBar() {
+function hideSearchBarMobile() {
   hideOverlay();
 
-  const searchBarContainer = document.getElementById("mobile-search-bar");
-  searchBarContainer.classList.add("hidden");
+  document.getElementById("mobile-search-bar").classList.add("hidden");
 }
 
 function hideVisibleContent() {
   hideSidebar();
-  hideSearchBar();
+  hideSearchBarMobile();
   hideNotifications();
   hideCalendar();
 
@@ -85,11 +77,12 @@ const overlay = document.getElementById("overlay");
 overlay.addEventListener("click", hideVisibleContent);
 
 const searchBarIcon = document.getElementById("search-bar-icon");
-searchBarIcon.addEventListener("click", showSearchBar);
+searchBarIcon.addEventListener("click", showSearchBarMobile);
 
 const searchResultContainer = document.getElementById(
   "search-result-container"
 );
+
 const mobileSearchResultContainer = document.getElementById(
   "mobile-search-result"
 );
@@ -138,13 +131,17 @@ function insertSearchResult(todos, container) {
   container.innerHTML = template;
 }
 
+function getUser() {
+  const users = getFromLocalStorage("DB").users;
+  const userId = getCookie("userId");
+  return findUser(userId, users);
+}
+
 function insertSearchResultHandler(keyupEvent) {
   const typedValue = keyupEvent.target.value.trim();
 
   if (typedValue.length > 2) {
-    const users = getFromLocalStorage("DB").users;
-    const userId = getCookie("userId");
-    user = findUser(userId, users);
+    user = getUser();
 
     const searchResult = searchTodo(typedValue, user.todos);
 
@@ -170,7 +167,8 @@ mobileSearchInput.addEventListener("keyup", insertSearchResultHandler);
 function insertDate() {
   const todayDateContainer = document.getElementById("today-date");
 
-  const dateTime = getDateTime();
+  let dateTime = getDateTime();
+  dateTime = formattingDateTime(dateTime);
 
   todayDateContainer.innerHTML = `<span>${dateTime.weekdayName}</span>
           <span class="text-picton-blue">${dateTime.date}</span>`;
@@ -186,16 +184,17 @@ function routeProtection() {
 
 window.addEventListener("load", async () => {
   routeProtection();
+  initilize();
+});
+
+function initilize() {
   insertDate();
 
-  const userId = getCookie("userId");
-  DB = getFromLocalStorage("DB");
-
-  user = findUser(userId, DB.users);
+  user = getUser();
 
   insertTextContent(`${user.name} ${user.family}`, "user-full-name");
   insertTextContent(user.email, "user-email");
-});
+}
 
 document
   .getElementById("notification-show-btn")
@@ -218,6 +217,7 @@ document
   .addEventListener("click", hideVisibleContent);
 
 const logoutBtn = document.getElementsByClassName("logout-btn")[0];
+
 logoutBtn.addEventListener("click", async (clickEvent) => {
   clickEvent.preventDefault();
 
@@ -240,6 +240,6 @@ logoutBtn.addEventListener("click", async (clickEvent) => {
 
   if (isLogoutConfirm) {
     deleteCookie("userId", "/src");
-    location.href = "/src/pages/login.html";
+    routeProtection();
   }
 });

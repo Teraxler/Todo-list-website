@@ -3,21 +3,25 @@ import {
   hideLoader,
   getPriorityColorClass,
   getStatusColorClass,
+  updateUserTodos,
+  updateUsers,
+  deleteUserTodo,
+  getDB,
+  updateDB,
 } from "../modules/shared.js";
 import {
   findTodo,
-  findTodoIndex,
   findUser,
+  formattingDateTime,
   getCookie,
   getFromLocalStorage,
   insertTextContent,
   normalizeDateTime,
-  saveToLocalStorage,
 } from "../modules/utils.js";
-
 import { showEditTodoModal } from "../modules/todo-modal.js";
 
 let user = {};
+let DB = {};
 let selectedTodoId = null;
 
 function generateTodo(todo) {
@@ -25,6 +29,8 @@ function generateTodo(todo) {
 
   const priorityColorClass = getPriorityColorClass(priority);
   const statusColorClass = getStatusColorClass(status);
+
+  const dateObj = normalizeDateTime(createdAt);
 
   return `<!-- Task -->
               <div
@@ -52,12 +58,10 @@ function generateTodo(todo) {
                           ? `src=${cover.img}`
                           : `src="../assets/images/todoes/${cover.path}"`
                       }
-
-                      alt=""
+                      alt="${cover.alt}"
                     />
                   </div>
                 </div>
-
                 <div class="flex justify-between gap-x-0.5 text-[10px] mt-1.5">
                   <span>
                     Priority:
@@ -74,7 +78,7 @@ function generateTodo(todo) {
                   <span class="text-quick-silver">
                     Created on:
                     <span class="block text-nowrap xl:inline">${
-                      normalizeDateTime(createdAt).date
+                      formattingDateTime(dateObj).date
                     }</span>
                   </span>
                 </div>
@@ -90,9 +94,9 @@ function insertTodos(todos) {
     todos.forEach((todo) => {
       if (createdAt && createdAt !== todo.createdAt.slice(0, 10)) {
         template += `<!-- Line -->
-                <div
-                class="w-[calc(100%+24px)] lg:w-[calc(100%+36px)] 2xl:w-[calc(100%+60px)] -ml-3 lg:-ml-4.5 2xl:-ml-7.5 my-3 lg:my-6 border-t border-quick-silver/41"
-                ></div>`;
+                  <div
+                  class="w-[calc(100%+24px)] lg:w-[calc(100%+36px)] 2xl:w-[calc(100%+60px)] -ml-3 lg:-ml-4.5 2xl:-ml-7.5 my-3 lg:my-6 border-t border-quick-silver/41"
+                  ></div>`;
       }
 
       createdAt = todo.createdAt.slice(0, 10);
@@ -107,11 +111,7 @@ function insertTodos(todos) {
 
 function insertSelectedTodoPriority(priority) {
   const priorityWrapper = document.getElementById("todo-priority");
-  const priorityColorClass = {
-    high: "text-danger",
-    medium: "text-amber-400",
-    low: "text-picton-blue",
-  };
+  const priorityColorClass = "text-" + getPriorityColorClass(priority);
 
   priorityWrapper.classList.remove(
     "text-danger",
@@ -120,16 +120,12 @@ function insertSelectedTodoPriority(priority) {
   );
 
   priorityWrapper.textContent = priority;
-  priorityWrapper.classList.add(priorityColorClass[priority.toLowerCase()]);
+  priorityWrapper.classList.add(priorityColorClass);
 }
 
 function insertSelectedTodoStatus(status) {
   const statusWrapper = document.getElementById("todo-status");
-  const statusColorClass = {
-    "not started": "text-danger",
-    "in progress": "text-blue-bonnet",
-    completed: "text-success",
-  };
+  const statusColorClass = "text-" + getStatusColorClass(status);
 
   statusWrapper.classList.remove(
     "text-danger",
@@ -138,86 +134,55 @@ function insertSelectedTodoStatus(status) {
   );
 
   statusWrapper.textContent = status;
-  statusWrapper.classList.add(statusColorClass[status.toLowerCase()]);
+  statusWrapper.classList.add(statusColorClass);
+}
+
+function insertTodoCover(cover) {
+  const coverContainer = document.getElementById("todo-cover");
+  coverContainer.alt = cover.alt;
+  coverContainer.src = cover.img
+    ? cover.img
+    : `../assets/images/todoes/${cover.path}`;
 }
 
 function insertTodoDetails(todo) {
-  if (!todo) {
+  if (todo) {
+    insertTodoCover(todo.cover);
+    insertSelectedTodoStatus(todo.status);
+    insertSelectedTodoPriority(todo.priority);
+
+    const dateObj = normalizeDateTime(todo.createdAt);
+    const createdDate = formattingDateTime(dateObj).date;
+
+    insertTextContent(todo.title, "todo-title");
+    insertTextContent(createdDate, "todo-created-at");
+    insertTextContent(todo.description, "todo-description");
+  } else {
     document.getElementById("todo-details-container").innerHTML = `
-      <span class="block text-center text-davy-grey py-20">Please select a todo</span>
+    <span class="block text-center text-davy-grey py-20">Please select a todo</span>
     `;
-
-    return;
   }
-
-  const coverContainer = document.getElementById("todo-cover");
-  coverContainer.src = todo.cover.img
-    ? todo.cover.img
-    : `../assets/images/todoes/${todo.cover.path}`;
-
-  insertSelectedTodoStatus(todo.status);
-
-  insertSelectedTodoPriority(todo.priority);
-
-  insertTextContent(todo.title, "todo-title");
-  insertTextContent(todo.description, "todo-description");
-  insertTextContent(todo.title, "todo-title");
-
-  const createdDate = normalizeDateTime(todo.createdAt).date;
-  insertTextContent(createdDate, "todo-created-at");
 }
 
 window.addEventListener("load", () => {
   showLoader();
-
-  const DB = getFromLocalStorage("DB");
-  const userId = getCookie("userId");
-
-  user = findUser(userId, DB.users);
-
-  selectedTodoId = user.todos[0]?.id;
-
-  insertTodos(user.todos);
-
-  insertTodoDetails(user.todos[0]);
+  initialize();
   hideLoader();
 });
 
-function updateStatistics(todos) {
-  let notStarted, inProgress, completed;
-  const count = todos.length;
+function initialize() {
+  DB = getFromLocalStorage("DB");
+  const userId = getCookie("userId");
 
-  notStarted = inProgress = completed = 0;
+  user = findUser(userId, DB.users);
+  selectedTodoId = user.todos[0]?.id;
 
-  if (count) {
-    todos.forEach((todo) => {
-      switch (todo.status) {
-        case "not started":
-          notStarted++;
-          break;
-        case "in progress":
-          inProgress++;
-          break;
-        case "completed":
-          completed++;
-          break;
-        default:
-          break;
-      }
-    });
+  render();
+}
 
-    user.statistics = {
-      completed: Math.round((completed / count) * 100),
-      "in progress": Math.round((inProgress / count) * 100),
-      "not started": Math.round((notStarted / count) * 100),
-    };
-  } else {
-    user.statistics = {
-      completed: 0,
-      "in progress": 0,
-      "not started": 0,
-    };
-  }
+function render() {
+  insertTodos(user.todos);
+  insertTodoDetails(user.todos[0]);
 }
 
 async function deleteTodoHandler() {
@@ -240,15 +205,13 @@ async function deleteTodoHandler() {
   });
 
   if (isDeleteConfirm) {
-    user.todos = user.todos.filter((todo) => todo.id !== selectedTodoId);
-    updateDB(user);
+    user = deleteUserTodo(selectedTodoId, user);
+    DB.users = updateUsers(user, DB.users);
+    updateDB(DB);
 
     user.todos.length === 0 ? (location.href = "../index.html") : null;
 
-    selectedTodoId = user.todos[0].id;
-
-    insertTodos(user.todos);
-    insertTodoDetails(user.todos[0]);
+    initialize();
   }
 }
 
@@ -259,30 +222,28 @@ function editTodoHandler() {
 }
 
 function startTodoHandler() {
-  const todoIndex = findTodoIndex(selectedTodoId, user.todos);
+  const selectedTodo = findTodo(selectedTodoId, user.todos);
 
-  if (todoIndex !== -1) {
-    user.todos[todoIndex].status = "in progress";
+  selectedTodo.status = "in progress";
 
-    insertTodos(user.todos);
-    insertSelectedTodoStatus("in progress");
+  user = updateUserTodos(selectedTodo, user);
+  DB.users = updateUsers(user, DB.users);
+  updateDB(DB);
 
-    updateStatistics(user.todos);
-    updateDB(user);
-  }
+  insertTodos(user.todos);
+  insertSelectedTodoStatus("in progress");
 }
 
 function completeTodoHandler() {
-  const todoIndex = findTodoIndex(selectedTodoId, user.todos);
-  if (todoIndex !== -1) {
-    user.todos[todoIndex].status = "completed";
+  const selectedTodo = findTodo(selectedTodoId, user.todos);
+  selectedTodo.status = "completed";
 
-    insertTodos(user.todos);
-    insertSelectedTodoStatus("completed");
+  user = updateUserTodos(selectedTodo, user);
+  DB.users = updateUsers(user, DB.users);
+  updateDB(DB);
 
-    updateStatistics(user.todos);
-    updateDB(user);
-  }
+  insertTodos(user.todos);
+  insertSelectedTodoStatus("completed");
 }
 
 const deleteTodoBtn = document.getElementById("delete-todo-btn");
@@ -295,50 +256,26 @@ editTodoBtn.addEventListener("click", editTodoHandler);
 startTodoBtn.addEventListener("click", startTodoHandler);
 completeTodoBtn.addEventListener("click", completeTodoHandler);
 
-function updateTodos(todos, editedTodo) {
-  todos = [...todos];
-
-  const todoIndex = todos.findIndex(
-    (todo) => String(todo.id) === String(editedTodo.id)
-  );
-
-  todos[todoIndex] = editedTodo;
-
-  return todos;
-}
-
-function updateDB(editedUser) {
-  const DB = getFromLocalStorage("DB");
-
-  const userIndex = DB.users.findIndex((user) => user.id === editedUser.id);
-
-  if (userIndex !== -1) {
-    DB.users[userIndex] = editedUser;
-
-    saveToLocalStorage("DB", DB);
-  }
-}
-
 function updateTodoHandler(customeEvent) {
   showLoader();
-  const updatedTodo = customeEvent.detail;
 
-  user.todos = updateTodos(user.todos, updatedTodo);
-  updateStatistics(user.todos);
-  updateDB(user);
+  user = updateUserTodos(customeEvent.detail, user);
+  DB.users = updateUsers(user, DB.users);
+  updateDB(DB);
 
   insertTodos(user.todos);
-  insertTodoDetails(updatedTodo);
+  insertTodoDetails(customeEvent.detail);
   hideLoader();
 }
 
 document.addEventListener("todoUpdated", updateTodoHandler);
 
 window.showTodoDetailsHandler = showTodoDetailsHandler;
+
 function showTodoDetailsHandler(todoId) {
   selectedTodoId = todoId;
 
-  const DB = getFromLocalStorage("DB");
+  const DB = getDB("DB");
   const userId = getCookie("userId");
 
   user = findUser(userId, DB.users);
@@ -347,3 +284,4 @@ function showTodoDetailsHandler(todoId) {
   const todo = findTodo(todoId, user.todos);
   insertTodoDetails(todo);
 }
+

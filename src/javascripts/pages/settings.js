@@ -1,12 +1,14 @@
-import { hideLoader, showLoader } from "../modules/shared.js";
 import {
-  findUser,
-  getCookie,
-  getFromLocalStorage,
-  saveToLocalStorage,
-} from "../modules/utils.js";
+  getDB,
+  hideLoader,
+  showLoader,
+  updateDB,
+  updateUsers,
+} from "../modules/shared.js";
+import { findUser, getCookie } from "../modules/utils.js";
 
 let user = {};
+let DB = {};
 
 function fillUserInfo(user) {
   const firstNameInput = document.getElementById("first-name-input");
@@ -115,18 +117,6 @@ function getUpdatedUser() {
   };
 }
 
-function updateDB(updatedUser) {
-  const DB = getFromLocalStorage("DB");
-
-  const userIndex = DB.users.findIndex((user) => user.id === updatedUser.id);
-
-  if (userIndex !== -1) {
-    DB.users[userIndex] = updatedUser;
-
-    saveToLocalStorage("DB", DB);
-  }
-}
-
 function updateUserHandler(clickEvent) {
   clickEvent.preventDefault();
   const updatedUser = getUpdatedUser();
@@ -135,8 +125,8 @@ function updateUserHandler(clickEvent) {
     updatedUser.password = updatedUser.newPassword;
     delete updatedUser.newPassword;
 
-    user = updatedUser;
-    updateDB(user);
+    DB.users = updateUsers(updatedUser, DB.users);
+    updateDB(DB);
 
     swal({
       title: "Your information successfuly updated",
@@ -151,11 +141,15 @@ saveChangesBtn.addEventListener("click", updateUserHandler);
 window.addEventListener("load", () => {
   showLoader();
 
-  const userId = getCookie("userId");
-  const DB = getFromLocalStorage("DB");
-
-  user = findUser(userId, DB.users);
+  initialize();
 
   fillUserInfo(user);
   hideLoader();
 });
+
+function initialize() {
+  DB = getDB();
+  const userId = getCookie("userId");
+
+  user = findUser(userId, DB.users);
+}

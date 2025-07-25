@@ -1,6 +1,7 @@
 import {
+  findUser,
   formattingDateTime,
-  getDateTimeV2,
+  getDateTime,
   getFromLocalStorage,
   idGenerator,
   saveToLocalStorage,
@@ -91,8 +92,8 @@ function isUserValid(newUser) {
   return true;
 }
 
-function signUpUser() {
-  const newUser = {
+function craeteUser() {
+  return {
     id: idGenerator(),
     name: firstNameInput.value.trim(),
     family: lastNameInput.value.trim(),
@@ -102,11 +103,15 @@ function signUpUser() {
     confirmPassword: confirmPasswordInput.value.trim(),
     phone: "",
     position: "",
-    createdAt: formattingDateTime(getDateTimeV2()).dateTimeISO,
+    createdAt: formattingDateTime(getDateTime()).iso,
     profile: "",
     todos: [],
     notifications: [],
   };
+}
+
+function signUpUser() {
+  const newUser = craeteUser();
 
   if (isUserValid(newUser)) {
     delete newUser.confirmPassword;
@@ -115,19 +120,19 @@ function signUpUser() {
   }
 }
 
+function isUserExists(id, users) {
+  return findUser(id, users) ? true : false;
+}
+
 function saveNewUser(newUser) {
   const DB = getFromLocalStorage("DB");
 
-  const isUserExists = DB.users.find((user) => user.id === newUser.id);
-
-  if (!isUserExists) {
+  if (!isUserExists(newUser.id, DB.users)) {
     DB.users.push(newUser);
 
-    const isSaved = saveToLocalStorage("DB", DB);
+    saveToLocalStorage("DB", DB);
 
-    if (isSaved) {
-      location.href = "./login.html";
-    }
+    location.href = "./login.html";
   }
 }
 

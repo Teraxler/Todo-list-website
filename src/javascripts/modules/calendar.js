@@ -1,19 +1,36 @@
-"use strict";
-
+import { hideTransparentOverlay, showTransparentOverlay } from "./shared.js";
 import {
-  hideTransparentOverlay,
-  showTransparentOverlay,
-} from "./shared.js";
-import { convertMonthToMonthName } from "./utils.js";
+  convertMonthToMonthName,
+  getDateTime,
+  normalizeDateTime,
+} from "./utils.js";
 
-const date = new Date();
+const dateTime = getDateTime();
 
-let weekday = date.getDay() + 1;
-let currentMonth = date.getMonth() + 1;
-let currentDay = date.getDate();
-let currentYear = date.getFullYear();
+let currentMonth = dateTime.month;
+let currentDay = dateTime.day;
+let currentYear = dateTime.year;
 let numberOfDaysOnMonth = calcNumberOfDaysOnMonth();
 let fisrtDayOfMonthOnWeek = calcFisrtDayOfMonthOnWeek();
+
+function calcNumberOfDaysOnMonth() {
+  const daysOfMonthMap = {
+    1: 31,
+    2: currentYear % 4 === 0 ? 29 : 28,
+    3: 31,
+    4: 30,
+    5: 31,
+    6: 30,
+    7: 31,
+    8: 31,
+    9: 30,
+    10: 31,
+    11: 30,
+    12: 31,
+  };
+
+  return daysOfMonthMap[currentMonth];
+}
 
 function nextMonth() {
   if (currentMonth < 12) {
@@ -23,12 +40,7 @@ function nextMonth() {
     currentYear++;
   }
 
-  fisrtDayOfMonthOnWeek += numberOfDaysOnMonth % 7;
-
-  if (fisrtDayOfMonthOnWeek > 7) {
-    fisrtDayOfMonthOnWeek = fisrtDayOfMonthOnWeek % 7;
-  }
-
+  fisrtDayOfMonthOnWeek = calcFisrtDayOfMonthOnWeek();
   numberOfDaysOnMonth = calcNumberOfDaysOnMonth();
 
   insertDaysOnCalendar();
@@ -44,16 +56,11 @@ function previousMonth() {
     currentMonth--;
   } else {
     currentMonth = 12;
-    currentYear--;
+    currentYear > 1 ? currentYear-- : null;
   }
 
+  fisrtDayOfMonthOnWeek = calcFisrtDayOfMonthOnWeek();
   numberOfDaysOnMonth = calcNumberOfDaysOnMonth();
-
-  fisrtDayOfMonthOnWeek -= numberOfDaysOnMonth % 7;
-
-  if (fisrtDayOfMonthOnWeek < 1) {
-    fisrtDayOfMonthOnWeek += 7;
-  }
 
   insertDaysOnCalendar();
   insertMonthYearOnCalendar();
@@ -64,53 +71,26 @@ document
   .getElementById("previous-month-btn")
   .addEventListener("click", previousMonth);
 
-function calcNumberOfDaysOnMonth() {
-  if ([1, 3, 5, 7, 8, 10, 12].includes(currentMonth)) {
-    return 31;
-  } else if ([4, 6, 9, 11].includes(currentMonth)) {
-    return 30;
-  } else {
-    return currentYear % 4 === 0 ? 29 : 28;
-  }
-}
-
 function insertMonthYearOnCalendar() {
   document.getElementById("calendar__month-year").innerHTML = `
     ${convertMonthToMonthName(currentMonth)} ${currentYear}`;
 }
 
 function calcFisrtDayOfMonthOnWeek() {
-  let fisrtDayOfMonthOnWeek = new Date(
+  let fisrtDayOfMonthOnWeek = normalizeDateTime(
     `${currentYear}-${currentMonth}-1`
-  ).getDay();
+  ).weekday;
 
-  fisrtDayOfMonthOnWeek = (fisrtDayOfMonthOnWeek + 2) % 7;
+  fisrtDayOfMonthOnWeek = (fisrtDayOfMonthOnWeek + 1) % 7;
 
-  return fisrtDayOfMonthOnWeek;
-}
-
-function calcFisrtDayOfMonthOnWeekV1() {
-  let fisrtDayOfMonthOnWeek = weekday;
-
-  let difference = -(currentDay % 7) + 1;
-
-  if (difference < 1) {
-    difference = 7 - (currentDay % 7) + 1;
-  }
-
-  for (let i = 0; i < difference; i++) {
-    fisrtDayOfMonthOnWeek = (fisrtDayOfMonthOnWeek + 1) % 7;
-  }
-
-  return fisrtDayOfMonthOnWeek;
+  return fisrtDayOfMonthOnWeek > 0 ? fisrtDayOfMonthOnWeek : 7;
 }
 
 function normalizeDateForInput() {
-  const year = currentYear;
   const month = String(currentMonth).padStart(2, 0);
   const day = String(currentDay).padStart(2, 0);
 
-  return `${year}-${month}-${day}`;
+  return `${currentYear}-${month}-${day}`;
 }
 
 function updateDateOnCalendarInput() {
@@ -118,12 +98,8 @@ function updateDateOnCalendarInput() {
     normalizeDateForInput();
 }
 
-function insertDaysOnCalendar() {
-  const tableBody = document.getElementById("calendar__tbody");
-
+function generateCalendarDays() {
   const calendarDays = [];
-  let template = "",
-    temp = "";
 
   for (let i = 1; i < fisrtDayOfMonthOnWeek; i++) {
     calendarDays.push(`<td></td>`);
@@ -137,15 +113,22 @@ function insertDaysOnCalendar() {
     );
   }
 
-  const calendarDaysLen = calendarDays.length;
-  for (let i = 1; i <= calendarDaysLen; i++) {
-    temp += calendarDays[i - 1];
+  return calendarDays;
+}
+
+function generateCalendarWeeks(days) {
+  const daysLen = days.length;
+  let template = "",
+    temp = "";
+
+  for (let i = 1; i <= daysLen; i++) {
+    temp += days[i - 1];
 
     if (i % 7 === 0) {
       template += `
-        <tr class="grid grid-cols-7 gap-x-2 md:gap-x-5">
-          ${temp}
-        </tr>`;
+          <tr class="grid grid-cols-7 gap-x-2 md:gap-x-5">
+            ${temp}
+          </tr>`;
 
       temp = "";
     }
@@ -153,37 +136,19 @@ function insertDaysOnCalendar() {
 
   if (temp) {
     template += `
-      <tr class="grid grid-cols-7 gap-x-5.5 gap-y-6.5">
-        ${temp}
-      </tr>`;
+        <tr class="grid grid-cols-7 gap-x-2 md:gap-x-5">
+          ${temp}
+        </tr>`;
   }
 
-  tableBody.innerHTML = template;
+  return template;
 }
 
-function insertDaysOnCalendarV1(container) {
-  let template = `
-  <span class="calendar__weekday-name">MON</span>
-  <span class="calendar__weekday-name">TUE</span>
-  <span class="calendar__weekday-name">WED</span>
-  <span class="calendar__weekday-name">THU</span>
-  <span class="calendar__weekday-name">FRI</span>
-  <span class="calendar__weekday-name">SAT</span>
-  <span class="calendar__weekday-name">SUN</span>
-  `;
+function insertDaysOnCalendar() {
+  const tableBody = document.getElementById("calendar__tbody");
 
-  for (let i = 1; i < fisrtDayOfMonthOnWeek; i++) {
-    template += `<span></span>`;
-  }
-
-  for (let i = 1; i <= numberOfDaysOnMonth; i++) {
-    template += `
-        <span class="${
-          i === currentDay ? "calendar__day--active" : "calendar__day"
-        }">${i}</span>`;
-  }
-
-  container.innerHTML = template;
+  const calendarDays = generateCalendarDays();
+  tableBody.innerHTML = generateCalendarWeeks(calendarDays);
 }
 
 window.addEventListener("load", () => {
@@ -193,11 +158,11 @@ window.addEventListener("load", () => {
 });
 
 function updateCalendar(changeEvent) {
-  const date = changeEvent.target.value;
+  const dateTime = normalizeDateTime(changeEvent.target.value);
 
-  currentYear = Number(date.slice(0, 4)) || 2000;
-  currentMonth = Number(date.slice(5, 7)) || 1;
-  currentDay = Number(date.slice(8, 10)) || 1;
+  currentYear = dateTime.year;
+  currentMonth = dateTime.month;
+  currentDay = dateTime.day;
 
   fisrtDayOfMonthOnWeek = calcFisrtDayOfMonthOnWeek();
 
@@ -215,7 +180,6 @@ document
     if (clickEvent.target.className === "calendar__day") {
       currentDay = Number(clickEvent.target.textContent);
 
-      // insertMonthYearOnCalendar();
       insertDaysOnCalendar();
       updateDateOnCalendarInput();
     }
@@ -236,17 +200,5 @@ function hideCalendar() {
 document
   .getElementById("calendar__hide-btn")
   .addEventListener("click", hideCalendar);
-
-// let date2 = new Date();
-// let dateFormat = new Intl.DateTimeFormat("fa").format(date2);
-// console.log(dateFormat);
-
-// function calcAmountDaysOfMonthShamsi() {
-//   const date = new Date();
-//   const month = date.getMonth();
-//   const year = date.getFullYear();
-
-//   return month < 6 ? 31 : month < 11 ? 30 : year % 4 === 3 ? 30 : 29;
-// }
 
 export { showCalendar, hideCalendar };

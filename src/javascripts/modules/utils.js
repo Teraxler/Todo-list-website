@@ -4,70 +4,41 @@ function idGenerator() {
 }
 
 // Date & Time
+const WEEKDAYS = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 function getDateTime() {
   const date = new Date();
 
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const weekday = date.getDay() + 1;
-
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
-
-  const weekdaysName = {
-    0: "Sunday",
-    1: "Monday",
-    2: "Tuesday",
-    3: "Wednesday",
-    4: "Thursday",
-    5: "Friday",
-    6: "Saturday",
-  };
-
-  const monthsName = {
-    0: "January",
-    1: "February",
-    2: "March",
-    3: "April",
-    4: "May",
-    5: "June",
-    6: "July",
-    7: "August",
-    8: "September",
-    9: "October",
-    10: "November",
-    11: "December",
-  };
-
-  return {
-    weekdayName: weekdaysName[weekday - 1],
-    monthName: monthsName[month - 1],
-    date: `${String(month).padStart(2, 0)}/${String(day).padStart(
-      2,
-      0
-    )}/${year}`,
-    time: `${hours}:${minutes}:${seconds}`,
-    year,
-    month,
-    day,
-    hours,
-    minutes,
-    seconds,
-  };
+  return normalizeDateTime(date);
 }
 
-function getDateTimeV2(dateTime = "now") {
-  let date;
+function normalizeDateTime(dateTime) {
+  // Input Format: "2024-05-10T09:45:37.408Z"
+  const date = new Date(dateTime);
 
-  if (dateTime == "now") {
-    date = new Date();
-  } else {
-    date = new Date(dateTime);
-  }
-
-  dateTime = {
+  return {
     year: date.getFullYear(),
     month: date.getMonth() + 1,
     day: date.getDate(),
@@ -75,83 +46,44 @@ function getDateTimeV2(dateTime = "now") {
     hour: date.getHours(),
     minute: date.getMinutes(),
     second: date.getSeconds(),
+    milliSecond: date.getMilliseconds(),
   };
-
-  return dateTime;
 }
 
 function formattingDateTime(dateTime) {
-  const weekdaysNameMap = {
-    1: "Sunday",
-    2: "Monday",
-    3: "Tuesday",
-    4: "Wednesday",
-    5: "Thursday",
-    6: "Friday",
-    7: "Saturday",
-  };
-  const monthsNameMap = {
-    1: "January",
-    2: "February",
-    3: "March",
-    4: "April",
-    5: "May",
-    6: "June",
-    7: "July",
-    8: "August",
-    9: "September",
-    10: "October",
-    11: "November",
-    12: "December",
-  };
-
   const stringDateTime = {
-    year: String(dateTime.year).padStart(4, 0),
-    month: String(dateTime.month).padStart(2, 0),
-    day: String(dateTime.day).padStart(2, 0),
-    hour: String(dateTime.hour).padStart(2, 0),
-    minute: String(dateTime.minute).padStart(2, 0),
-    second: String(dateTime.second).padStart(2, 0),
+    year: dateTime.year,
+    month: dateTime.month,
+    day: dateTime.day,
+    hour: dateTime.hour,
+    minute: dateTime.minute,
+    second: dateTime.second,
+    yearStr: pad(dateTime.year, 4),
+    monthStr: pad(dateTime.month),
+    dayStr: pad(dateTime.day),
+    hourStr: pad(dateTime.hour),
+    minuteStr: pad(dateTime.minute),
+    secondStr: pad(dateTime.second),
 
-    weekdayName: weekdaysNameMap[dateTime.weekday],
-    monthName: monthsNameMap[dateTime.month],
+    weekdayName: WEEKDAYS[dateTime.weekday - 1],
+    monthName: MONTHS[dateTime.month - 1],
   };
 
   return {
     ...stringDateTime,
-
-    date: `${stringDateTime.month}/${stringDateTime.day}/${stringDateTime.year}`,
-    time: `${stringDateTime.hour}:${stringDateTime.minute}:${stringDateTime.second}`,
-    dateTimeISO: `${stringDateTime.year}-${stringDateTime.month}-${stringDateTime.day}T${stringDateTime.hour}:${stringDateTime.minute}:${stringDateTime.second}`,
+    date: `${stringDateTime.monthStr}/${stringDateTime.dayStr}/${stringDateTime.yearStr}`,
+    time: `${stringDateTime.hourStr}:${stringDateTime.minuteStr}:${stringDateTime.secondStr}`,
+    iso: `${stringDateTime.yearStr}-${stringDateTime.monthStr}-${stringDateTime.dayStr}T${stringDateTime.hourStr}:${stringDateTime.minuteStr}:${stringDateTime.secondStr}`,
   };
 }
 
-function normalizeDateTime(dateTime) {
-  // Input Format: "2024-05-10T09:45:37.408Z"
-  const years = dateTime.slice(0, 4);
-  const months = dateTime.slice(5, 7);
-  const days = dateTime.slice(8, 10);
-  const hours = dateTime.slice(11, 13);
-  const minutes = dateTime.slice(14, 16);
-  const seconds = dateTime.slice(17, 19);
-  const milliSeconds = dateTime.slice(20, 23);
+// Get, Format, normalize
 
-  return {
-    years,
-    months,
-    days,
-    hours,
-    minutes,
-    seconds,
-    milliSeconds,
-    date: `${years}/${months}/${days}`,
-    time: `${hours}:${minutes}:${seconds}`,
-  };
-}
-
-function calcRelativeDateTimeDifference(dateTime = "1970-01-01T00:00:00.000Z") {
+function calcRelativeDateTimeDifference(
+  isoDateTime = "1970-01-01T00:00:00.000Z"
+) {
   const currentDateTime = new Date();
-  const inputDateTime = new Date(dateTime);
+  const inputDateTime = new Date(isoDateTime);
 
   return convertMilliSecondsToDateTime(currentDateTime - inputDateTime);
 }
@@ -195,22 +127,7 @@ function convertMilliSecondsToDateTime(milliSeconds) {
 }
 
 function convertMonthToMonthName(month) {
-  const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  return monthNames[month - 1];
+  return MONTHS[month - 1];
 }
 
 // String
@@ -218,8 +135,42 @@ function capitalize(text) {
   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 }
 
+function pad(num, length = 2) {
+  return String(num).padStart(length, 0);
+}
+
 // Mathmatics
 const clacDegreesOfPercent = (percents) => (360 * percents) / 100;
+
+function calcStatistics(todos) {
+  let notStarted, inProgress, completed, statistics;
+  const count = todos.length;
+
+  notStarted = inProgress = completed = 0;
+
+  const statusMap = {
+    "not started": () => notStarted++,
+    "in progress": () => inProgress++,
+    completed: () => completed++,
+  };
+
+  if (count) {
+    todos.forEach((todo) => statusMap[todo.status]());
+
+    statistics = {
+      completed: Math.round((completed / count) * 100),
+      "in progress": Math.round((inProgress / count) * 100),
+      "not started": Math.round((notStarted / count) * 100),
+    };
+  } else {
+    statistics = {
+      completed: 0,
+      "in progress": 0,
+      "not started": 0,
+    };
+  }
+  return statistics;
+}
 
 // Search
 function searchTodo(searchValue, todos) {
@@ -237,6 +188,14 @@ function filterNotCompletedTodos(todos) {
   return todos.filter((todo) => todo.status !== "completed");
 }
 
+function filterList(list, key, value, isIncludes = true) {
+  if (isIncludes) {
+    return list.filter((item) => item[key] === value) || [];
+  } else {
+    return list.filter((item) => item[key] !== value) || [];
+  }
+}
+
 // Find
 function findUser(id, users) {
   const userIndex = users.findIndex((user) => String(user.id) === String(id));
@@ -248,6 +207,10 @@ function findTodo(id, todos) {
   return todos.find((todo) => todo.id === id);
 }
 
+function findUserIndex(users, id) {
+  return users.findIndex((user) => user.id === id);
+}
+
 const findTodoIndex = (id, todos) =>
   todos.findIndex((todo) => String(todo.id) === String(id));
 
@@ -255,6 +218,10 @@ function findUserByUserPass({ username, password }, users) {
   return users.find(
     (user) => user.username === username && user.password === password
   );
+}
+
+function findItem(list, key, value) {
+  return list.find((item) => item[key] === value);
 }
 
 // Sort
@@ -288,7 +255,6 @@ function getFromLocalStorage(key) {
 function saveToLocalStorage(key, value) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
-    return true;
   } catch (error) {
     console.error(error);
     swal({
@@ -365,6 +331,11 @@ function getCookie(name) {
   return getAllCookies()[name] || null;
 }
 
+// Copy
+function deepCopy(data) {
+  return JSON.parse(JSON.stringify(data));
+}
+
 //
 function getBase64Image(img) {
   var canvas = document.createElement("canvas");
@@ -390,10 +361,6 @@ function convertImgToCanvas(image) {
   const imageAsDataUrl = imgCanvas.toDataURL("image/png");
 
   return imageAsDataUrl;
-}
-
-function convertDataUrlToBlob(dataUrl) {
-  console.log(dataUrl);
 }
 
 // Escape HTML
@@ -437,31 +404,12 @@ function ApiErrorHandler(status, details = null) {
   }
 }
 
-function generatorGrayCode(bits = 1) {
-  if (bits === 1) {
-    return ["0", "1"];
-  } else {
-    const baseCode = generatorGrayCode(bits - 1);
-    const loopLength = 2 ** bits / 2;
-    let gray = [];
-
-    for (let i = 0; i < loopLength; i++) {
-      gray.push("0" + baseCode[i]);
-    }
-
-    for (let i = loopLength - 1; i >= 0; i--) {
-      gray.push("1" + baseCode[i]);
-    }
-
-    return gray;
-  }
-}
-
 export {
   getDateTime,
   searchTodo,
   findUser,
   findTodo,
+  findUserIndex,
   findTodoIndex,
   findUserByUserPass,
   normalizeDateTime,
@@ -471,20 +419,21 @@ export {
   saveToLocalStorage,
   removeFromLocalStorage,
   convertImgToCanvas,
-  convertDataUrlToBlob,
   getBase64Image,
-  getDateTimeV2,
   formattingDateTime,
   idGenerator,
   clacDegreesOfPercent,
+  calcStatistics,
   capitalize,
   getQueryParam,
   insertTextContent,
   filterCompletedTodos,
   filterNotCompletedTodos,
+  filterList,
   setCookieUserId,
   getAllCookies,
   getCookie,
   deleteCookie,
   escapeHtml,
+  deepCopy,
 };

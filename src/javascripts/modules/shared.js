@@ -1,3 +1,13 @@
+import {
+  calcStatistics,
+  deepCopy,
+  filterList,
+  findTodoIndex,
+  findUserIndex,
+  getFromLocalStorage,
+  saveToLocalStorage,
+} from "./utils.js";
+
 function showOverlay() {
   document.getElementById("overlay").classList.add("h-full");
 }
@@ -14,24 +24,24 @@ function hideTransparentOverlay() {
   document.getElementById("transparent-overlay").classList.remove("h-full");
 }
 
-function showTodoOptions(clickEvent) {
+function showTodoOptions(element) {
   showTransparentOverlay();
 
-  const todoOptions = clickEvent.currentTarget.nextElementSibling;
+  const todoOptionsContainer = element.nextElementSibling;
 
-  todoOptions?.classList.remove("invisible", "opacity-0");
-  todoOptions?.classList.add("todo-options--active");
+  todoOptionsContainer?.classList.remove("invisible", "opacity-0");
+  todoOptionsContainer?.classList.add("todo-options--active");
 }
 
 function hideTodoOptions() {
   hideTransparentOverlay();
 
-  const todoOptions = document.getElementsByClassName(
+  const todoOptionsContainer = document.getElementsByClassName(
     "todo-options--active"
   )[0];
 
-  todoOptions?.classList.add("invisible", "opacity-0");
-  todoOptions?.classList.remove("todo-options--active");
+  todoOptionsContainer?.classList.add("invisible", "opacity-0");
+  todoOptionsContainer?.classList.remove("todo-options--active");
 }
 
 function showLoader() {
@@ -59,8 +69,8 @@ function getPriorityColorClass(priority) {
 
   const priorityColorMap = {
     high: "danger",
-    medium: "amber-400",
     low: "picton-blue",
+    medium: "amber-400",
   };
 
   return priorityColorMap[priority];
@@ -70,12 +80,50 @@ function getStatusColorClass(status) {
   status = status.toLowerCase();
 
   const statusColorMap = {
+    completed: "success",
     "not started": "danger",
     "in progress": "blue-bonnet",
-    completed: "success",
   };
 
   return statusColorMap[status];
+}
+
+function deleteUserTodo(todoId, user) {
+  user = deepCopy(user);
+
+  user.todos = filterList(user.todos, "id", todoId, false);
+  user.statistics = calcStatistics(user.todos);
+
+  return user;
+}
+
+function updateUserTodos(editedTodo, user) {
+  user = deepCopy(user);
+  const todoIndex = findTodoIndex(editedTodo.id, user.todos);
+
+  if (todoIndex !== -1) {
+    user.todos[todoIndex] = editedTodo;
+    user.statistics = calcStatistics(user.todos);
+  }
+  return user;
+}
+
+function updateUsers(editedUser, users) {
+  users = deepCopy(users);
+  const userIndex = findUserIndex(users, editedUser.id);
+
+  if (userIndex !== -1) {
+    users[userIndex] = editedUser;
+  }
+  return users;
+}
+
+function getDB() {
+  return getFromLocalStorage("DB");
+}
+
+function updateDB(DB) {
+  saveToLocalStorage("DB", DB);
 }
 
 export {
@@ -89,4 +137,9 @@ export {
   hideLoader,
   getPriorityColorClass,
   getStatusColorClass,
+  deleteUserTodo,
+  updateUserTodos,
+  updateUsers,
+  updateDB,
+  getDB,
 };

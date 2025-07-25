@@ -26,20 +26,12 @@ function hideNotifications() {
     .classList.add("opacity-0", "invisible");
 }
 
-function insertNotifications(notifications) {
-  let template = "";
-  const notificationsContainer = document.getElementById(
-    "notifications-container"
-  );
+function generateNotification(notification) {
+  const { priority, cover, title, createdAt } = notification;
 
-  if (notifications.length) {
-    notifications.forEach((notification) => {
-      const { id, priority, cover, title } = notification;
-      const relativeDateTime = calcRelativeDateTimeDifference(
-        notification.createdAt
-      );
+  const relativeDateTime = calcRelativeDateTimeDifference(createdAt);
 
-      template += `
+  return `
       <li class="px-3.75 py-1.5 lg:py-2.5">
         <a
           class="flex items-center justify-between gap-x-4"
@@ -51,9 +43,9 @@ function insertNotifications(notifications) {
             </p>
             <span class="font-medium text-xs">Priority: </span
             ><span class="font-medium text-xs ${
-              priority.toLowerCase() === "high"
+              priority === "high"
                 ? "text-danger"
-                : priority.toLowerCase() === "medium"
+                : priority === "medium"
                 ? "text-amber-400"
                 : "text-picton-blue"
             }">${priority}</span>
@@ -70,13 +62,25 @@ function insertNotifications(notifications) {
         </a>
       </li>
       `;
+}
+
+function insertNotifications(notifications, container) {
+  let template = "";
+
+  if (notifications.length) {
+    notifications.forEach((notification) => {
+      template += generateNotification(notification);
     });
   } else {
     template = `<li class="px-3.75 py-1.5 lg:py-2.5"> <span class="text-quick-silver">Nothing</span></li>`;
   }
 
-  notificationsContainer.innerHTML = template;
+  container.innerHTML = template;
 }
+
+const notificationsContainer = document.getElementById(
+  "notifications-container"
+);
 
 window.addEventListener("load", async () => {
   const DB = getFromLocalStorage("DB");
@@ -84,7 +88,7 @@ window.addEventListener("load", async () => {
 
   user = findUser(userId, DB.users);
 
-  insertNotifications(user.notifications);
+  insertNotifications(user.notifications, notificationsContainer);
 });
 
 export { showNotifications, hideNotifications };
