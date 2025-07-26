@@ -56,19 +56,19 @@ function generateTodo(todo) {
             </div>
             <!-- Drop-Down -->
             <div
-              class="task-options__list  invisible opacity-0 absolute z-10 right-0 bg-white flex flex-col gap-y-1.25 mt-0.5 px-1.25 pb-1.75 pt-2.25 leading-5 rounded-lg shadow"
+              class="task-options__list invisible opacity-0 absolute z-10 right-0 bg-white flex flex-col gap-y-0.75 mt-0.5 px-1.25 pb-1.75 pt-2.25 leading-5 rounded-lg shadow"
               data-is-visible="false"
               >
-              <button class="task-options__edit-task text-xs text-start cursor-pointer" onclick="startTodoHandler('${id}')">
+              <button class="task-options__edit-task text-xs text-start cursor-pointer transition-colors hover:bg-ghost-white rounded-sm p-0.5" onclick="startTodoHandler('${id}')">
                 Start
               </button>
-              <button class="task-options__edit-task text-xs text-start cursor-pointer" onclick="editTodoHandler('${id}')">
+              <button class="task-options__edit-task text-xs text-start cursor-pointer transition-colors hover:bg-ghost-white rounded-sm p-0.5" onclick="editTodoHandler('${id}')">
                 Edit
               </button>
-              <button class="task-options__delete-task text-xs text-start cursor-pointer" onclick="deleteTodoHandler('${id}')">
+              <button class="task-options__delete-task text-xs text-start cursor-pointer transition-colors hover:bg-ghost-white rounded-sm p-0.5" onclick="deleteTodoHandler('${id}')">
                 Delete
               </button>
-              <button class="task-options__finish-task text-xs text-start cursor-pointer" onclick="finishTodoHandler('${id}')">
+              <button class="task-options__finish-task text-xs text-start cursor-pointer transition-colors hover:bg-ghost-white rounded-sm p-0.5" onclick="finishTodoHandler('${id}')">
                 Finish
               </button>
             </div>
