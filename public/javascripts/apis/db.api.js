@@ -1,4 +1,4 @@
-export default async function getDB() {
+export default async function getData() {
   try {
     const response = await fetch("../javascripts/database.json");
 
