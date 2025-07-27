@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <link rel="stylesheet" href="./styles/app.css" />
+  </head>
+  <body class="font-inter bg-ghost-white">
+    <!-- SVG -->
+    <svg width="0" height="0" class="hidden">
+      <symbol id="plus-icon" viewBox="0 0 448 512">
+        <!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. -->
+        <path
+          d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z"
+        />
+      </symbol>
+      <symbol
+        id="upload-img-icon"
+        viewBox="0 0 64 59"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M63.25 32.9662V17.8243C63.25 13.3622 61.4774 9.0829 58.3223 5.92773C55.1671 2.77256 50.8878 1 46.4257 1H17.8243C13.3622 1 9.0829 2.77256 5.92773 5.92773C2.77256 9.0829 1 13.3622 1 17.8243V41.3784C1 43.5878 1.43517 45.7755 2.28068 47.8168C3.12618 49.858 4.36545 51.7127 5.92773 53.275C9.0829 56.4301 13.3622 58.2027 17.8243 58.2027H38.8884"
+          stroke="#A1A3AB"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M1.875 46.4257L11.0947 35.6581C12.3055 34.4555 13.8947 33.7082 15.5931 33.5427C17.2916 33.3771 18.9952 33.8035 20.4154 34.7496C21.8357 35.6957 23.5392 36.122 25.2377 35.9565C26.9361 35.7909 28.5253 35.0436 29.7361 33.8411L37.5762 26.0009C39.829 23.7405 42.8116 22.3541 45.9919 22.0891C49.1721 21.8241 52.3431 22.6977 54.9389 24.554L63.2501 30.9809M18.6993 23.4436C19.4328 23.4392 20.1583 23.2904 20.8343 23.0056C21.5103 22.7208 22.1236 22.3056 22.6391 21.7838C23.1547 21.262 23.5624 20.6438 23.839 19.9644C24.1157 19.285 24.2558 18.5578 24.2514 17.8243C24.2469 17.0908 24.0981 16.3653 23.8133 15.6893C23.5285 15.0133 23.1134 14.4001 22.5916 13.8845C22.0697 13.3689 21.4515 12.9612 20.7721 12.6846C20.0928 12.408 19.3655 12.2679 18.632 12.2723C17.1506 12.2812 15.7334 12.8783 14.6922 13.9321C13.651 14.9859 13.0711 16.4102 13.08 17.8916C13.0889 19.373 13.686 20.7902 14.7398 21.8314C15.7936 22.8726 17.2179 23.4526 18.6993 23.4436Z"
+          stroke="#A1A3AB"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M54.6934 39.696V56.5203"
+          stroke="#A1A3AB"
+          stroke-width="1.5"
+          stroke-miterlimit="10"
+          stroke-linecap="round"
+        />
+        <path
+          d="M62.4086 46.779L55.7899 40.1603C55.6465 40.015 55.4757 39.8997 55.2874 39.8209C55.0991 39.7422 54.897 39.7017 54.6929 39.7017C54.4888 39.7017 54.2868 39.7422 54.0985 39.8209C53.9101 39.8997 53.7393 40.015 53.596 40.1603L46.9773 46.779"
+          stroke="#A1A3AB"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </symbol>
+      <symbol
+        fill="currentColor"
+        id="back-arrow-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 26.676 26.676"
+      >
+        <path
+          d="M26.105,21.891c-0.229,0-0.439-0.131-0.529-0.346l0,0c-0.066-0.156-1.716-3.857-7.885-4.59 c-1.285-0.156-2.824-0.236-4.693-0.25v4.613c0,0.213-0.115,0.406-0.304,0.508c-0.188,0.098-0.413,0.084-0.588-0.033L0.254,13.815 C0.094,13.708,0,13.528,0,13.339c0-0.191,0.094-0.365,0.254-0.477l11.857-7.979c0.175-0.121,0.398-0.129,0.588-0.029 c0.19,0.102,0.303,0.295,0.303,0.502v4.293c2.578,0.336,13.674,2.33,13.674,11.674c0,0.271-0.191,0.508-0.459,0.562 C26.18,21.891,26.141,21.891,26.105,21.891z"
+        ></path>
+      </symbol>
+      <symbol
+        id="dashboard"
+        viewBox="0 0 26 26"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M14.4444 8.66667V0H26V8.66667H14.4444ZM0 14.4444V0H11.5556V14.4444H0ZM14.4444 26V11.5556H26V26H14.4444ZM0 26V17.3333H11.5556V26H0Z"
+        />
+      </symbol>
+      <symbol
+        id="help"
+        viewBox="0 0 26 26"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12.935 20.8C13.39 20.8 13.7748 20.6427 14.0894 20.3281C14.404 20.0135 14.5609 19.6291 14.56 19.175C14.56 18.72 14.4031 18.3352 14.0894 18.0206C13.7757 17.706 13.3909 17.5491 12.935 17.55C12.48 17.55 12.0956 17.7073 11.7819 18.0219C11.4682 18.3365 11.3109 18.7209 11.31 19.175C11.31 19.63 11.4673 20.0148 11.7819 20.3294C12.0965 20.644 12.4809 20.8009 12.935 20.8ZM11.765 15.795H14.17C14.17 15.08 14.2515 14.5167 14.4144 14.105C14.5773 13.6933 15.0375 13.13 15.795 12.415C16.3583 11.8517 16.8025 11.3152 17.1275 10.8056C17.4525 10.296 17.615 9.68413 17.615 8.97C17.615 7.75667 17.1708 6.825 16.2825 6.175C15.3942 5.525 14.3433 5.2 13.13 5.2C11.895 5.2 10.8927 5.525 10.1231 6.175C9.3535 6.825 8.81747 7.605 8.515 8.515L10.66 9.36C10.7683 8.97 11.0123 8.5475 11.3919 8.0925C11.7715 7.6375 12.3509 7.41 13.13 7.41C13.8233 7.41 14.3433 7.5998 14.69 7.9794C15.0367 8.359 15.21 8.77587 15.21 9.23C15.21 9.66333 15.08 10.0698 14.82 10.4494C14.56 10.829 14.235 11.1809 13.845 11.505C12.8917 12.35 12.3067 12.9892 12.09 13.4225C11.8733 13.8558 11.765 14.6467 11.765 15.795ZM13 26C11.2017 26 9.51167 25.6585 7.93 24.9756C6.34833 24.2927 4.9725 23.3666 3.8025 22.1975C2.6325 21.0275 1.70647 19.6517 1.0244 18.07C0.342333 16.4883 0.000866667 14.7983 0 13C0 11.2017 0.341467 9.51167 1.0244 7.93C1.70733 6.34833 2.63337 4.9725 3.8025 3.8025C4.9725 2.6325 6.34833 1.70647 7.93 1.0244C9.51167 0.342333 11.2017 0.000866667 13 0C14.7983 0 16.4883 0.341467 18.07 1.0244C19.6517 1.70733 21.0275 2.63337 22.1975 3.8025C23.3675 4.9725 24.294 6.34833 24.9769 7.93C25.6598 9.51167 26.0009 11.2017 26 13C26 14.7983 25.6585 16.4883 24.9756 18.07C24.2927 19.6517 23.3666 21.0275 22.1975 22.1975C21.0275 23.3675 19.6517 24.294 18.07 24.9769C16.4883 25.6598 14.7983 26.0009 13 26Z"
+        />
+      </symbol>
+      <symbol
+        id="log-out"
+        viewBox="0 0 26 26"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M20.2222 7.22222L18.2 9.24444L20.5111 11.5556H8.66667V14.4444H20.5111L18.2 16.7556L20.2222 18.7778L26 13L20.2222 7.22222ZM2.88889 2.88889H13V0H2.88889C1.3 0 0 1.3 0 2.88889V23.1111C0 24.7 1.3 26 2.88889 26H13V23.1111H2.88889V2.88889Z"
+        />
+      </symbol>
+      <symbol
+        id="menu"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 30 30"
+      >
+        <path
+          d="M 3 7 A 1.0001 1.0001 0 1 0 3 9 L 27 9 A 1.0001 1.0001 0 1 0 27 7 L 3 7 z M 3 14 A 1.0001 1.0001 0 1 0 3 16 L 27 16 A 1.0001 1.0001 0 1 0 27 14 L 3 14 z M 3 21 A 1.0001 1.0001 0 1 0 3 23 L 27 23 A 1.0001 1.0001 0 1 0 27 21 L 3 21 z"
+        />
+      </symbol>
+      <symbol
+        id="settings"
+        viewBox="0 0 26 26"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M9.44279 26L8.92537 21.84C8.64511 21.7317 8.3808 21.6017 8.13244 21.45C7.88408 21.2983 7.64176 21.1358 7.40547 20.9625L3.55721 22.5875L0 16.4125L3.33085 13.8775C3.30929 13.7258 3.29851 13.5794 3.29851 13.4381V12.5619C3.29851 12.4206 3.30929 12.2742 3.33085 12.1225L0 9.5875L3.55721 3.4125L7.40547 5.0375C7.64262 4.86417 7.89055 4.70167 8.14925 4.55C8.40796 4.39833 8.66667 4.26833 8.92537 4.16L9.44279 0H16.5572L17.0746 4.16C17.3549 4.26833 17.6192 4.39833 17.8676 4.55C18.1159 4.70167 18.3582 4.86417 18.5945 5.0375L22.4428 3.4125L26 9.5875L22.6692 12.1225C22.6907 12.2742 22.7015 12.4206 22.7015 12.5619V13.4381C22.7015 13.5794 22.6799 13.7258 22.6368 13.8775L25.9677 16.4125L22.4104 22.5875L18.5945 20.9625C18.3574 21.1358 18.1095 21.2983 17.8507 21.45C17.592 21.6017 17.3333 21.7317 17.0746 21.84L16.5572 26H9.44279ZM13.0647 17.55C14.3151 17.55 15.3823 17.1058 16.2662 16.2175C17.1501 15.3292 17.592 14.2567 17.592 13C17.592 11.7433 17.1501 10.6708 16.2662 9.7825C15.3823 8.89417 14.3151 8.45 13.0647 8.45C11.7927 8.45 10.7199 8.89417 9.84637 9.7825C8.9728 10.6708 8.53645 11.7433 8.53732 13C8.53732 14.2567 8.97367 15.3292 9.84637 16.2175C10.7191 17.1058 11.7918 17.55 13.0647 17.55Z"
+        />
+      </symbol>
+      <symbol
+        id="search"
+        viewBox="0 0 17 16"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M6.65349 0.712191C5.57196 0.790068 4.52474 1.12545 3.59919 1.69037C2.67365 2.25528 1.89661 3.03334 1.33292 3.95963C0.769235 4.88593 0.435234 5.93359 0.358787 7.01522C0.282339 8.09685 0.465663 9.18107 0.893464 10.1774C1.32126 11.1738 1.98114 12.0534 2.81802 12.7429C3.65491 13.4324 4.64455 13.9117 5.70437 14.141C6.76419 14.3702 7.86346 14.3426 8.91047 14.0606C9.95748 13.7786 10.9219 13.2503 11.7232 12.5197L14.8468 15.2242C15.0078 15.3588 15.2151 15.4247 15.4242 15.4078C15.6333 15.391 15.8274 15.2926 15.9647 15.1341C16.102 14.9755 16.1715 14.7693 16.1583 14.56C16.1451 14.3506 16.0501 14.1548 15.894 14.0148L12.7703 11.3103C13.4867 10.2535 13.8912 9.01631 13.9373 7.74037C13.9834 6.46443 13.6694 5.20128 13.0312 4.09547C12.393 2.98967 11.4563 2.08588 10.3284 1.48755C9.20052 0.88922 7.92696 0.620516 6.65349 0.712191ZM1.95468 7.8677C1.85575 6.49212 2.30732 5.13359 3.21004 4.09096C4.11276 3.04833 5.39269 2.407 6.76826 2.30807C8.14384 2.20914 9.50237 2.6607 10.545 3.56342C11.5876 4.46614 12.229 5.74608 12.3279 7.12165C12.4268 8.49722 11.9753 9.85575 11.0725 10.8984C10.1698 11.941 8.88988 12.5823 7.51431 12.6813C6.13874 12.7802 4.78021 12.3286 3.73757 11.4259C2.69494 10.5232 2.05362 9.24327 1.95468 7.8677Z"
+        />
+      </symbol>
+      <symbol
+        id="task-pending"
+        viewBox="0 0 29 33"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M23.8511 26.2698L22.4285 25.4499V22.6013C22.4285 22.5211 22.3965 22.4442 22.3397 22.3875C22.2829 22.3308 22.2059 22.299 22.1255 22.299C22.0452 22.299 21.9681 22.3308 21.9113 22.3875C21.8545 22.4442 21.8226 22.5211 21.8226 22.6013V25.6246C21.8226 25.6777 21.8366 25.7298 21.8631 25.7758C21.8897 25.8218 21.928 25.8599 21.974 25.8865L23.5482 26.7935C23.5825 26.8135 23.6205 26.8266 23.66 26.8319C23.6994 26.8372 23.7395 26.8346 23.778 26.8243C23.8164 26.814 23.8524 26.7962 23.8839 26.7719C23.9154 26.7476 23.9418 26.7173 23.9614 26.6828C24.0016 26.6134 24.0126 26.531 23.9919 26.4535C23.9713 26.3761 23.9206 26.31 23.8511 26.2698ZM22.1255 19.578C18.7791 19.578 16.0664 22.2851 16.0664 25.6246C16.0664 28.9642 18.7791 31.6713 22.1255 31.6713C25.4701 31.6676 28.181 28.9624 28.1846 25.6246C28.1846 22.2851 25.4719 19.578 22.1255 19.578ZM22.1255 31.0666C21.4094 31.0666 20.7003 30.9259 20.0387 30.6524C19.3771 30.3789 18.7759 29.978 18.2695 29.4727C17.7631 28.9674 17.3615 28.3674 17.0874 27.7072C16.8134 27.0469 16.6723 26.3393 16.6723 25.6246C16.6723 24.91 16.8134 24.2023 17.0874 23.5421C17.3615 22.8818 17.7631 22.2819 18.2695 21.7766C18.7759 21.2712 19.3771 20.8704 20.0387 20.5969C20.7003 20.3234 21.4094 20.1827 22.1255 20.1827C23.5713 20.1843 24.9574 20.7581 25.9797 21.7784C27.0021 22.7986 27.5771 24.1818 27.5787 25.6246C27.5787 27.0679 27.0042 28.4521 25.9815 29.4727C24.9588 30.4933 23.5718 31.0666 22.1255 31.0666Z"
+          fill="#888888"
+          stroke="#A1A3AB"
+        />
+        <path
+          d="M15.8909 2.39129H13.5073V1.59419C13.506 1.17178 13.3382 0.767019 13.0404 0.468322C12.7427 0.169626 12.3392 0.00126159 11.9182 0H5.56182C5.14075 0.00126159 4.73729 0.169626 4.43955 0.468322C4.14181 0.767019 3.97398 1.17178 3.97273 1.59419V2.39129H1.58909C1.16802 2.39255 0.764563 2.56092 0.466823 2.85961C0.169083 3.15831 0.00125755 3.56307 0 3.98549V20.7245C0.00125755 21.1469 0.169083 21.5517 0.466823 21.8504C0.764563 22.1491 1.16802 22.3175 1.58909 22.3187H8.74V20.7245H1.58909V3.98549H3.97273V6.37678H13.5073V3.98549H15.8909V12.7536H17.48V3.98549C17.4787 3.56307 17.3109 3.15831 17.0132 2.85961C16.7154 2.56092 16.312 2.39255 15.8909 2.39129ZM11.9182 4.78258H5.56182V1.59419H11.9182V4.78258Z"
+          fill="#A1A3AB"
+        />
+      </symbol>
+      <symbol
+        id="task-status"
+        width="23"
+        height="23"
+        viewBox="0 0 23 23"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15.64 20.0776L13.2572 17.669L11.96 18.9802L15.64 22.7L23 15.2604L21.7028 13.9492L15.64 20.0776Z"
+          fill="#A1A3AB"
+        />
+        <path
+          d="M15.8909 2.39129H13.5073V1.59419C13.506 1.17178 13.3382 0.767019 13.0404 0.468322C12.7427 0.169626 12.3392 0.00126159 11.9182 0H5.56182C5.14075 0.00126159 4.73729 0.169626 4.43955 0.468322C4.14181 0.767019 3.97398 1.17178 3.97273 1.59419V2.39129H1.58909C1.16802 2.39255 0.764563 2.56092 0.466823 2.85961C0.169083 3.15831 0.00125755 3.56307 0 3.98549V20.7245C0.00125755 21.1469 0.169083 21.5517 0.466823 21.8504C0.764563 22.1491 1.16802 22.3175 1.58909 22.3187H8.74V20.7245H1.58909V3.98549H3.97273V6.37678H13.5073V3.98549H15.8909V12.7536H17.48V3.98549C17.4787 3.56307 17.3109 3.15831 17.0132 2.85961C16.7154 2.56092 16.312 2.39255 15.8909 2.39129ZM11.9182 4.78258H5.56182V1.59419H11.9182V4.78258Z"
+          fill="#A1A3AB"
+        />
+      </symbol>
+      <symbol
+        id="tasks"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M5 22H19C20.103 22 21 21.103 21 20V5C21 3.897 20.103 3 19 3H17C17 2.73478 16.8946 2.48043 16.7071 2.29289C16.5196 2.10536 16.2652 2 16 2H8C7.73478 2 7.48043 2.10536 7.29289 2.29289C7.10536 2.48043 7 2.73478 7 3H5C3.897 3 3 3.897 3 5V20C3 21.103 3.897 22 5 22ZM5 5H7V7H17V5H19V20H5V5Z"
+        />
+        <path
+          d="M11 13.586L9.20697 11.793L7.79297 13.207L11 16.414L16.207 11.207L14.793 9.79297L11 13.586Z"
+        />
+      </symbol>
+      <symbol
+        id="tasks-category"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M9.65329 19.7143H24V21.4286H9.65329V19.7143ZM2.65414 20.5714L0.0102479 22.7829L1.45517 24L5.55423 20.5714L1.45517 17.1429L0 18.3514L2.65414 20.5714ZM9.65329 11.1429H24V12.8571H9.65329V11.1429ZM2.65414 12L0.0102479 14.2114L1.45517 15.4286L5.55423 12L1.45517 8.57143L0 9.78L2.65414 12ZM9.65329 2.57143H24V4.28571H9.65329V2.57143ZM2.65414 3.42857L0.0102479 5.64L1.45517 6.85714L5.55423 3.42857L1.45517 0L0 1.20857L2.65414 3.42857Z"
+        />
+      </symbol>
+      <symbol
+        id="notification-icon"
+        viewBox="0 0 15 16"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M10.3704 15.4889C10.3704 15.6068 10.3246 15.7199 10.2432 15.8032C10.1618 15.8866 10.0514 15.9334 9.93627 15.9334H5.30585C5.19072 15.9334 5.0803 15.8866 4.99889 15.8032C4.91748 15.7199 4.87175 15.6068 4.87175 15.4889C4.87175 15.3711 4.91748 15.258 4.99889 15.1747C5.0803 15.0913 5.19072 15.0445 5.30585 15.0445H9.93627C10.0514 15.0445 10.1618 15.0913 10.2432 15.1747C10.3246 15.258 10.3704 15.3711 10.3704 15.4889ZM14.2852 13.0445C14.1975 13.2027 14.0701 13.3342 13.9162 13.4253C13.7624 13.5165 13.5876 13.564 13.4098 13.563H1.83304C1.65499 13.5626 1.48019 13.5142 1.32625 13.4226C1.1723 13.331 1.04466 13.1995 0.956185 13.0413C0.867707 12.8831 0.821519 12.7039 0.822275 12.5216C0.823031 12.3393 0.870704 12.1604 0.960491 12.003C1.36927 11.2815 1.97774 9.24745 1.97774 6.60004C1.97774 5.06768 2.5723 3.59808 3.63063 2.51454C4.68896 1.43099 6.12436 0.822266 7.62106 0.822266C9.11776 0.822266 10.5532 1.43099 11.6115 2.51454C12.6698 3.59808 13.2644 5.06768 13.2644 6.60004C13.2644 9.24671 13.8736 11.2815 14.2831 12.003C14.3738 12.1607 14.4219 12.3404 14.4223 12.5234C14.4226 12.7065 14.3753 12.8864 14.2852 13.0445ZM13.5321 12.4519C12.9844 11.4889 12.3962 9.24301 12.3962 6.60004C12.3962 5.30343 11.8931 4.05992 10.9976 3.14308C10.1021 2.22623 8.8875 1.71115 7.62106 1.71115C6.35462 1.71115 5.14005 2.22623 4.24454 3.14308C3.34903 4.05992 2.84594 5.30343 2.84594 6.60004C2.84594 9.24375 2.25701 11.4889 1.70932 12.4519C1.69662 12.4744 1.68993 12.5 1.68993 12.526C1.68993 12.552 1.69662 12.5775 1.70932 12.6C1.72123 12.6227 1.739 12.6416 1.76069 12.6547C1.78238 12.6678 1.80715 12.6745 1.83231 12.6741H13.4091C13.4342 12.6745 13.459 12.6678 13.4807 12.6547C13.5024 12.6416 13.5202 12.6227 13.5321 12.6C13.5448 12.5775 13.5515 12.552 13.5515 12.526C13.5515 12.5 13.5448 12.4744 13.5321 12.4519Z"
+        />
+      </symbol>
+      <symbol
+        id="calendar-icon"
+        viewBox="0 0 15 15"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M13.3276 2.09458L9.92466 2.09459V1.24737C9.92466 1.0125 9.73447 0.822266 9.49966 0.822266C9.26485 0.822266 9.07466 1.0125 9.07466 1.24737V2.09438H5.67466V1.24737C5.67466 1.0125 5.48447 0.822266 5.24966 0.822266C5.01485 0.822266 4.82466 1.0125 4.82466 1.24737V2.09438H1.42764C0.958224 2.09438 0.577637 2.47505 0.577637 2.94458V13.5721C0.577637 14.0416 0.958224 14.4223 1.42764 14.4223H13.3276C13.797 14.4223 14.1776 14.0416 14.1776 13.5721V2.94458C14.1776 2.47525 13.797 2.09458 13.3276 2.09458ZM13.3276 13.5721H1.42764V2.94458H4.82466V3.37286C4.82466 3.60772 5.01485 3.79796 5.24966 3.79796C5.48447 3.79796 5.67466 3.60772 5.67466 3.37286V2.94479H9.07466V3.37308C9.07466 3.60794 9.26485 3.79818 9.49966 3.79818C9.73447 3.79818 9.92466 3.60794 9.92466 3.37308V2.94479H13.3276V13.5721ZM10.3526 7.62087H11.2026C11.4372 7.62087 11.6276 7.43043 11.6276 7.19577V6.34557C11.6276 6.11092 11.4372 5.92047 11.2026 5.92047H10.3526C10.118 5.92047 9.92764 6.11092 9.92764 6.34557V7.19577C9.92764 7.43043 10.118 7.62087 10.3526 7.62087ZM10.3526 11.0215H11.2026C11.4372 11.0215 11.6276 10.8312 11.6276 10.5964V9.74616C11.6276 9.5115 11.4372 9.32106 11.2026 9.32106H10.3526C10.118 9.32106 9.92764 9.5115 9.92764 9.74616V10.5964C9.92764 10.8314 10.118 11.0215 10.3526 11.0215ZM7.80264 9.32106H6.95264C6.71804 9.32106 6.52764 9.5115 6.52764 9.74616V10.5964C6.52764 10.8312 6.71804 11.0215 6.95264 11.0215H7.80264C8.03724 11.0215 8.22764 10.8312 8.22764 10.5964V9.74616C8.22764 9.51171 8.03724 9.32106 7.80264 9.32106ZM7.80264 5.92047H6.95264C6.71804 5.92047 6.52764 6.11092 6.52764 6.34557V7.19577C6.52764 7.43043 6.71804 7.62087 6.95264 7.62087H7.80264C8.03724 7.62087 8.22764 7.43043 8.22764 7.19577V6.34557C8.22764 6.1107 8.03724 5.92047 7.80264 5.92047ZM4.40264 5.92047H3.55264C3.31804 5.92047 3.12764 6.11092 3.12764 6.34557V7.19577C3.12764 7.43043 3.31804 7.62087 3.55264 7.62087H4.40264C4.63724 7.62087 4.82764 7.43043 4.82764 7.19577V6.34557C4.82764 6.1107 4.63724 5.92047 4.40264 5.92047ZM4.40264 9.32106H3.55264C3.31804 9.32106 3.12764 9.5115 3.12764 9.74616V10.5964C3.12764 10.8312 3.31804 11.0215 3.55264 11.0215H4.40264C4.63724 11.0215 4.82764 10.8312 4.82764 10.5964V9.74616C4.82764 9.51171 4.63724 9.32106 4.40264 9.32106Z"
+        />
+      </symbol>
+      <symbol
+        id="invite-user"
+        viewBox="0 0 20 12"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M15.351 10.1276V11.7398H5.67752V10.1276C5.67752 10.1276 5.67752 6.90308 10.5143 6.90308C15.351 6.90308 15.351 10.1276 15.351 10.1276ZM12.9326 2.87247C12.9326 2.39416 12.7908 1.9266 12.5251 1.5289C12.2593 1.1312 11.8816 0.82123 11.4397 0.63819C10.9978 0.455149 10.5116 0.407258 10.0425 0.500571C9.57334 0.593884 9.14243 0.824211 8.80421 1.16243C8.466 1.50064 8.23567 1.93155 8.14236 2.40067C8.04905 2.86979 8.09694 3.35604 8.27998 3.79794C8.46302 4.23984 8.77299 4.61753 9.17069 4.88327C9.56838 5.149 10.036 5.29084 10.5143 5.29084C11.1556 5.29084 11.7708 5.03605 12.2243 4.58251C12.6778 4.12898 12.9326 3.51386 12.9326 2.87247ZM15.5122 6.95145C15.9529 7.35798 16.3081 7.84821 16.5573 8.39353C16.8064 8.93885 16.9444 9.52833 16.9632 10.1276V11.7398H19.3816V10.1276C19.3816 10.1276 19.3816 7.34645 15.5122 6.95145ZM14.5449 0.454102C14.3013 0.454248 14.0593 0.492323 13.8274 0.56696C14.299 1.24327 14.5519 2.04795 14.5519 2.87247C14.5519 3.69699 14.299 4.50167 13.8274 5.17798C14.0593 5.25262 14.3013 5.29069 14.5449 5.29084C15.1863 5.29084 15.8014 5.03605 16.2549 4.58251C16.7084 4.12898 16.9632 3.51386 16.9632 2.87247C16.9632 2.23108 16.7084 1.61596 16.2549 1.16243C15.8014 0.708894 15.1863 0.454102 14.5449 0.454102ZM6.48365 4.48471H4.06528V2.06635H2.45304V4.48471H0.034668V6.09696H2.45304V8.51533H4.06528V6.09696H6.48365V4.48471Z"
+        />
+      </symbol>
+      <symbol
+        id="chevron-left"
+        viewBox="0 0 8 14"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M0.292787 7.37629C0.105316 7.18876 0 6.93445 0 6.66929C0 6.40412 0.105316 6.14982 0.292787 5.96229L5.94979 0.305288C6.04203 0.209778 6.15238 0.133596 6.27438 0.0811869C6.39639 0.0287779 6.52761 0.00119157 6.66039 3.77564e-05C6.79316 -0.00111606 6.92484 0.0241859 7.04774 0.0744668C7.17064 0.124748 7.28229 0.199001 7.37618 0.292893C7.47007 0.386786 7.54433 0.498438 7.59461 0.621334C7.64489 0.74423 7.67019 0.87591 7.66904 1.00869C7.66788 1.14147 7.6403 1.27269 7.58789 1.39469C7.53548 1.5167 7.4593 1.62704 7.36379 1.71929L2.41379 6.66929L7.36379 11.6193C7.54594 11.8079 7.64674 12.0605 7.64446 12.3227C7.64218 12.5849 7.53701 12.8357 7.35161 13.0211C7.1662 13.2065 6.91538 13.3117 6.65319 13.314C6.39099 13.3162 6.13839 13.2154 5.94979 13.0333L0.292787 7.37629Z"
+        />
+      </symbol>
+      <symbol
+        id="chevron-right"
+        viewBox="0 0 8 14"
+        fill="currentColor"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M7.71378 6.62907C7.90132 6.81653 8.00673 7.0708 8.00683 7.33596C8.00693 7.60113 7.90171 7.85547 7.7143 8.04307L2.05941 13.7022C1.9672 13.7977 1.85688 13.8739 1.7349 13.9264C1.61291 13.9789 1.4817 14.0065 1.34892 14.0077C1.21614 14.0089 1.08446 13.9836 0.961541 13.9334C0.838626 13.8832 0.726945 13.809 0.633018 13.7151C0.53909 13.6212 0.464796 13.5096 0.414469 13.3867C0.364142 13.2639 0.338792 13.1322 0.339896 12.9994C0.341001 12.8666 0.368538 12.7354 0.420902 12.6134C0.473265 12.4914 0.549406 12.381 0.644882 12.2887L5.59304 7.33686L0.6412 2.3887C0.458972 2.20016 0.358084 1.9476 0.360265 1.6854C0.362445 1.42321 0.467521 1.17235 0.65286 0.986877C0.838199 0.8014 1.08897 0.696137 1.35117 0.693761C1.61336 0.691385 1.866 0.792086 2.05467 0.974174L7.71378 6.62907Z"
+        />
+      </symbol>
+    </svg>
+
+    <!-- Header -->
+    <header
+      class="sticky z-10 top-0 flex items-center justify-between h-25 mb-6 sm:mb-10 lg:mb-14 px-4 sm:pl-10 lg:pl-17.5 sm:pr-12 lg:pr-19 bg-cultured shadow-header"
+    >
+      <div class="flex items-center gap-x-2">
+        <!-- Menu Toggle -->
+        <div
+          id="toggle-menu"
+          class="sm:hidden bg-primary rounded-lg size-7 sm:size-8.5 p-1.5 sm:p-2 cursor-pointer text-white"
+        >
+          <svg class="size-full">
+            <use href="#menu"></use>
+          </svg>
+        </div>
+        <!-- Logo -->
+        <div class="flex font-semibold sm:text-xl md:text-[32px]">
+          <span class="text-primary"> Dash </span>
+          <span> board </span>
+        </div>
+      </div>
+      <!-- Search-bar -->
+      <div id="search-bar-container" class="hidden md:flex top-28 md:static">
+        <form
+          class="flex bg-ghost-white shadow-search-box rounded-lg w-70 lg:w-100 xl:w-173.75 lg:max-w-[48.26vw]"
+          action=""
+        >
+          <div class="flex w-full relative">
+            <input
+              type="search"
+              id="header-search-input"
+              class="peer w-full px-3.75 text-quick-silver font-montserrat font-semibold text-xs outline-0"
+              placeholder="Search your todo here..."
+            />
+            <!-- Search-bar drop-down -->
+            <ul
+              id="search-result-container"
+              class="absolute bg-ghost-white border-t border-light-gray top-full left-0 right-0 rounded-b-lg shadow-search-box invisible peer-focus:visible hover:visible"
+            >
+              <!-- Search Result -->
+            </ul>
+          </div>
+          <div
+            class="shrink-0 bg-primary rounded-lg size-7 sm:size-8.5 p-1.5 sm:p-2"
+          >
+            <svg class="size-full text-white">
+              <use href="#search"></use>
+            </svg>
+          </div>
+        </form>
+      </div>
+      <!-- Notifications, Calendar & Serach icon -->
+      <div class="flex items-center gap-x-1.5 sm:gap-x-2.5">
+        <div
+          id="search-bar-icon"
+          class="md:hidden bg-primary rounded-lg size-7 sm:size-8.5 p-1.5 sm:p-2 transition-shadow duration-75 hover:shadow-btn-hover cursor-pointer"
+        >
+          <svg class="size-full text-white">
+            <use href="#search"></use>
+          </svg>
+        </div>
+        <div class="relative">
+          <div
+            id="notification-show-btn"
+            class="bg-primary rounded-lg size-7 sm:size-8.5 p-1.5 sm:p-2 transition-shadow duration-75 hover:shadow-btn-hover cursor-pointer"
+          >
+            <svg class="size-full text-white">
+              <use href="#notification-icon"></use>
+            </svg>
+          </div>
+          <!-- Notification List -->
+          <div
+            id="notification"
+            class="opacity-0 invisible absolute translate-x-4/10 sm:translate-0 right-1/2 sm:right-0 w-75 md:w-94.5 shadow-modal rounded-[14px] overflow-hidden"
+          >
+            <div class="bg-white px-6 pt-4 pb-3">
+              <div class="flex items-center justify-between">
+                <span class="font-semibold">Notifications</span>
+                <div id="notification__hide-btn" class="cursor-pointer">
+                  <svg class="w-5.5 h-5.5 text-primary">
+                    <use href="#back-arrow-icon"></use>
+                  </svg>
+                </div>
+              </div>
+              <span
+                id="notification__date"
+                class="font-medium text-quick-silver"
+                >Today</span
+              >
+            </div>
+            <ul
+              id="notifications-container"
+              class="bg-ghost-white max-h-103.5 overflow-y-auto"
+            >
+              <li class="px-3.75 py-1.5 lg:py-2.5">
+                <a
+                  class="flex items-center justify-between gap-x-4"
+                  href="./pages/id=${id}"
+                >
+                  <div>
+                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
+                      Develop API Endpoint
+                    </p>
+                    <span class="font-medium text-xs">Priority: </span
+                    ><span class="font-medium text-xs text-danger">High</span>
+                  </div>
+                  <div
+                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
+                  >
+                    <img src="./assets/images/todoes/api.png" alt="api" />
+                  </div>
+                </a>
+              </li>
+              <li class="px-3.75 py-1.5 lg:py-2.5">
+                <a
+                  class="flex items-center justify-between gap-x-4"
+                  href="./pages/id=${id}"
+                >
+                  <div>
+                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
+                      Develop API Endpoint
+                    </p>
+                    <span class="font-medium text-xs">Priority: </span
+                    ><span class="font-medium text-xs text-danger">High</span>
+                  </div>
+                  <div
+                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
+                  >
+                    <img src="./assets/images/todoes/api.png" alt="api" />
+                  </div>
+                </a>
+              </li>
+              <li class="px-3.75 py-1.5 lg:py-2.5">
+                <a
+                  class="flex items-center justify-between gap-x-4"
+                  href="./pages/id=${id}"
+                >
+                  <div>
+                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
+                      Develop API Endpoint
+                    </p>
+                    <span class="font-medium text-xs">Priority: </span
+                    ><span class="font-medium text-xs text-danger">High</span>
+                  </div>
+                  <div
+                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
+                  >
+                    <img src="./assets/images/todoes/api.png" alt="api" />
+                  </div>
+                </a>
+              </li>
+              <li class="px-3.75 py-1.5 lg:py-2.5">
+                <a
+                  class="flex items-center justify-between gap-x-4"
+                  href="./pages/id=${id}"
+                >
+                  <div>
+                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
+                      Develop API Endpoint
+                    </p>
+                    <span class="font-medium text-xs">Priority: </span
+                    ><span class="font-medium text-xs text-danger">High</span>
+                  </div>
+                  <div
+                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
+                  >
+                    <img src="./assets/images/todoes/api.png" alt="api" />
+                  </div>
+                </a>
+              </li>
+              <li class="px-3.75 py-1.5 lg:py-2.5">
+                <a
+                  class="flex items-center justify-between gap-x-4"
+                  href="./pages/id=${id}"
+                >
+                  <div>
+                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
+                      Develop API Endpoint
+                    </p>
+                    <span class="font-medium text-xs">Priority: </span
+                    ><span class="font-medium text-xs text-danger">High</span>
+                  </div>
+                  <div
+                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
+                  >
+                    <img src="./assets/images/todoes/api.png" alt="api" />
+                  </div>
+                </a>
+              </li>
+              <li class="px-3.75 py-1.5 lg:py-2.5">
+                <a
+                  class="flex items-center justify-between gap-x-4"
+                  href="./pages/id=${id}"
+                >
+                  <div>
+                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
+                      Develop API Endpoint
+                    </p>
+                    <span class="font-medium text-xs">Priority: </span
+                    ><span class="font-medium text-xs text-danger">High</span>
+                  </div>
+                  <div
+                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
+                  >
+                    <img src="./assets/images/todoes/api.png" alt="api" />
+                  </div>
+                </a>
+              </li>
+              <li class="px-3.75 py-1.5 lg:py-2.5">
+                <a
+                  class="flex items-center justify-between gap-x-4"
+                  href="./pages/id=${id}"
+                >
+                  <div>
+                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
+                      Develop API Endpoint
+                    </p>
+                    <span class="font-medium text-xs">Priority: </span
+                    ><span class="font-medium text-xs text-danger">High</span>
+                  </div>
+                  <div
+                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
+                  >
+                    <img src="./assets/images/todoes/api.png" alt="api" />
+                  </div>
+                </a>
+              </li>
+              <li class="px-3.75 py-1.5 lg:py-2.5">
+                <a
+                  class="flex items-center justify-between gap-x-4"
+                  href="./pages/id=${id}"
+                >
+                  <div>
+                    <p class="text-sm lg:text-base/relaxed line-clamp-2">
+                      Develop API Endpoint
+                    </p>
+                    <span class="font-medium text-xs">Priority: </span
+                    ><span class="font-medium text-xs text-danger">High</span>
+                  </div>
+                  <div
+                    class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden"
+                  >
+                    <img src="./assets/images/todoes/api.png" alt="api" />
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="relative">
+          <div
+            id="calendar-show-btn"
+            class="bg-primary rounded-lg size-7 sm:size-8.5 p-1.5 sm:p-2 transition-shadow duration-75 hover:shadow-btn-hover cursor-pointer"
+          >
+            <svg class="size-full text-white">
+              <use href="#calendar-icon"></use>
+            </svg>
+          </div>
+          <!-- Calendar -->
+          <div
+            id="calendar"
+            class="opacity-0 invisible absolute z-20 -right-2/1 xs:right-0 w-72 sm:w-88 md:w-94.5 bg-ghost-white p-4 sm:px-5 md:px-8 md:py-6 rounded-[14px] shadow-modal"
+          >
+            <div class="flex items-center justify-between">
+              <span>Calendar</span>
+              <div id="calendar__hide-btn" class="cursor-pointer">
+                <svg class="w-5.5 h-5.5 text-primary">
+                  <use href="#back-arrow-icon"></use>
+                </svg>
+              </div>
+            </div>
+            <input
+              class="w-full my-2 sm:my-3 border border-quick-silver rounded-md px-1.5 sm:px-2.5 py-1 sm:py-2"
+              type="date"
+              name=""
+              id="calendar__input-date"
+            />
+            <div class="flex items-center justify-between">
+              <div
+                id="previous-month-btn"
+                class="size-8 md:size-9 flex items-center justify-center border border-quick-silver hover:bg-white transition-colors rounded-md cursor-pointer"
+              >
+                <svg class="w-1.5 md:w-2 h-2.75 md:h-3.25">
+                  <use href="#chevron-left"></use>
+                </svg>
+              </div>
+              <span id="calendar__month-year">April 2025</span>
+              <div
+                id="next-month-btn"
+                class="size-8 md:size-9 flex items-center justify-center border border-quick-silver hover:bg-white transition-colors rounded-md cursor-pointer"
+              >
+                <svg class="w-1.5 md:w-2 h-2.75 md:h-3.25">
+                  <use href="#chevron-right"></use>
+                </svg>
+              </div>
+            </div>
+            <!-- Calandar Body -->
+            <table
+              id="calendar__items-wrapper"
+              class="w-full text-xs font-semibold text-center mt-3"
+            >
+              <thead id="calendar__thead">
+                <tr class="grid grid-cols-7 gap-x-2 md:gap-x-5">
+                  <th class="calendar__weekday-name">SAT</th>
+                  <th class="calendar__weekday-name">SUN</th>
+                  <th class="calendar__weekday-name">MON</th>
+                  <th class="calendar__weekday-name">TUE</th>
+                  <th class="calendar__weekday-name">WED</th>
+                  <th class="calendar__weekday-name">THU</th>
+                  <th class="calendar__weekday-name">FRI</th>
+                </tr>
+              </thead>
+              <tbody
+                class="flex flex-col gap-y-3 md:gap-y-4 mt-3 md:mt-6"
+                id="calendar__tbody"
+              >
+                <!-- Days Of Month -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Today -->
+        <div class="flex flex-col text-xs sm:text-base" id="today-date">
+          <span>Wendsday</span>
+          <span class="text-picton-blue">1404/01/27</span>
+        </div>
+      </div>
+    </header>
+    <!-- Mobile Serachbar -->
+    <div
+      id="mobile-search-bar"
+      class="hidden fixed top-28 left-0 right-0 w-fit z-20 m-auto"
+    >
+      <form
+        class="flex bg-ghost-white shadow-search-box rounded-lg w-70"
+        action=""
+      >
+        <div class="flex w-full relative">
+          <input
+            type="search"
+            id="mobile-search-input"
+            class="peer w-full px-3.75 text-quick-silver font-montserrat font-semibold text-xs outline-0"
+            placeholder="Search your todo here..."
+          />
+          <!-- Search-bar drop-down -->
+          <ul
+            id="mobile-search-result"
+            class="absolute bg-ghost-white border-t border-light-gray top-full left-0 right-0 rounded-b-lg invisible peer-focus:visible hover:visible"
+          >
+            <!-- Search Result -->
+          </ul>
+        </div>
+        <div
+          class="shrink-0 bg-primary rounded-lg size-7 sm:size-8.5 p-1.5 sm:p-2"
+        >
+          <svg class="size-full text-white">
+            <use href="#search"></use>
+          </svg>
+        </div>
+      </form>
+    </div>
+
+    <div class="flex min-h-[calc(100dvh-140px)]">
+      <!-- Sidebar -->
+      <aside
+        id="sidebar"
+        class="fixed z-10 sm:z-0 -left-50 sm:left-0 sm:sticky top-35 lg:top-39 min-w-17 w-50 sm:w-auto lg:w-62.5 xl:w-82.5 h-[calc(100dvh-140px)] lg:h-[calc(100dvh-156px)] shrink-0 flex flex-col bg-primary px-2.5 lg:px-4 xl:px-5.25 pb-7.75 text-white rounded-r-lg transition-all duration-500"
+      >
+        <div class="relative pt-12 lg:pt-14">
+          <div
+            class="absolute -top-4/10 left-0 right-0 mx-auto rounded-full overflow-hidden size-12 lg:size-21.5"
+          >
+            <img src="./assets/images/users/user-1.jpg" alt="Profile image" />
+          </div>
+          <div class="hidden lg:block">
+            <span
+              class="user-full-name text-sm xl:text-base text-center line-clamp-1"
+              >Sunder Gurung</span
+            >
+            <span
+              class="user-email text-sm xl:text-base text-center line-clamp-1"
+              >sundargurung360@gmail.com</span
+            >
+          </div>
+        </div>
+        <nav
+          class="flex flex-col justify-between items-center h-full lg:pt-4.5"
+        >
+          <ul class="w-full flex flex-col gap-y-2 *:flex">
+            <li>
+              <a
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full bg-white text-primary"
+                href="javascript:void(0)"
+              >
+                <svg class="shrink-0 size-5 xl:size-6">
+                  <use href="#dashboard"></use>
+                </svg>
+                <span class="sm:hidden lg:inline"> Dashboard </span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
+                href="./pages/my-todos.html"
+              >
+                <svg class="shrink-0 size-5 xl:size-6">
+                  <use href="#tasks"></use>
+                </svg>
+                <span class="sm:hidden lg:inline"> My Todos </span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
+                href="./pages/todo-categories.html"
+              >
+                <svg class="shrink-0 size-5 xl:size-6">
+                  <use href="#tasks-category"></use>
+                </svg>
+                <span class="sm:hidden lg:inline"> Todo Categories </span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
+                href="./pages/settings.html"
+              >
+                <svg class="shrink-0 size-5 xl:size-6">
+                  <use href="#settings"></use>
+                </svg>
+                <span class="sm:hidden lg:inline"> Settings </span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
+                href="javascript:void(0)"
+              >
+                <svg class="shrink-0 size-5 xl:size-6">
+                  <use href="#help"></use>
+                </svg>
+                <span class="sm:hidden lg:inline"> Help </span>
+              </a>
+            </li>
+          </ul>
+          <!-- Logout -->
+          <a
+            class="logout-btn flex items-center gap-x-3 xl:gap-x-4 p-3 xl:py-4.5 xl:px-4 mt-auto rounded-[14px] mx-auto w-full sm:w-auto lg:w-full hover:bg-white/95 hover:text-primary transition-all duration-200"
+            href="./pages/login.html"
+          >
+            <svg class="shrink-0 size-5 xl:size-6">
+              <use href="#log-out"></use>
+            </svg>
+            <span class="sm:hidden lg:inline"> Logout </span>
+          </a>
+        </nav>
+      </aside>
+      <!-- Main -->
+      <main class="mx-auto px-4 sm:px-5">
+        <div class="flex justify-between items-center">
+          <h1
+            class="user-name text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium"
+          >
+            Welcome Sundar 👋
+          </h1>
+          <!-- <button
+            class="w-18 sm:w-24.5 h-6 sm:h-9 flex items-center justify-center gap-x-1 sm:gap-x-2 text-xs sm:text-[14px] text-primary hover:text-white hover:bg-primary font-medium border border-primary rounded-md sm:rounded-lg transition-colors duration-150 cursor-pointer"
+          >
+            <svg class="w-4 h-3">
+              <use href="#invite-user"></use>
+            </svg>
+            Invite
+          </button> -->
+        </div>
+
+        <div
+          class="border border-quick-silver/63 mt-4 md:mt-6 lg:mt-8.5 mb-7.5"
+        >
+          <!-- To-Do -->
+          <div
+            class="flex flex-col-reverse md:flex-row gap-x-4 px-5 xl:px-6.5 py-5"
+          >
+            <!-- To-Do Section -->
+            <section
+              class="px-3 lg:px-4 xl:px-4.5 2xl:px-6 py-5.5 shadow-section rounded-[14px]"
+            >
+              <!-- Header Section -->
+              <div class="flex justify-between">
+                <div>
+                  <h2 class="flex gap-x-1">
+                    <svg class="w-7 h-8"><use href="#task-pending"></use></svg>
+                    <span class="font-medium text-primary"> To-Do </span>
+                  </h2>
+                  <p class="flex gap-x-2.5 text-xs mt-2.5">
+                    <span id="todo-date">20 June</span>
+                    <span id="todo-time-difference" class="text-quick-silver"
+                      >• Today</span
+                    >
+                  </p>
+                </div>
+                <button
+                  id="show-create-todo-modal"
+                  class="my-auto flex items-center gap-x-2 text-xs text-quick-silver cursor-pointer hover:text-primary transition-all duration-200 hover:*:fill-white hover:*:bg-primary"
+                >
+                  <svg
+                    class="fill-primary p-px size-[15px] transition-all duration-200 rounded-full"
+                  >
+                    <use href="#plus-icon"></use>
+                  </svg>
+                  Add todo
+                </button>
+              </div>
+
+              <!-- Body Section -->
+              <div
+                id="todos-container"
+                class="flex flex-col gap-y-2.5 lg:px-2.5 pt-4.5"
+              >
+                <!-- Todos container -->
+
+                <!-- Todo -->
+                <div
+                  class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]"
+                >
+                  <!-- Circle Shape-->
+                  <div
+                    class="absolute top-3 xl:top-3.5 left-3 xl:left-3.5 size-2.5 xl:size-3 border-danger border-2 rounded-full"
+                  ></div>
+                  <!-- Menu Icon -->
+                  <div
+                    class="absolute top-2.5 right-3 xl:right-3.5 flex gap-x-0.5 cursor-pointer py-1"
+                  >
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                  </div>
+
+                  <div class="flex gap-x-2 xl:gap-x-2.5">
+                    <div>
+                      <p
+                        class="text-sm xl:text-base/[19px] font-semibold line-clamp-2"
+                      >
+                        Attend Nischal’s Birthday Party
+                      </p>
+                      <p
+                        class="text-xs xl:text-sm/[17px] line-clamp-4 mt-2 xl:mt-2.5"
+                      >
+                        Buy gifts on the way and pick up cake from the bakery.
+                        (6 PM | Fresh Elements).....
+                      </p>
+                    </div>
+                    <div
+                      class="my-auto size-20 lg:size-22 shrink-0 *:h-full *:object-cover"
+                    >
+                      <img
+                        class="rounded-xl lg:rounded-[14px] overflow-hidden"
+                        src="./assets/images/todoes/team-meeting.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    class="flex justify-between gap-x-0.5 text-[10px] mt-3 xl:mt-3.5"
+                  >
+                    <span>
+                      Priority:
+                      <span class="block xl:inline text-amber-400">Medium</span>
+                    </span>
+                    <span>
+                      Status:
+                      <span class="block xl:inline text-danger"
+                        >Not Started</span
+                      >
+                    </span>
+                    <span class="text-quick-silver">
+                      Created on:
+                      <span class="block xl:inline">23/03/2025</span>
+                    </span>
+                  </div>
+                </div>
+                <!-- Line -->
+                <div
+                  class="w-[calc(100%+24px)] lg:w-[calc(100%+56px)] 2xl:w-[calc(100%+68px)] -ml-3 lg:-ml-7 2xl:-ml-8.5 my-3 lg:my-6 border-t border-quick-silver/41"
+                ></div>
+                <!-- Todo -->
+                <div
+                  class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]"
+                >
+                  <!-- Circle Shape-->
+                  <div
+                    class="absolute top-3 xl:top-3.5 left-3 xl:left-3.5 size-2.5 xl:size-3 border-danger border-2 rounded-full"
+                  ></div>
+                  <!-- Menu Icon -->
+                  <div
+                    class="absolute top-2.5 right-3 xl:right-3.5 flex gap-x-0.5 cursor-pointer py-1"
+                  >
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                    <span
+                      class="size-1 border border-quick-silver rounded-full"
+                    ></span>
+                  </div>
+
+                  <div class="flex gap-x-2 xl:gap-x-2.5">
+                    <div>
+                      <p
+                        class="text-sm xl:text-base/[19px] font-semibold line-clamp-2"
+                      >
+                        Attend Nischal’s Birthday Party
+                      </p>
+                      <p
+                        class="text-xs xl:text-sm/[17px] line-clamp-4 mt-2 xl:mt-2.5"
+                      >
+                        Buy gifts on the way and pick up cake from the bakery.
+                        (6 PM | Fresh Elements).....
+                      </p>
+                    </div>
+                    <div
+                      class="my-auto size-20 lg:size-22 shrink-0 *:h-full *:object-cover"
+                    >
+                      <img
+                        class="rounded-xl lg:rounded-[14px] overflow-hidden"
+                        src="./assets/images/todoes/team-meeting.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    class="flex justify-between gap-x-0.5 text-[10px] mt-3 xl:mt-3.5"
+                  >
+                    <span>
+                      Priority:
+                      <span class="block xl:inline text-picton-blue"
+                        >Medium</span
+                      >
+                    </span>
+                    <span>
+                      Status:
+                      <span class="block xl:inline text-danger"
+                        >Not Started</span
+                      >
+                    </span>
+                    <span class="text-quick-silver">
+                      Created on:
+                      <span class="block xl:inline">23/03/2025</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- todo Status & Completed todo -->
+            <div class="flex flex-col gap-y-4">
+              <!-- todo Status -->
+              <section
+                class="px-3 lg:px-4 xl:px-4.5 2xl:px-5.5 pt-6 pb-7 xl:pb-11 shadow-section rounded-[14px]"
+              >
+                <h2 class="flex gap-x-1">
+                  <svg class="w-7 h-8"><use href="#task-status"></use></svg>
+                  <span class="font-medium text-primary"> Todo Status </span>
+                </h2>
+                <!-- Stat -->
+                <div
+                  id="todos-stats-container"
+                  class="flex justify-between gap-x-2.5 mt-4"
+                >
+                  <!-- Completed -->
+                  <div>
+                    <div class="donut-chart donut-chart--completed shrink-0">
+                      <span class="donut-chart__title">84%</span>
+                    </div>
+                    <li
+                      class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--success"
+                    >
+                      Completed
+                    </li>
+                  </div>
+                  <!-- In Progress -->
+                  <div>
+                    <div class="donut-chart donut-chart--in-progress shrink-0">
+                      <span class="donut-chart__title">46%</span>
+                    </div>
+                    <li
+                      class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--blue-bonnet"
+                    >
+                      In Progress
+                    </li>
+                  </div>
+                  <!-- Not Started -->
+                  <div>
+                    <div class="donut-chart donut-chart--not-started shrink-0">
+                      <span class="donut-chart__title">13%</span>
+                    </div>
+                    <li
+                      class="block mt-5 text-xs lg:text-sm xl:text-base text-center dot-icon dot-icon--danger"
+                    >
+                      Not Started
+                    </li>
+                  </div>
+                </div>
+              </section>
+              <!-- Completed Todo -->
+              <section
+                class="px-3 lg:px-4 xl:px-4.5 2xl:px-6 py-5.5 shadow-section rounded-[14px]"
+              >
+                <h2 class="flex items-center gap-x-1">
+                  <svg class="w-6 h-7 text-quick-silver">
+                    <use href="#tasks"></use>
+                  </svg>
+                  <span class="font-medium text-primary"> Completed Todo </span>
+                </h2>
+                <!-- Body Section -->
+                <div
+                  id="todos-completed-container"
+                  class="flex flex-col gap-y-2.5 lg:px-2.5 pt-4.5"
+                >
+                  <!-- Todo -->
+                  <div
+                    class="max-w-100 relative py-3.5 pl-8 xl:pl-10 pr-7 xl:pr-7.5 outline outline-quick-silver rounded-[14px]"
+                  >
+                    <!-- Circle Shape-->
+                    <div
+                      class="absolute top-3 xl:top-3.5 left-3 xl:left-3.5 size-2.5 xl:size-3 border-danger border-2 rounded-full"
+                    ></div>
+                    <!-- Menu Icon -->
+                    <div
+                      class="absolute top-2.5 right-3 xl:right-3.5 flex gap-x-0.5 cursor-pointer py-1"
+                    >
+                      <span
+                        class="size-1 border border-quick-silver rounded-full"
+                      ></span>
+                      <span
+                        class="size-1 border border-quick-silver rounded-full"
+                      ></span>
+                      <span
+                        class="size-1 border border-quick-silver rounded-full"
+                      ></span>
+                    </div>
+
+                    <div class="flex gap-x-2 xl:gap-x-2.5">
+                      <div>
+                        <p
+                          class="text-sm xl:text-base/[19px] font-semibold line-clamp-2"
+                        >
+                          Attend Nischal’s Birthday Party
+                        </p>
+                        <p
+                          class="text-xs xl:text-sm/[17px] line-clamp-4 mt-2 xl:mt-2.5"
+                        >
+                          Buy gifts on the way and pick up cake from the bakery.
+                          (6 PM | Fresh Elements).....
+                        </p>
+                      </div>
+                      <div
+                        class="my-auto size-20 lg:size-22 shrink-0 *:h-full *:object-cover"
+                      >
+                        <img
+                          class="rounded-xl lg:rounded-[14px] overflow-hidden"
+                          src="./assets/images/todoes/team-meeting.png"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+
+                    <div
+                      class="flex justify-between gap-x-0.5 text-[10px] mt-3 xl:mt-3.5"
+                    >
+                      <span>
+                        Priority:
+                        <span class="block xl:inline text-picton-blue"
+                          >Medium</span
+                        >
+                      </span>
+                      <span>
+                        Status:
+                        <span class="block xl:inline text-danger"
+                          >Not Started</span
+                        >
+                      </span>
+                      <span class="text-quick-silver">
+                        Created on:
+                        <span class="block xl:inline">23/03/2025</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <!-- -------------------------- Add New Todo Modal -------------------------- -->
+
+    <!-- -------------------------- Todo Modal -------------------------- -->
+    <div
+      id="todo-modal"
+      class="invisible opacity-0 fixed z-20 top-1/2 -translate-y-1/2 left-0 right-0 mx-auto md:w-160 lg:w-200 xl:w-225 p-4 sm:px-6 lg:px-10 xl:px-15.5 sm:pt-6 lg:pt-8 xl:pt-11.5 sm:pb-6 lg:pb-10 xl:pb-12.5 bg-white transition-all rounded-[5px]"
+    >
+      <!-- Header -->
+      <div class="flex items-center justify-between">
+        <div class="font-montserrat font-semibold">
+          <span class="hidden" id="todo-modal__new-todo-title">
+            Add New todo
+          </span>
+          <span class="hidden" id="todo-modal__edit-todo-title">
+            Edit todo
+          </span>
+          <span class="block h-0.5 w-24 bg-orioles-orange"></span>
+        </div>
+        <button
+          id="todo-modal__close-btn"
+          class="font-montserrat font-semibold text-sm underline underline-offset-3 cursor-pointer"
+        >
+          Go Back
+        </button>
+      </div>
+      <form id="todo-form" action="">
+        <div
+          class="sm:border border-quick-silver/64 sm:py-3.5 p-2.5 sm:px-4 mt-2 sm:mt-4 lg:mt-6 xl:mt-10"
+        >
+          <div class="w-full xs:w-58/100 xl:w-68/100">
+            <label class="block font-montserrat text-sm font-semibold" for=""
+              >Title</label
+            >
+            <input
+              class="w-full h-9 text-sm md:text-base px-2.5 md:px-4 mt-1 xs:mt-2 border border-quick-silver rounded-md"
+              type="text"
+              name=""
+              id="todo-form__title"
+            />
+          </div>
+          <div class="w-full xs:w-58/100 xl:w-68/100 mt-2.5 xs:mt-4">
+            <label class="block font-montserrat text-sm font-semibold"
+              >Date</label
+            >
+            <input
+              class="w-full h-9 text-sm md:text-base px-2.5 md:px-4 mt-1 xs:mt-2 border border-quick-silver rounded-md"
+              type="datetime-local"
+              name=""
+              id="todo-form__date"
+            />
+          </div>
+
+          <div class="w-full xs:w-58/100 xl:w-68/100 mt-2.5 xs:mt-3">
+            <span class="font-montserrat font-semibold text-sm">Priority</span>
+            <div
+              id="todo-form__priority-container"
+              class="flex justify-between lg:gap-x-13.5 mt-1 xs:mt-2.5"
+            >
+              <div class="flex items-center gap-x-2.5">
+                <label
+                  class="text-[13px] text-quick-silver dot-icon before:bg-danger"
+                  for="priority-high"
+                  >High</label
+                >
+                <input
+                  class="priority-task accent-primary"
+                  type="checkbox"
+                  name="priority-task"
+                  id="priority-high"
+                  data-task-priority="high"
+                />
+              </div>
+              <div class="flex items-center gap-x-2.5">
+                <label
+                  class="text-[13px] text-quick-silver dot-icon before:bg-amber-400"
+                  for="priority-medium"
+                  >Medium</label
+                >
+                <input
+                  class="priority-task accent-primary"
+                  type="checkbox"
+                  name="priority-task"
+                  id="priority-medium"
+                  data-task-priority="medium"
+                />
+              </div>
+              <div class="flex items-center gap-x-2.5">
+                <label
+                  class="text-[13px] text-quick-silver dot-icon before:bg-picton-blue"
+                  for="priority-low"
+                  >Low</label
+                >
+                <input
+                  class="priority-task accent-primary"
+                  type="checkbox"
+                  name="priority-task"
+                  id="priority-low"
+                  data-task-priority="low"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="flex justify-between flex-col-reverse xs:flex-row gap-y-2.5 mt-4 font-montserrat"
+          >
+            <div class="w-full xs:w-58/100 xl:w-68/100">
+              <label class="font-semibold text-sm" for=""
+                >Todo Description</label
+              >
+              <textarea
+                class="text-[13px] max-h-92.5 w-full h-40 xs:h-50 lg:h-51.25 p-2.5 sm:py-3.5 sm:px-4 mt-1 xs:mt-2.5 border border-quick-silver rounded-md"
+                col
+                name=""
+                id="todo-form__description"
+                placeholder="Start writting here..."
+              ></textarea>
+            </div>
+            <div class="">
+              <span class="font-semibold text-sm">Upload Image</span>
+              <label
+                class="relative flex justify-center items-center size-40 xs:size-50 lg:w-53.5 lg:h-51.25 px-2.5 sm:px-6 lg:px-9.5 py-4 lg:py-5.5 mx-auto xs:mx-0 mt-1 xs:mt-2.5 text-quick-silver text-center border border-quick-silver rounded-md"
+              >
+                <div id="todo-form__cover-upload-label">
+                  <svg class="w-12 xs:w-16 h-10 xs:h-14 text-white mx-auto">
+                    <use href="#upload-img-icon"></use>
+                  </svg>
+                  <span class="text-xs xs:text-[13px] block mt-2.5 xs:mt-6">
+                    Drag & Drop files here or
+                  </span>
+                  <span
+                    class="text-xs xs:text-[13px] font-medium py-1 xs:py-1.5 px-2 xs:px-3 border border-quick-silver rounded-md mt-2 xs:mt-2.5 inline-block cursor-pointer"
+                    >Browse</span
+                  >
+                </div>
+                <div
+                  class="absolute inset-4 max-h-full max-w-full rounded-md overflow-hidden"
+                  id="todo-form__cover-preview"
+                >
+                  <img class="aspect-square" src="" alt="" />
+                </div>
+                <input
+                  type="file"
+                  id="todo-form__cover"
+                  hidden
+                  accept=".jpg, .png, .jpeg, .webp"
+                />
+              </label>
+            </div>
+          </div>
+        </div>
+        <button
+          id="todo-form__create-todo-btn"
+          class="hidden w-16 xs:w-22.5 h-7 xs:h-8.5 sm:mt-4 lg:mt-6 xl:mt-10 ml-2.5 sm:ml-5 font-montserrat text-xs xs:text-sm bg-orioles-orange text-white rounded-md cursor-pointer"
+        >
+          Done
+        </button>
+        <button
+          id="todo-form__update-todo-btn"
+          data-task-id=""
+          class="hidden w-24 xs:w-29 h-7 xs:h-8.5 sm:mt-4 lg:mt-6 xl:mt-10 ml-2.5 sm:ml-5 font-montserrat text-xs xs:text-sm bg-orioles-orange text-white rounded-md cursor-pointer"
+        >
+          Save Changes
+        </button>
+      </form>
+    </div>
+
+    <div
+      id="overlay"
+      class="fixed top-0 left-0 w-full h-0 z-10 bg-black/74 transition-all duration-700"
+    ></div>
+    <div
+      id="transparent-overlay"
+      class="fixed top-0 left-0 w-full h-0 z-5 bg-transparent transition-all duration-700"
+    ></div>
+
+    <div class="loader-overlay fixed inset-0 bg-white z-40"></div>
+    <div class="loader fixed inset-1/2 z-50"></div>
+
+    <!-- JavaScript -->
+    <script type="module" src="./javascripts/app.js"></script>
+    <script type="module" src="./javascripts/pages/index.js"></script>
+
+    <!-- Libraries -->
+    <script src="../node_modules/sweetalert/dist/sweetalert.min.js"></script>
+  </body>
+</html>

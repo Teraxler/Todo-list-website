@@ -7,6 +7,12 @@
   "type": "commonjs",
   "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx @tailwindcss/cli -i ./src/config/tailwind.config.css -o ./src/styles/app.css --watch"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.4",
+    "sweetalert": "^2.1.2",
+    "tailwindcss": "^4.1.4"
   }
 }

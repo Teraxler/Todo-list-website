@@ -1,0 +1,1 @@
+const baseUrl = "../database.json";export { baseUrl };

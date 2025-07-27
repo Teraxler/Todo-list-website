@@ -1,0 +1,12 @@
+export default async function getData() {
+  try {
+    const response = await fetch("../javascripts/database.json");
+
+    return await response.json();
+  } catch (error) {
+    swal({
+      title: "Failed to fetch DB",
+      text: "Please reload your page",
+    });
+  }
+}
