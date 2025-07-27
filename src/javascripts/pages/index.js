@@ -180,8 +180,7 @@ function generateDonutChart(status, percent) {
                     percent
                   )}deg, var(--color-light-silver) 
                   ${clacDegreesOfPercent(percent)}deg 360deg
-                );"
-            >
+                );">
               <span class="donut-chart__title">${percent}%</span>
             </div>
             <li
@@ -318,7 +317,7 @@ showCreateTodoModalBtn.addEventListener("click", showCreateTodoModal);
 function saveTodoHandler(event) {
   showLoader();
 
-  user.todos.push(event.detail);
+  user.todos.unshift(event.detail);
   user.statistics = calcStatistics(user.todos);
 
   DB.users = updateUsers(user, DB.users);

@@ -1,4 +1,4 @@
-import { getDB } from "../modules/shared.js";
+import { getDB, hideLoader } from "../modules/shared.js";
 import {
   capitalize,
   findUserByUserPass,
@@ -39,3 +39,7 @@ async function signInUser() {
 const signUpBtn = document.getElementById("sign-up-btn");
 
 signUpBtn.addEventListener("click", signInUser);
+
+window.addEventListener("load", ()=>{
+  hideLoader()
+})

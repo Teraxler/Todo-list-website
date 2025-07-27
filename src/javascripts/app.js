@@ -99,8 +99,7 @@ function insertSearchResult(todos, container) {
       <li class="px-3.75 py-1.5 lg:py-2.5">
         <a
           class="flex items-center justify-between gap-x-4 cursor-pointer"
-          href="/src/pages/todo-details.html?id=${id}"
-        >
+          href="/src/pages/todo-details.html?id=${id}">
           <div>
             <p class="text-sm lg:text-base/relaxed line-clamp-2">${title}</p>
             <span class="font-medium text-xs">Priority: </span

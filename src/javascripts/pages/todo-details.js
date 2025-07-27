@@ -1,6 +1,4 @@
 import {
-  calcStatistics,
-  filterList,
   findTodo,
   findUser,
   formattingDateTime,
