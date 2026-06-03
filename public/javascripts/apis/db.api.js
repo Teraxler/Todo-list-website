@@ -1,7 +1,6 @@
 export default async function getData() {
   try {
     const response = await fetch("../javascripts/database.json");
-
     return await response.json();
   } catch (error) {
     swal({
