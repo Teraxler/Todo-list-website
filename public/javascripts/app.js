@@ -2,7 +2,7 @@ import{deleteCookie,findUser,formattingDateTime,getCookie,getDateTime,getFromLoc
       <li class="px-3.75 py-1.5 lg:py-2.5">
         <a
           class="flex items-center justify-between gap-x-4 cursor-pointer"
-          href="/src/pages/todo-details.html?id=${t}">
+          href="/Todo-list-website/public/pages/todo-details.html?id=${t}">
           <div>
             <p class="text-sm lg:text-base/relaxed line-clamp-2">${s}</p>
             <span class="font-medium text-xs">Priority: </span
@@ -10,7 +10,7 @@ import{deleteCookie,findUser,formattingDateTime,getCookie,getDateTime,getFromLoc
           </div>
           <div
             class="size-10 lg:size-13 shrink-0 rounded-sm overflow-hidden">
-          ${i.img?`<img class="aspect-square" src="${i.img}" alt="${i.alt}" />`:`<img class="aspect-square" src="/src/assets/images/todoes/${i.path}" alt="${i.alt}" />`}
+          ${i.img?`<img class="aspect-square" src="${i.img}" alt="${i.alt}" />`:`<img class="aspect-square" src="/public/assets/images/todoes/${i.path}" alt="${i.alt}" />`}
           </div>
         </a>
       </li>
@@ -18,4 +18,4 @@ import{deleteCookie,findUser,formattingDateTime,getCookie,getDateTime,getFromLoc
       <li class="px-3.75 py-1.5 lg:py-2.5">
         <span class="text-quick-silver">You must type at least 3 characters</span>
       </li>`;searchResultContainer.innerHTML=i;mobileSearchResultContainer.innerHTML=i}}const headerSearchInput=document.getElementById("header-search-input");headerSearchInput.addEventListener("keyup",insertSearchResultHandler);const mobileSearchInput=document.getElementById("mobile-search-input");mobileSearchInput.addEventListener("keyup",insertSearchResultHandler);function insertDate(){const e=document.getElementById("today-date");let t=getDateTime();t=formattingDateTime(t);e.innerHTML=`<span>${t.weekdayName}</span>
-          <span class="text-picton-blue">${t.date}</span>`}function routeProtection(){const e=getCookie("userId");if(e==null){location.href="/src/pages/login.html"}}window.addEventListener("load",async()=>{routeProtection();initilize()});function initilize(){insertDate();user=getUser();insertTextContent(`${user.name} ${user.family}`,"user-full-name");insertTextContent(user.email,"user-email")}document.getElementById("notification-show-btn").addEventListener("click",()=>{hideVisibleContent();showNotifications()});document.getElementById("notification__hide-btn").addEventListener("click",hideNotifications);document.getElementById("calendar-show-btn").addEventListener("click",()=>{hideVisibleContent();showCalendar()});document.getElementById("transparent-overlay").addEventListener("click",hideVisibleContent);const logoutBtn=document.getElementsByClassName("logout-btn")[0];logoutBtn.addEventListener("click",async e=>{e.preventDefault();const t=await swal({title:"Are you sure want to logout?",icon:"warning",buttons:{no:{text:"Cancel",value:false,className:"swal-btn--natural"},yes:{text:"Yes, logout!",value:true,className:"swal-btn--danger"}}});if(t){deleteCookie("userId","/src");routeProtection()}});
+          <span class="text-picton-blue">${t.date}</span>`}function routeProtection(){const e=getCookie("userId");if(e==null){location.href="/Todo-list-website/public/pages/login.html"}}window.addEventListener("load",async()=>{routeProtection();initilize()});function initilize(){insertDate();user=getUser();insertTextContent(`${user.name} ${user.family}`,"user-full-name");insertTextContent(user.email,"user-email")}document.getElementById("notification-show-btn").addEventListener("click",()=>{hideVisibleContent();showNotifications()});document.getElementById("notification__hide-btn").addEventListener("click",hideNotifications);document.getElementById("calendar-show-btn").addEventListener("click",()=>{hideVisibleContent();showCalendar()});document.getElementById("transparent-overlay").addEventListener("click",hideVisibleContent);const logoutBtn=document.getElementsByClassName("logout-btn")[0];logoutBtn.addEventListener("click",async e=>{e.preventDefault();const t=await swal({title:"Are you sure want to logout?",icon:"warning",buttons:{no:{text:"Cancel",value:false,className:"swal-btn--natural"},yes:{text:"Yes, logout!",value:true,className:"swal-btn--danger"}}});if(t){deleteCookie("userId","/src");routeProtection()}});
